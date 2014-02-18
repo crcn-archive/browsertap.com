@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node ./app",
+    "server": "PORT=81 node ./app",
     "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:80 --port 81 --verbose"
   },
   "repository": {

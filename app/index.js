@@ -3,6 +3,6 @@ require("./bootstrap")({
     root: __dirname + "/packages"
   },
   http: {
-    port: 80
+    port: process.env.PORT || 80
   }
 });

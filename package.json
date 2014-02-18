@@ -1,0 +1,30 @@
+{
+  "name": "browsertap.com",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "node ./app",
+    "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:80 --port 81 --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crcn/browsertap.com.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/crcn/browsertap.com/issues"
+  },
+  "dependencies": {
+    "mojojs": "~0.7.x",
+    "paperclip": "~0.3.x",
+    "ditto": "0.0.x",
+    "packages": "0.0.x",
+    "bindable": "~0.5.26",
+    "dnode": "~1.2.0",
+    "express": "~3.4.8",
+    "less": "~1.6.3",
+    "glob": "~3.2.8"
+  }
+}

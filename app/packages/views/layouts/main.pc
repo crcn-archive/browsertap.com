@@ -16,8 +16,6 @@
     
   </head>
   <body>
-
     {{ html: blocks.main }}
-
   </body>
 </html>

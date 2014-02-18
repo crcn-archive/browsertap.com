@@ -1,0 +1,7 @@
+<div class="bt-main-feature">
+  <div class="bt-feature-header">
+    <img src="img/features/Shape {{model.shape}}.png"></img>
+  </div>
+  <h3>{{ model.title }}</h3>
+  <p>{{ model.text }}</p>
+</div>

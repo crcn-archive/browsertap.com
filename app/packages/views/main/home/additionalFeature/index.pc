@@ -1,0 +1,4 @@
+<div class="bt-extra-feature">
+  <span class="fextra-{{ model.implemented ? 1 : 0 }}">{{ html: "&#" + (model.implemented ? "10004" : "10007") + ";" }}</span>
+  {{ model.text }}
+</div>'

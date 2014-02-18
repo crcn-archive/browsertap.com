@@ -6,7 +6,7 @@
         <!-- top nav -->
         <div id="bt-header">
           <img src="/img/browsertap logo.png" alt="Browsertap Logo"></img>
-          <a href="/login" id="bt-header-signin">Sign In Now</a>
+          <a href="/login" style="display:none;" id="bt-header-signin">Sign In Now</a>
         </div>
 
         <!-- big obnoxious header that should scare anyone away from the product -->
@@ -67,65 +67,7 @@
     <div id="bt-features">
       <div class="bt-content">
 
-        <div class="bt-main-feature">
-          <div class="bt-feature-header">
-            <img src="img/features/Shape 6.png"></img>
-          </div>
-          <h3>Responsive Testing</h3>
-          <p>Now you can test any responsive site, on
-          any browser without leaving your browser of 
-          choice, simply by resizing your window.</p>
-        </div>
-
-        <div class="bt-main-feature">
-          <div class="bt-feature-header">
-            <img src="img/features/Shape 5.png"></img>
-          </div>
-          <h3>Seamless UI</h3>
-          <p>With Browsertap, you'll forget you're inside 
-          of an emulator. Just use your browser as 
-          you normally would.</p>
-        </div>
-
-        <div class="bt-main-feature">
-          <div class="bt-feature-header">
-            <img src="img/features/Shape 4.png"></img>
-          </div>
-          <h3>1-Click Testing</h3>
-          <p>Jump straight into testing with one click
-          from our browser extension or bookmarklet.
-          No need to visit browsertap.com</p>
-        </div>
-
-        <div class="bt-main-feature clear">
-          <div class="bt-feature-header">
-            <img src="img/features/Group 1.png"></img>
-          </div>
-          <h3>Parallel Testing</h3>
-          <p>Test multiple browser at once, with a new
-          window or tab per test, allowing you to 
-          compare rendering engines.</p>
-        </div>
-
-        <div class="bt-main-feature">
-          <div class="bt-feature-header">
-            <img src="img/features/Shape 8.png"></img>
-          </div>
-          <h3>Local Testing</h3>
-          <p>Run a small application that allows
-          Browsertap to connect to your computer,
-          forwarding localhost and file:// for testing.</p>
-        </div>
-
-        <div class="bt-main-feature">
-          <div class="bt-feature-header">
-            <img src="img/features/Shape 9.png"></img>
-          </div>
-          <h3>Developer Tools</h3>
-          <p>Browsertap supports many developer tools
-          and extensions for each browser, letting you
-          see exactly what's going on with your code.</p>
-        </div>
+        {{ html: sections.features }}
 
       </div>
     </div>
@@ -135,7 +77,9 @@
       <div class="bt-content">
         <h3><strong>Features in Alpha:</strong></h3>
 
-        <div id="all-features"></div>
+        <div id="all-features">
+          {{ html: sections.additionalFeatures }}
+        </div>
       </div>
     </div>
 

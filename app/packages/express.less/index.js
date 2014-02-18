@@ -15,7 +15,9 @@ exports.load = function (config, server) {
       buffer.push(fs.readFileSync(path, { encoding: "utf8" }));
     }
 
+
     cssParser.parse(buffer.join("\n"), function (err, tree) {
+
       if (err) return res.send(JSON.stringify(err));
 
       res.setHeader("Content-Type", "text/css");

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <!-- If you're reading this, prepare for a lot of shit. -->
+
+    <!-- Misc shit -->
+    <title>Fast, Interactive Browser Testing</title>
+
+    <!-- csshit -->
+    <!--link rel="stylesheet" type="text/css" href="vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendors/bootstrap/css/bootstrap-responsive.min.css"-->
+
+    <link rel="stylesheet" type="text/css" href="/css/app.css" />
+    <!--link rel="stylesheet/less" type="text/css" href="vendors/retina/retina.less"-->
+    
+  </head>
+  <body>
+
+    {{ html: blocks.main }}
+
+  </body>
+</html>

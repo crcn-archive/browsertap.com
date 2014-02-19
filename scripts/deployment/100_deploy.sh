@@ -24,7 +24,11 @@ async.waterfall([
       instances().
       find(search).
       parallel().
-      rsync(__dirname + "/../../", "/home/ubuntu/apps/browsertap.com").
+      rsync({ 
+        keyPath: __dirname + "/keypair",
+        from: __dirname + "/../../", 
+        to: "/home/ubuntu/apps/browsertap.com"
+      }).
       then(next);
   },
 
@@ -40,7 +44,10 @@ async.waterfall([
       instances().
       find(search).
       delay(1000 * 5).
-      exec("sudo supervisorctl restart browsertap.com").
+      exec({
+        keyPath: __dirname + "/keypair",
+        script: "sudo supervisorctl restart browsertap.com"
+      }).
       then(next);
   }
 ], function (err) {

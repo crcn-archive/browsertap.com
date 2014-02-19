@@ -70,6 +70,8 @@ module.exports = function (options, next) {
     }
   ], function (err) {
 
+    console.log("DONE");
+
     if (err) {
       console.error(err);
       return process.exit(1);

@@ -25,7 +25,7 @@ async.waterfall([
       find(search).
       parallel().
       rsync({ 
-        keyPath: __dirname + "/keypair",
+        keyPath: "~/.ssh/id_browsertap.com",
         from: __dirname + "/../../", 
         to: "/home/ubuntu/apps/browsertap.com"
       }).
@@ -45,7 +45,7 @@ async.waterfall([
       find(search).
       delay(1000 * 5).
       exec({
-        keyPath: __dirname + "/keypair",
+        keyPath: "~/.ssh/id_browsertap.com",
         script: "sudo supervisorctl restart browsertap.com"
       }).
       then(next);

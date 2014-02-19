@@ -1,11 +1,11 @@
 var awsm = require("awsm"),
 aws      = awsm(require("../config").aws),
-async    = require("async");
+async    = require("async"),
+hurryup  = require("hurryup");
 
 aws.use(require("awsm-ssh"));
 
 module.exports = function (options, next) {
-
 
   var awsc = aws.chain(), search = { "tags.name": options.name };
 
@@ -27,7 +27,7 @@ module.exports = function (options, next) {
         rsync({ 
           keyPath: options.keyPath,
           from: __dirname + "/../../", 
-          to: "/home/ubuntu/apps/" + options.name
+          to: "/home/ubuntu/apps/browsertap.com"
         }).
         then(next);
     },
@@ -55,7 +55,6 @@ module.exports = function (options, next) {
      */
 
     function restartServers (args, next) {
-
       awsc.
         ec2().
         regions().

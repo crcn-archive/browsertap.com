@@ -7,10 +7,6 @@ aws.use(require("awsm-ssh"));
 
 
 var awsc = aws.chain();
-aws.cli = {
-  closeReadline: function () { },
-  openReadline: function () { }
-}
 
 console.log("deploying to all running websites");
 
@@ -20,7 +16,7 @@ async.waterfall([
   /**
    */
 
-  function (next) {
+  function deployAssets (next) {
     awsc.
       ec2().
       regions().
@@ -35,7 +31,7 @@ async.waterfall([
   /**
    */
 
-  function (args, next) {
+  function restartServers (args, next) {
 
     awsc.
       ec2().

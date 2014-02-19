@@ -17,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/crcn/browsertap.com/issues"
   },
+  "engines": {
+    "node": ">=0.10.25"
+  },
   "dependencies": {
     "mojojs": "~0.7.x",
     "paperclip": "~0.3.x",

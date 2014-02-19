@@ -66,7 +66,10 @@ module.exports = function (options, next) {
           keyPath: options.keyPath,
           script: "sudo supervisorctl restart " + options.name
         }).
-        then(next);
+        then(function () {
+          console.log("DONE SH");
+          next();
+        });
     }
   ], function (err) {
 

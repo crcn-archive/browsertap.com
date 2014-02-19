@@ -6,7 +6,7 @@ async    = require("async");
 aws.use(require("awsm-ssh"));
 
 
-var awsc = aws.chain();
+var awsc = aws.chain(), search = { "tags.name": "website" };
 
 console.log("deploying to all running websites");
 
@@ -22,7 +22,7 @@ async.waterfall([
       regions().
       all().
       instances().
-      find({ "tags.name": "website" }).
+      find(search).
       parallel().
       rsync(__dirname + "/../../", "/home/ubuntu/apps/browsertap.com").
       then(next);
@@ -38,7 +38,7 @@ async.waterfall([
       regions().
       all().
       instances().
-      find({ "tags.name": "website" }).
+      find(search).
       delay(1000 * 5).
       exec("sudo supervisorctl restart browsertap.com").
       then(next);

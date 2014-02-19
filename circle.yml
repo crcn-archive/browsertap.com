@@ -1,0 +1,16 @@
+general:
+  branches:
+    ignore:
+      - release
+
+## Customize dependencies
+test:
+  override:
+    - npm test: # note ':' here
+        timeout: 600 # fail if command has no output for 3 minutes
+
+deployment:
+  automerge:
+    branch: [master]
+    commands:
+      - ./scripts/deployment/100_deploy.sh

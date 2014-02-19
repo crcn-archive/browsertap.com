@@ -36,7 +36,7 @@
     "outcome": "0.0.18",
     "awsm": "0.0.x",
     "async": "~0.2.10",
-    "awsm-ssh": "0.0.16",
+    "awsm-ssh": "0.0.17",
     "browserify": "~3.30.1",
     "hurryup": "0.0.2"
   }

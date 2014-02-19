@@ -55,6 +55,9 @@ module.exports = function (options, next) {
      */
 
     function restartServers (args, next) {
+
+      var next = Array.prototype.slice.call(arguments, 0).pop();
+
       awsc.
         ec2().
         regions().
@@ -66,14 +69,9 @@ module.exports = function (options, next) {
           keyPath: options.keyPath,
           script: "sudo supervisorctl restart " + options.name
         }).
-        then(function () {
-          console.log("DONE SH");
-          next();
-        });
+        then(next);
     }
   ], function (err) {
-
-    console.log("DONE");
 
     if (err) {
       console.error(err);

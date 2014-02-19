@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "website": "TYPE=website node server",
     "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:80 --port 81 --verbose",
     "test": "echo 'OK'"
   },
@@ -34,6 +35,7 @@
     "outcome": "0.0.18",
     "awsm": "0.0.x",
     "async": "~0.2.10",
-    "awsm-ssh": "0.0.16"
+    "awsm-ssh": "0.0.16",
+    "browserify": "~3.30.1"
   }
 }

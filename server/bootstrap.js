@@ -6,6 +6,7 @@ module.exports = function (config) {
     require({
       config: new bindable.Object(config)
     }).
-    require(__dirname + "/packages").
+    require(__dirname + "/packages/common").
+    require(__dirname + "/packages/" + config.type).
     load();
 }

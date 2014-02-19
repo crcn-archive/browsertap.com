@@ -9,7 +9,7 @@ module.exports = function (options, next) {
 
   var awsc = aws.chain(), search = { "tags.name": options.name };
 
-  console.log("deploying to all running websites");
+  console.log("deploying to all running websites to %s", options.name);
 
   async.waterfall([
 

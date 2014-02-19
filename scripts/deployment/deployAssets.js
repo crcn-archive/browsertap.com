@@ -46,7 +46,7 @@ module.exports = function (options, next) {
           exec({
             keyPath: options.keyPath,
             script: script
-          }).
+          }, true).
           then(next);
         }, next);
     },

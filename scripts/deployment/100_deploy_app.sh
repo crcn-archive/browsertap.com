@@ -4,5 +4,5 @@ var deployAssets = require("./deployAssets");
 deployAssets({
   name        : "app",
   keyPath     : "~/.ssh/id_browsertap.com",
-  exec        : [__dirname + "/../install/app.sh"]
+  exec        : [__dirname + "/../install/app.sh", "sudo killall -9 node"]
 });

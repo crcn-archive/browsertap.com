@@ -12,6 +12,8 @@ mojo.Application.extend(BrowserTap, {
 
   _registerPlugins: function () {
     this.use(require("./views"));
+    this.use(require("mojo-router"));
+    this.use(require("./routes"));
   },
 
   /**

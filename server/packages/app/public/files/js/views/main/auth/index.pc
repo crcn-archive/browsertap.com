@@ -1,5 +1,1 @@
-<div class="col-md-4"></div>
-<div class="col-md-4">
-  {{ html: `sections.pages` }}
-</div>
-<div class="col-md-4"></div>
+{{ html: `sections.pages` }}

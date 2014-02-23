@@ -20,7 +20,6 @@ module.exports = mojo.View.extend({
   sections: {
     pages: {
       type: "states",
-      index: 0,
       views: [
         { class: require("./auth") , name: "auth" },
         { class: require("./app")  , name: "app"  }

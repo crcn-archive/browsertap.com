@@ -1,1 +1,3 @@
-{{ html: `sections.pages` }}
+<div class="auth-container">
+  {{ html: `sections.pages` }}
+</div>

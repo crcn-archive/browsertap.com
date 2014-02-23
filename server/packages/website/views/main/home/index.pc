@@ -31,7 +31,7 @@
   <div class="bt-content">
 
     <div id="bt-mid-header">
-      <h1>The future of cross-browser testing<br /> is in the <strong>browser you&rsquo;re using right now.</strong></h1>
+      <h1>The future of cross-browser testing<br/> is in the <strong>browser you&rsquo;re using right now.</strong></h1>
     </div>
 
     <!-- hmmm - the blurb below should be technical, but I shouldn't read it and go "wwhaauut?" -->

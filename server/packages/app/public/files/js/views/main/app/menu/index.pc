@@ -1,0 +1,3 @@
+
+aa
+<a href="#" class="bt-menu bt-menu-position-{{position}}" data-bind="{{ onClick: move() }}">move</a>

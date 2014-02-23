@@ -1,1 +1,5 @@
-form
+<form data-bind="{{ onSubmit: resetPassword() }}">
+  <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>
+  <input type="submit" name="login" value="Reset Password"></input>
+  <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">Login</a>
+</form>

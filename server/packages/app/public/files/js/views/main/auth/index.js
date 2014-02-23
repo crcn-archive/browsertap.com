@@ -1,4 +1,5 @@
-var mojo = require("mojojs");
+var mojo = require("mojojs"),
+bindable = require("bindable");
 
 module.exports = mojo.View.extend({
 
@@ -12,6 +13,14 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "models.states.auth": "sections.pages.currentName"
+  },
+
+  /**
+   */
+
+  initialize: function () {
+    mojo.View.prototype.initialize.apply(this, arguments);
+    this.set("user", new bindable.Object());
   },
 
   /**

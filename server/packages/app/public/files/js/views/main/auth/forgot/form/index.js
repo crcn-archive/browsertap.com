@@ -5,5 +5,12 @@ module.exports = mojo.View.extend({
   /**
    */
 
-  paper: require("./index.pc")
+  paper: require("./index.pc"),
+  
+  /**
+   */
+
+  resetPassword: function () {
+    
+  }
 });

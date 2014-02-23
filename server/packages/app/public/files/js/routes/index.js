@@ -14,6 +14,7 @@ module.exports = function (app) {
 
   router.
     route("/login").
+    name("login").
     states({
       main : "auth",
       auth : "login"
@@ -21,6 +22,7 @@ module.exports = function (app) {
 
   router.
     route("/signup").
+    name("signup").
     states({
       main : "auth",
       auth : "signup"
@@ -36,6 +38,7 @@ module.exports = function (app) {
 
   router.
     route("/forgot").
+    name("forgotPassword").
     states({
       main : "auth",
       auth : "forgot",

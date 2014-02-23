@@ -15,6 +15,7 @@ mojo.Application.extend(BrowserTap, {
     this.use(require("mojo-router"));
     this.use(require("./routes"));
     this.use(require("./template/modifiers"));
+    this.use(require("./hotkeys"));
   },
 
   /**

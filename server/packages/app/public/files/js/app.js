@@ -18,6 +18,7 @@ mojo.Application.extend(BrowserTap, {
     this.use(require("./template/modifiers"));
     this.use(require("./hotkeys"));
     this.use(require("./commands"));
+    this.use(require("./tour"));
   },
 
   /**

@@ -18,6 +18,7 @@ module.exports = mojo.View.extend({
       views: [
         { class : require("./main"),        name: "main"        },
         { class : require("./extensions"),  name: "extensions"  },
+        { class : require("./quality"),     name: "quality"     },
         { class : require("./payments") ,   name: "payments"    },
         { class : require("./setupTunnel"), name: "setupTunnel" }
       ]

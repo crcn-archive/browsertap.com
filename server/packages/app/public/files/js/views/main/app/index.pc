@@ -1,4 +1,1 @@
-main
-{{ html: sections.menu }}
-
-<a href="#" data-bind="{{ onClick: 'logout' | redirect() }}">logout</a>
+{{ html: `sections.pages` }}

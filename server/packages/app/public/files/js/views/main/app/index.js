@@ -10,7 +10,19 @@ module.exports = mojo.View.extend({
   /**
    */
 
+  bindings: {
+    "models.states.app": "sections.pages.currentName"
+  },
+
+  /**
+   */
+
   sections: {
-    menu: require("./menu")
+    pages: {
+      type: "states",
+      views: [
+        { class: require("./controller"), name: "controller" }
+      ]
+    }
   }
 });

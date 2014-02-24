@@ -1,4 +1,5 @@
-var mojo = require("mojojs");
+var mojo     = require("mojojs"),
+bindableCall = require("bindable-call");
 
 module.exports = mojo.View.extend({
 
@@ -10,7 +11,33 @@ module.exports = mojo.View.extend({
   /**
    */
 
+  bindings: {
+    "signupRequest.error": "error",
+    "signupRequest.success": function () {
+      this.application.router.redirect("home");
+    }
+  },
+
+  /**
+   */
+
   signup: function () {
-    
+    var self = this;
+
+    var d = this.get("user").toJSON();
+
+    if (!d.email || !d.confirmPassword || !d.password) {
+      return this.set("error", new Error("Please fill in all fields."));
+    }
+
+    if (d.confirmPassword != d.password) {
+      return this.set("error", new Error("Please make sure your password match."));
+    }
+
+    this.set("error", undefined);
+
+    this.set("signupRequest", bindableCall(function (next) {
+      self.application.mediator.execute("signup", d, next);
+    }));
   }
 });

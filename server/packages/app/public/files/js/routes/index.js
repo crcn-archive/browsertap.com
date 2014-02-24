@@ -10,7 +10,14 @@ module.exports = function (app) {
       main : "app",
       app  : "controller"
     })
-
+  
+  router.
+    route("/logout").
+    name("logout").
+    enter(function (request, next) {
+      router.redirect("login");
+      next();
+    })
 
   router.
     route("/login").

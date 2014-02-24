@@ -1,3 +1,7 @@
+{{#if: error }}
+  {{ error.message }}
+{{/}}
+
 <form data-bind="{{ onSubmit: resetPassword() }}">
   <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>
   <input type="submit" name="login" value="Reset Password"></input>

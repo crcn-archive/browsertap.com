@@ -5,7 +5,7 @@ function Browsers (user) {
   this.user = user;
 }
 
-Browsers.extend(BaseCollection, {
+BaseCollection.extend(Browsers, {
 
   /**
    */

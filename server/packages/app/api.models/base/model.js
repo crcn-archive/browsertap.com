@@ -1,12 +1,11 @@
 var bindable = require("bindable");
 
-function BaseModel (data, application) {
-  bindable.Object.apply(this, arguments);
-  this._application = application;
-  this._db = application.db;
+function BaseModel (options, application) {
+  bindable.Object.apply(this, options.data || {});
+  this.application = application;
 }
 
-bindable.Object.extend({
+bindable.Object.extend(BaseModel, {
   
 });
 

@@ -13,7 +13,9 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "loginRequest.error": "error",
-    "loginRequest.success": function () {
+    "models.users": "users",
+    "loginRequest.success": function (value) {
+      if (!value) return;
       this.application.router.redirect("home");
     }
   },
@@ -24,7 +26,7 @@ module.exports = mojo.View.extend({
   login: function () {
     var self = this;
     this.set("loginRequest", bindableCall(function (next) {
-      self.application.mediator.execute("login", self.get("user").toJSON(), next);
+      self.users.login(self.get("user").toJSON(), next);
     }));
   }
 });

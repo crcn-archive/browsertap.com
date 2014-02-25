@@ -53,7 +53,10 @@
     "coffee-script": "~1.7.1",
     "browserify-middleware": "~2.3.0",
     "mojo-mediator": "0.0.4",
-    "deep-extend": "~0.2.8"
+    "deep-extend": "~0.2.8",
+    "domready": "~1.0.4",
+    "traverse": "~0.6.6",
+    "underscore": "~1.6.0"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

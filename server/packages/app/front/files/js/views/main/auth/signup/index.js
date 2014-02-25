@@ -13,7 +13,9 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "signupRequest.error": "error",
-    "signupRequest.success": function () {
+    "models.users": "users",
+    "signupRequest.success": function (v) {
+      if (!v) return;
       this.application.router.redirect("home");
     }
   },
@@ -37,7 +39,7 @@ module.exports = mojo.View.extend({
     this.set("error", undefined);
 
     this.set("signupRequest", bindableCall(function (next) {
-      self.application.mediator.execute("signup", d, next);
+      self.users.signup(d, next);
     }));
   }
 });

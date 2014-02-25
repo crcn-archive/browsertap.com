@@ -16,10 +16,6 @@ var modelClasses = {
 
 exports.require = ["api.models.core"];
 exports.load = function (models) {
-
-  return;
-
-
   for (var name in modelClasses) {
     models.registerClass(name, modelClasses[name]);
   }

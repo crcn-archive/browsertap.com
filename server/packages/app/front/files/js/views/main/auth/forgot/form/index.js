@@ -14,7 +14,9 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "resetPasswordRequest.error": "error",
-    "resetPasswordRequest.success": function () {
+    "models.users": "users",
+    "resetPasswordRequest.success": function (v) {
+      if (!v) return;
       this.application.router.redirect("home");
     }
   },
@@ -26,7 +28,7 @@ module.exports = mojo.View.extend({
   resetPassword: function () {
     var self = this;
     this.set("resetPasswordRequest", bindableCall(function (next) {
-      self.application.mediator.execute("sendResetPasswordEmail", self.get("user").toJSON(), next);
+      self.users.sendResetPasswordEmail(self.get("user").toJSON(), next);
     }));
   }
 });

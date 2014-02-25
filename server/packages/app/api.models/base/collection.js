@@ -5,7 +5,8 @@ function BaseCollection () {
 }
 
 Collection.extend(BaseCollection, {
-
+  private: ["application"],
+  public: ["bind", "set", "get", "on", "once", "off", "emit"]
 });
 
-module.exports = Collection;
+module.exports = BaseCollection;

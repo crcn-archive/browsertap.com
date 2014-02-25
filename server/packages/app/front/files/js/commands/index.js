@@ -1,5 +1,6 @@
 var commands = [
-  require("./api")
+  require("./load/dnode"),
+  require("./load/dom")
 ];
 
 module.exports = function (app) {

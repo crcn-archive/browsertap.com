@@ -52,7 +52,8 @@
     "through": "~2.3.4",
     "coffee-script": "~1.7.1",
     "browserify-middleware": "~2.3.0",
-    "mojo-mediator": "0.0.4"
+    "mojo-mediator": "0.0.4",
+    "deep-extend": "~0.2.8"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

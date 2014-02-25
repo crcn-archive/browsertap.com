@@ -1,9 +1,4 @@
-require("./bootstrap")({
-  type: process.env.TYPE,
-  directories: {
-    root: __dirname + "/packages/" + process.env.TYPE
-  },
-  http: {
-    port: process.env.PORT || 80
-  }
-});
+var deepExtend = require("deep-extend"),
+config = require("./config");
+
+require("./bootstrap")(deepExtend(config.default, config[process.env.NODE_ENV] || {}));

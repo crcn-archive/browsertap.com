@@ -21,10 +21,10 @@ BaseModel.extend(User, {
 
   virtuals: {
     "settings": function (next) {
-      return this._application.createModel("settings", this).load(next);
+      return this._application.createModel("settings", { user: this }).load(next);
     },
-    "browsers": function (next) {
-      return this._application.createModel("browsers", this).load(next);
+    "launchers": function (next) {
+      return this._application.createModel("launchers", { user: this }).load(next);
     }
   }
 

@@ -1,13 +1,10 @@
 
-var User = require("./user"),
-Users    = require("./users"),
-Settings = require("./settings");
-
-
 var modelClasses = {
-  user     : User,
-  users    : Users,
-  settings : Settings
+  user      : require("./user"),
+  users     : require("./users"),
+  settings  : require("./settings"),
+  launcher  : require("./launcher"),
+  launchers : require("./launchers")
 };
 
 exports.require = ["api.models.core"];

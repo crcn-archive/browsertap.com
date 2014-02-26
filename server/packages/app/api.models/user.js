@@ -20,9 +20,18 @@ BaseModel.extend(User, {
    */
 
   virtuals: {
+
+    // creates a session
+    "session": function (next) {
+      return this._application.createModel("session", { user: this }).save(next);
+    },
+
+    // the settings for the user
     "settings": function (next) {
       return this._application.createModel("settings", { user: this }).load(next);
     },
+
+    // application launchers
     "launchers": function (next) {
       return this._application.createModel("launchers", { user: this }).load(next);
     }

@@ -14,11 +14,14 @@ BaseCollection.extend(Users, {
   public: ["login", "signup", "resetPassword", "sendResetPasswordEmail"],
 
   /**
+   * 1. create session
    */
 
   login: function (credentials, next) {
 
     var col = this.collection, self = this;
+
+    // TODO - flow control check for session, or credentials
 
     async.waterfall([
 
@@ -28,6 +31,8 @@ BaseCollection.extend(Users, {
 
       function onFoundUser (user, next) {
         if (!user) return next(new Error("invalid credentials"));
+
+        // todo - make session object here with ttl
         next(null, self.app.models.createModel("user", { data: user }));
       }
 
@@ -36,6 +41,9 @@ BaseCollection.extend(Users, {
   },
 
   /**
+   * TODO
+   * 1. salt password
+   * 2. validate user / pass format
    */
 
   signup: function (credentials, next) {

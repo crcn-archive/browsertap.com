@@ -13,17 +13,11 @@ function publicize (object) {
 /**
  */
 
-function copyPublic (context) {
-  var pub = findPublicProperties(context).public;
-
-  var clone = {};
-
-  for (var i = pub.length; i--;) {
-    var v = dref.get(context, pub[i]);
-    v = copy(v, context);
-    dref.set(clone, pub[i], v);
+function cloneObject (context) {
+  var clone = {}
+  for (var property in context) {
+    copyTo(context, property, clone);
   }
-
   return clone;
 }
 
@@ -33,7 +27,7 @@ function copyPublic (context) {
 function cloneArray (context) {
   var clone = new Array(context.length);
   for (var i = context.length; i--;) {
-    clone[i] = copyPublic(context[i]);
+    clone[i] = copy(context[i]);
   }
   return clone;
 }
@@ -45,30 +39,13 @@ function copy (value, context) {
 
   var t = typeof value;
 
-  if (value == null) {
-    return value;
-  }
-
   if (t === "function") {
-    var oldFn = value;
-    value =  function () {
-      var args = Array.prototype.slice.call(arguments, 0),
-      next = args.length ? typeof args[args.length - 1] === "function" ? args.pop() : null : null;
-
-      if (next) {
-        args.push(function () {
-          var nargs = Array.prototype.slice.call(arguments, 0).map(copy);
-          next.apply(this, nargs);
-        })
-      }
-
-      oldFn.apply(context, args);
-    }
+    value =  _.bind(value, context);
   } else if (t === "object") {
     if (t.constructor === Array) {
       value = cloneArray(value);
-    } else if(String(value) === "[object Object]") {
-      value = copyPublic(value);
+    } else {
+      value = cloneObject(value);
     }
   }
 
@@ -78,8 +55,38 @@ function copy (value, context) {
 /**
  */
 
+function copyTo (context, property, clone) {
+  if (canCopy(property, context)) {
+    clone[property] = copy(context[property], context);
+  } else {
+  }
+}
+
+/**
+ */
+
+function canCopy (property, context) {
+
+  var pubProps = findPublicProperties(context);
+
+  var wrap = new bindable.Object(context);
+
+  return ~pubProps.public.indexOf(property) && !~pubProps.private.indexOf(property);
+}
+
+console.log(publicize({
+  public: ["__context.name"],
+  __context: {
+    name: "test",
+    email: "abba"
+  }
+}))
+
+/**
+ */
+
 function findPublicProperties (context) {
-  var ctx = context;
+  var ctx = context.constructor.prototype;
   var pub = [], priv = [];
   while (ctx) {
     pub = pub.concat(ctx.public || []);

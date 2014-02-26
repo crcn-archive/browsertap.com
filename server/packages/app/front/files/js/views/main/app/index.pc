@@ -1,1 +1,2 @@
+{{ models.user | json() }}
 {{ html: `sections.pages` }}

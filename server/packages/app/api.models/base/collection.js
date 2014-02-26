@@ -1,7 +1,8 @@
 var Collection = require("bindable").Collection;
 
-function BaseCollection () {
+function BaseCollection (options, application) {
   Collection.call(this);
+  this.app = application;
 }
 
 Collection.extend(BaseCollection, {

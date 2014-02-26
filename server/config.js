@@ -9,7 +9,9 @@ module.exports = {
     }
   },
   development: {
-
+    "mongo": {
+      "host": "mongodb://testing:a1c5ee280b@troup.mongohq.com:10032/browsertap-dev"
+    }
   },
   staging: {
 

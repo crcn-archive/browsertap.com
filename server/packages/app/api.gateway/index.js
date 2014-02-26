@@ -17,8 +17,12 @@ exports.load = function (server, models, publicize) {
   function _installDNode (server) {
 
     var sock = shoe(function (stream) {
-      var d = dnode(publicize(models.createModel("users")));
+      var m = models.createModel("users");
+      var d = dnode(publicize(m));
       d.pipe(stream).pipe(d);
+      stream.on("end", function () {
+        m.dispose();
+      })
     });
 
     sock.install(server, "/dnode");

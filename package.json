@@ -56,7 +56,10 @@
     "deep-extend": "~0.2.8",
     "domready": "~1.0.4",
     "traverse": "~0.6.6",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "janitorjs": "0.0.4",
+    "mediocre": "0.0.8",
+    "dref": "~0.1.2"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

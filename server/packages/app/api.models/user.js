@@ -10,9 +10,11 @@ BaseModel.extend(User, {
    */
 
   public: [
-    "email", 
     "settings", 
-    "browsers"],
+    "browsers",
+    "__context.email",
+    "__context._id"
+  ],
 
   /**
    */

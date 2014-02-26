@@ -1,16 +1,12 @@
 
 var User = require("./user"),
 Users    = require("./users"),
-Browser  = require("./browser")
-Browsers = require("./browsers"),
 Settings = require("./settings");
 
 
 var modelClasses = {
   user     : User,
   users    : Users,
-  browser  : Browser,
-  browsers : Browsers,
   settings : Settings
 };
 

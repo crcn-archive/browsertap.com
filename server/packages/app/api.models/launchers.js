@@ -10,6 +10,11 @@ BaseCollection.extend(Browsers, {
   /**
    */
 
+  public: ["_source"],
+
+  /**
+   */
+
   _load: function (next) {
     this._application.mediator.execute("getAvailableBrowsers", next);
   }

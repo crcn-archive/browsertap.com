@@ -4,6 +4,7 @@ janitor      = require("janitorjs");
 function BaseModel (options, application) {
   bindable.Object.call(this, options.data || {});
   this.app = application;
+  this.options = options;
   this._janitor = janitor();
 }
 

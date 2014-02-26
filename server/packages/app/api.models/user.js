@@ -2,6 +2,7 @@ var BaseModel = require("./base/model");
 
 function User () {
   BaseModel.apply(this, arguments);
+  this.session = this.options.session;
 }
 
 BaseModel.extend(User, {
@@ -23,6 +24,8 @@ BaseModel.extend(User, {
 
     // creates a session
     "session": function (next) {
+
+      // automatically create a new session
       return this._application.createModel("session", { user: this }).save(next);
     },
 

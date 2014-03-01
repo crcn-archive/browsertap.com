@@ -1,0 +1,27 @@
+{
+  "login": {
+    "errors": {
+      "404": "Invalid email / password",
+      "602": "Please make sure your email is valid",
+      "undefined": "An unknown error has ocurred"
+    }
+  },
+  "forgotReset": {
+    "errors": {
+      "404": "doesn't look like that code exists"
+    }
+  },
+  "forgotForm": {
+    "errors": {
+      "404": "Whoops, doesn't look like that email address is registered",
+      "602": "Please make sure your email is valid",
+      "undefined": "An unknown error has ocurred"
+    }
+  },
+  "signup": {
+    "errors": {
+      "602": "Please make sure your email is valid.",
+      "604": "That email address is already used"
+    }
+  }
+}

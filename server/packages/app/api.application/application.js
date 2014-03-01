@@ -1,7 +1,8 @@
 var bindable = require("bindable");
 
-function Application () {
+function Application (config) {
   bindable.Object.call(this, this);
+  this.config = config;
 }
 
 bindable.Object.extend(Application, {

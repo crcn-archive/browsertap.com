@@ -30,7 +30,7 @@
     "dnode": "~1.2.0",
     "express": "~3.4.8",
     "less": "~1.6.3",
-    "glob": "~3.2.8",
+    "glob": "~3.2.9",
     "protoclass": "0.0.5",
     "sift": "0.0.12",
     "outcome": "0.0.18",
@@ -59,7 +59,14 @@
     "underscore": "~1.6.0",
     "janitorjs": "0.0.4",
     "mediocre": "0.0.8",
-    "dref": "~0.1.2"
+    "dref": "~0.1.2",
+    "postmark": "~0.2.0",
+    "amanda": "~0.4.7",
+    "verify": "0.1.x",
+    "shoe": "0.0.15",
+    "flatstack": "0.0.10",
+    "toarray": "0.0.1",
+    "factories": "0.0.7"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

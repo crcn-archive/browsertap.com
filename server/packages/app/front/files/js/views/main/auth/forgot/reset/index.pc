@@ -1,5 +1,5 @@
 {{#if:error}}
-  {{ error.message }}
+  {{ ("forgotReset.errors." + error.code) | t() }}
 {{/}}
 
 <form data-bind="{{ onSubmit: resetPassword() }}">

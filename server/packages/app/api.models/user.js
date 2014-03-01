@@ -1,11 +1,16 @@
-var BaseModel = require("./base/model");
+var BaseModel = require("./base/dbModel"),
+crypto        = require("crypto");
 
 function User () {
   BaseModel.apply(this, arguments);
-  this.session = this.options.session;
 }
 
 BaseModel.extend(User, {
+
+  /**
+   */
+
+  collectionName: "users",
 
   /**
    */
@@ -38,6 +43,38 @@ BaseModel.extend(User, {
     "launchers": function (next) {
       return this._application.createModel("launchers", { user: this }).load(next);
     }
+  },
+
+  /**
+   */
+
+  resetPassword: function (password, next) {
+    this.set("password", crypto.createHash('md5').update(this.get("password")).digest("hex").toString());
+    this.save(next);
+  },
+
+  /**
+   */
+
+  _create: function (next) {
+    this.collection.insert({
+      email: this.get("email"),
+      password: crypto.createHash('md5').update(this.get("password")).digest("hex").toString()
+    }, next);
+  },
+
+  /**
+   */
+
+  _update: function (next) {
+    this.collection.update({ 
+      _id: this.get("_id") 
+    }, {
+      $set: {
+        email: this.get("email"),
+        password: this.get("password")
+      }
+    }, next);
   }
 
 });

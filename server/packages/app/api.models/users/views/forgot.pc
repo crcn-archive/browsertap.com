@@ -1,0 +1,6 @@
+
+Forgot your password?
+
+If you've forgotten your password, click the link below to create a new password and login.
+
+<a href="{{ resetLink }}">Proceed</a>

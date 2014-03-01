@@ -5,6 +5,9 @@ module.exports = function (app) {
   var modifiers = {
     redirect: function (location) {
       app.router.redirect(location);
+    },
+    t: function (string, params) {
+      return app.i18n.t(string, params);
     }
   };
 

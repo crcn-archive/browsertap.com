@@ -1,6 +1,7 @@
 var commands = [
   require("./load/dnode"),
   require("./load/dom"),
+  require("./load/i18n"),
   require("./api")
 ];
 

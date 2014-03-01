@@ -1,5 +1,10 @@
+
+{{#if: models.login.flash }}
+  {{ models.login.flash.message }}
+{{/}}
+
 {{#if: error }}
-  {{ error.message }}
+  {{ ("login.errors." + error.code) | t() }}
 {{/}}
 
 <form data-bind="{{ onSubmit: login() }}">

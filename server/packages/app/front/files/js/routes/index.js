@@ -36,7 +36,7 @@ module.exports = function (app) {
     })
 
   router.
-    route("/forgot/reset").
+    route("/forgot/reset/:code").
     states({
       main : "auth",
       auth : "forgot",

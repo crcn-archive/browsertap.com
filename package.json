@@ -68,7 +68,8 @@
     "toarray": "0.0.1",
     "factories": "0.0.7",
     "nofactor": "0.0.41",
-    "platform": "~1.0.0"
+    "platform": "~1.0.0",
+    "request": "~2.34.0"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

@@ -12,6 +12,10 @@ before(function (next) {
   helpers.flushDb(next);
 });
 
+after(function (next) {
+  helpers.flushDb(next);
+})
+
 
 before(function (next) {
   browsertap({

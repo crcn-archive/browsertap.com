@@ -1,11 +1,12 @@
-var BaseCollection = require("../base/dbCollection"),
-async              = require("async"),
-verify             = require("verify")(),
-comerr             = require("comerr"),
-crypto             = require('crypto'),
-bindable           = require("bindable"),
-pc                 = require("paperclip"),
-forgotTemplate     = pc.template(require("./views/forgot.pc"));
+var BaseCollection       = require("../base/dbCollection"),
+async                    = require("async"),
+verify                   = require("verify")(),
+comerr                   = require("comerr"),
+crypto                   = require('crypto'),
+bindable                 = require("bindable"),
+pc                       = require("paperclip"),
+validatePasswordStrength = require("./utils/validatePasswordStrength"),
+forgotTemplate           = pc.template(require("./views/forgot.pc"));
 
 function Users () {
   BaseCollection.apply(this, arguments);
@@ -90,6 +91,8 @@ BaseCollection.extend(Users, {
         verify.that(credentials).has("email", "password").then(next);
       },
 
+      validatePasswordStrength(credentials),
+
       function findUser (next) {
         self.findOne({ email: credentials.email }, next);
       },
@@ -122,6 +125,8 @@ BaseCollection.extend(Users, {
       function validate (next) {
         verify.that(options).has("password", "code").then(next);
       },
+
+      validatePasswordStrength(options),
 
       function findResetPasswordCode (next) {
         self.app.models.findOne("resetPasswordCode", { _id: {$oid: options.code } }, next);

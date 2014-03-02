@@ -2,7 +2,7 @@ var expect = require("expect.js"),
 helpers    = require("../../../../helpers"),
 sinon      = require("sinon");
 
-describe("reset-password#", function () {
+describe("reset-password-form#", function () {
 
   after(helpers.flushDb);
 
@@ -52,6 +52,5 @@ describe("reset-password#", function () {
     }}).now();
   });
 
-
-
+  
 });

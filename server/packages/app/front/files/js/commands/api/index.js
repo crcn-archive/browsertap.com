@@ -1,4 +1,5 @@
-var outcome = require("outcome");
+var outcome = require("outcome"),
+comerr      = require("comerr");
 
 module.exports = {
 
@@ -34,13 +35,30 @@ module.exports = {
 	/**
 	 */
 
+	sendResetPasswordEmail: function (message, next) {
+		var app = message.mediator.application;
+
+    app.get("models.users").sendResetPasswordEmail(message.data, next);
+	},
+
+	/**
+	 */
+
 	resetPassword: function (message, next) {
 
 		var app = message.mediator.application;
 
+		var d = message.data;
+
+		if (d.password !== d.confirmPassword) {
+			return next(comerr.incorrectInput());
+		}
+
+
 		app.get("models.users").resetPassword(message.data, outcome.e(next).s(function () {
 			app.models.set("login.flash.message", "You can now login")
 			app.router.redirect("login");
+			next();
 		}));
 	}
 }

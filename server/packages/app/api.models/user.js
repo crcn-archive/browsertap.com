@@ -49,7 +49,7 @@ BaseModel.extend(User, {
    */
 
   resetPassword: function (password, next) {
-    this.set("password", crypto.createHash('md5').update(this.get("password")).digest("hex").toString());
+    this.set("password", crypto.createHash('md5').update(password).digest("hex").toString());
     this.save(next);
   },
 

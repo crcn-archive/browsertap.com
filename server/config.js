@@ -28,11 +28,13 @@ module.exports = function (ops) {
         "app": "localhost"
       },
       "mongo": {
-        "host": "mongodb://testing:a1c5ee280b@troup.mongohq.com:10032/browsertap-dev"
+        "host": "mongodb://127.0.0.1:27017/browsertap-dev"
       }
     },
     staging: {
-
+      "mongo": {
+        "host": "mongodb://testing:a1c5ee280b@troup.mongohq.com:10032/browsertap-dev"
+      }
     },
     production: {
 

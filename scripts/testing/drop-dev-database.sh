@@ -1,1 +1,1 @@
-mongo troup.mongohq.com:10032/browsertap-dev -u testing -p a1c5ee280b --eval "db.getCollectionNames().forEach(function(c) { if(!c.match('^system')) { db.getCollection(c).drop() } })";
+mongo browsertap-dev --eval "db.getCollectionNames().forEach(function(c) { if(!c.match('^system')) { db.getCollection(c).drop() } })";

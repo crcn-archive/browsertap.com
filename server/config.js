@@ -2,6 +2,7 @@
 module.exports = function (ops) {
   return {
     default: {
+      inviteOnly: true,
       env: ops.env,
       fibers: ops.fibers,
       type: ops.type,

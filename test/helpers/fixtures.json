@@ -1,15 +1,17 @@
 {
   "users": {
     "u1": {
+      "name": "u1",
       "email": "u1@browsertap.com",
       "password": "5f4dcc3b5aa765d61d8327deb882cf99",
-      "_id": "531281cd192ed58611bda1e1"
+      "_id": "5313a181ec1ee51f19f8d2d5"
     },
     "forgotPassword": {
+      "name": "u2",
       "email": "u2@browsertap.com",
       "password": "5f4dcc3b5aa765d61d8327deb882cf99",
-      "_id": "531281cd192ed58611bda1e2",
-      "resetPasswordCode": "531281cd192ed58611bda1e3"
+      "_id": "5313a181ec1ee51f19f8d2d6",
+      "resetPasswordCode": "5313a181ec1ee51f19f8d2d7"
     },
     "notSignedUp": {
       "email": "u3@browsertap.com",

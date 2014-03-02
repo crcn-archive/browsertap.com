@@ -1,1 +1,1 @@
-mongo browsertap-dev --eval "db.getCollectionNames().forEach(function(c) { if(!c.match('^system')) { db.getCollection(c).drop() } })";
+mongo browsertap-dev --eval "printjson(db.dropDatabase());";

@@ -10,6 +10,7 @@ forgotTemplate           = pc.template(require("./views/forgot.pc"));
 
 function Users () {
   BaseCollection.apply(this, arguments);
+  this.inviteOnly = this.app.get("config.inviteOnly");
 }
 
 BaseCollection.extend(Users, {
@@ -22,7 +23,7 @@ BaseCollection.extend(Users, {
   /**
    */
 
-  public: ["login", "signup", "sendResetPasswordEmail", "getResetPasswordCode"],
+  public: ["login", "signup", "sendResetPasswordEmail", "getResetPasswordCode", "inviteOnly"],
 
   /**
    */
@@ -86,7 +87,7 @@ BaseCollection.extend(Users, {
     async.waterfall([
 
       function validate (next) {
-        verify.that(credentials).has("email", "password").then(next);
+        verify.that(credentials).has("name", "email", "password").then(next);
       },
 
       validatePasswordStrength(credentials),
@@ -103,8 +104,9 @@ BaseCollection.extend(Users, {
       function signupUser (next) {
         self.app.models.createModel("user", { 
           data: {
-            email: credentials.email,
-            password: credentials.password
+            name     : credentials.name,
+            email    : credentials.email,
+            password : credentials.password
           } 
         }).save(next);
       }

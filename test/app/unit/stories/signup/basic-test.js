@@ -26,6 +26,7 @@ describe("signup#", function () {
 
   it("shows a 601 INCORRECT INPUT if the passwords don't match", function (next) {
     user.setProperties({
+      name: "name",
       email: "notRegistered@browsertap.com",
       password: "password",
       confirmPassword: "abba"

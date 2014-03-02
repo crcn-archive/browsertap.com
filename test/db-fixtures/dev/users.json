@@ -5,7 +5,7 @@
       "password": "5f4dcc3b5aa765d61d8327deb882cf99",
       "_id": {
         "__type": "ObjectID",
-        "value": "531281cd192ed58611bda1e1"
+        "value": "5313a181ec1ee51f19f8d2d5"
       }
     },
     "collection": "users",
@@ -22,7 +22,7 @@
       "password": "5f4dcc3b5aa765d61d8327deb882cf99",
       "_id": {
         "__type": "ObjectID",
-        "value": "531281cd192ed58611bda1e2"
+        "value": "5313a181ec1ee51f19f8d2d6"
       }
     },
     "collection": "users",
@@ -31,7 +31,7 @@
         "_id"
       ],
       "resetPasswordCodes": [
-        "user"
+        "userId"
       ]
     },
     "method": "insert"

@@ -17,6 +17,7 @@ module.exports = {
       d = dnode();
       d.on("remote", function (users) {
         message.mediator.application.models.set("users", _wrapBindables(users));
+        message.mediator.application.models.set("inviteOnly", users.inviteOnly);
         if (next) next();
       });
 

@@ -40,6 +40,14 @@ module.exports = function (app) {
     })
 
   router.
+    route("/iwantin").
+    name("requestInvite").
+    states({
+      main : "auth",
+      auth : "requestInvite"
+    })
+
+  router.
     route("/forgot/reset/:code").
     states({
       main : "auth",

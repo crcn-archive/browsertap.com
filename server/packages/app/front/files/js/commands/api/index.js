@@ -12,7 +12,7 @@ module.exports = {
 
 		var d = message.data;
 
-    if (!d.email || !d.confirmPassword || !d.password) {
+    if (!d.email || !d.confirmPassword || !d.password || !d.name) {
       return next(comerr.invalid());
     }
 

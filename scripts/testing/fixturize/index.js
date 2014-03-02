@@ -3,7 +3,7 @@ async          = require("async"),
 fs             = require("fs");
 
 browsertap({
-  env     : "development",
+  env     : "testing",
   type    : "app",
   fibers  : true
 }, function (err, exports) {
@@ -20,8 +20,8 @@ browsertap({
 
   var users = app.models.createModel("users");
 
-  var u1 = users.signupSync({ email: "u1@browsertap.com", password: "password" }),
-  u2     = users.signupSync({ email: "u2@browsertap.com", password: "password" });
+  var u1 = users.signupSync({ name: "u1", email: "u1@browsertap.com", password: "password" }),
+  u2     = users.signupSync({ name: "u2", email: "u2@browsertap.com", password: "password" });
 
   users.sendResetPasswordEmailSync({ email: u2.get("email") });
   u2.set("resetPasswordCode", lastEmailSent.body.match(/resetPassword\/([^\"]+)/)[1]);

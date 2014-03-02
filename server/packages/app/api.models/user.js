@@ -72,7 +72,8 @@ BaseModel.extend(User, {
       _id: this.get("_id") 
     }, {
       $set: {
-        password: this.get("password")
+        name     : this.get("name"),
+        password : this.get("password")
       }
     }, next);
   }

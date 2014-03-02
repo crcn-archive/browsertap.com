@@ -30,31 +30,11 @@ module.exports = mojo.View.extend({
     pages: {
       type: "states",
       views: [
-        { class: require("./login")  , name: "login"  },
-        { class: require("./forgot") , name: "forgot" },
-        { class: require("./signup") , name: "signup" }
+        { class: require("./login")         , name: "login"         },
+        { class: require("./forgot")        , name: "forgot"        },
+        { class: require("./signup")        , name: "signup"        },
+        { class: require("./requestInvite") , name: "requestInvite" }
       ],
-      transition2: function(from, to, next) {
-        var felms = (from ? from.$() : $("<div>")).filter(function (index, elm) {
-          return elm.nodeType === 1;
-        });
-        var telms = to.$().filter(function (index, elm) {
-          return elm.nodeType === 1;
-        });
-
-        $(".card").removeClass("flipped");
-        felms.removeClass("back");
-        felms.addClass("front");
-        telms.removeClass("front");
-        telms.addClass("back");
-
-        setTimeout(function () {
-
-        });
-
-
-        // setTimeout(next, 1000);
-      },
       transition: function (from, to, next) {
 
         if (!process.browser) return next();

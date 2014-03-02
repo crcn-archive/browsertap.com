@@ -1,8 +1,7 @@
 var MainView = require("./main");
 
-var views = {
-  main: MainView
-}
+var views = require("./components");
+views.main = MainView;
 
 module.exports = function (app) {
   for (name in views) {

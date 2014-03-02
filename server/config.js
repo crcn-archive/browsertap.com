@@ -38,6 +38,9 @@ module.exports = function (ops) {
       },
       "mongo": {
         "host": "mongodb://127.0.0.1:27017/browsertap-dev"
+      },
+      http: {
+        port: 80943
       }
     },
     staging: {

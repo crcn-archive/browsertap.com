@@ -1,0 +1,37 @@
+[
+  {
+    "data": {
+      "_id": {
+        "__type": "ObjectID",
+        "value": "53127c345fed4c0008000002"
+      },
+      "user": "architectd",
+      "pwd": "e32b94f971dcb75a650a4a16e272f9bb"
+    },
+    "collection": "system.users",
+    "refs": {
+      "system.users": [
+        "_id"
+      ]
+    },
+    "method": "insert"
+  },
+  {
+    "data": {
+      "_id": {
+        "__type": "ObjectID",
+        "value": "53127c5291700398b956cfe9"
+      },
+      "user": "testing",
+      "pwd": "12b65878a4ccbd1fb4a8c6d1d00c026d",
+      "readOnly": false
+    },
+    "collection": "system.users",
+    "refs": {
+      "system.users": [
+        "_id"
+      ]
+    },
+    "method": "insert"
+  }
+]

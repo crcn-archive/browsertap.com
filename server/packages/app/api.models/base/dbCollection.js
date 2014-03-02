@@ -9,10 +9,10 @@ function DbCollection (options, application) {
 
 BaseCollection.extend(DbCollection, {
   find: function (query, options, complete) {
-    this.models.find([this.modelName].concat(Array.prototype.slice.call(arguments, 0)));
+    this.models.find.apply(this.models, [this.modelName].concat(Array.prototype.slice.call(arguments, 0)));
   },
   findOne: function (query, options, complete) {
-    this.models.findOne([this.modelName].concat(Array.prototype.slice.call(arguments, 0)));
+    this.models.findOne.apply(this.models, [this.modelName].concat(Array.prototype.slice.call(arguments, 0)));
   }
 });
 

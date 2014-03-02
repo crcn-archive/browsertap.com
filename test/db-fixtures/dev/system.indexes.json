@@ -1,0 +1,28 @@
+[
+  {
+    "data": {
+      "v": 1,
+      "key": {
+        "_id": 1
+      },
+      "ns": "browsertap-dev.users",
+      "name": "_id_"
+    },
+    "collection": "system.indexes",
+    "refs": {},
+    "method": "insert"
+  },
+  {
+    "data": {
+      "v": 1,
+      "key": {
+        "_id": 1
+      },
+      "ns": "browsertap-dev.resetPasswordCodes",
+      "name": "_id_"
+    },
+    "collection": "system.indexes",
+    "refs": {},
+    "method": "insert"
+  }
+]

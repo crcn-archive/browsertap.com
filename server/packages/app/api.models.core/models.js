@@ -2,14 +2,21 @@ var protoclass = require("protoclass"),
 factories      = require("factories"),
 comerr         = require("comerr"),
 traverse       = require("traverse"),
-ObjectID       = require("mongodb").ObjectID;
+ObjectID       = require("mongodb").ObjectID,
+Future         = require("fibers/future")
 
 function Models (application) {
   this._modelClasses = {};
-  this.application = application;
+  this.application   = application;
+  application.utils.fiberize(this);
 }
 
 protoclass(Models, {
+
+  /**
+   */
+
+  fiberize: ["findOne", "find"],
 
   /**
    */
@@ -36,15 +43,23 @@ protoclass(Models, {
    */
 
   _query: function (method, modelName) {
+
     var args = Array.prototype.slice.call(arguments, 0);
     var methodName = args.shift(),
     modelName = args.shift();
 
     var modelClass = this._modelClasses[modelName];
-    var collection     = this.application.db.collection(modelClass.prototype.collectionName);
+
+    if (!modelClass) {
+      throw new Error("model '" + modelName + "' doesn't exist");
+    }
+
+    var collection = this.application.db.collection(modelClass.prototype.collectionName);
 
     args.push(this._mapComplete(modelName, args.pop()));
 
+
+    // change $oid to object ID
     args[0] = traverse(args[0]).forEach(function (x) {
       if (x && x.$oid) {
         this.update(new ObjectID(String(x.$oid)));
@@ -72,12 +87,12 @@ protoclass(Models, {
     }
 
     return function (err, items) {
-      console.log(arguments);
+
       if (err) return complete(err);
 
 
       if (!items) {
-        return complete(comerr.notFound());
+        return complete(null, null);
       } else if (items.map) {
         items = items.map(_createModel);
       } else if(items) {

@@ -6,6 +6,11 @@ module.exports = mojo.View.extend({
   /**
    */
 
+  name: "LoginView",
+
+  /**
+   */
+
   paper: require("./index.pc"),
 
   /**

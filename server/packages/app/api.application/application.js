@@ -3,6 +3,7 @@ var bindable = require("bindable");
 function Application (config) {
   bindable.Object.call(this, this);
   this.config = config;
+  this.use(require("./utils"));
 }
 
 bindable.Object.extend(Application, {

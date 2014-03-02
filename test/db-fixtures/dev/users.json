@@ -1,0 +1,39 @@
+[
+  {
+    "data": {
+      "email": "u1@browsertap.com",
+      "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "_id": {
+        "__type": "ObjectID",
+        "value": "531281cd192ed58611bda1e1"
+      }
+    },
+    "collection": "users",
+    "refs": {
+      "users": [
+        "_id"
+      ]
+    },
+    "method": "insert"
+  },
+  {
+    "data": {
+      "email": "u2@browsertap.com",
+      "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "_id": {
+        "__type": "ObjectID",
+        "value": "531281cd192ed58611bda1e2"
+      }
+    },
+    "collection": "users",
+    "refs": {
+      "users": [
+        "_id"
+      ],
+      "resetPasswordCodes": [
+        "user"
+      ]
+    },
+    "method": "insert"
+  }
+]

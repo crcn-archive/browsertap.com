@@ -6,6 +6,16 @@ module.exports = {
 
     var app = message.mediator.application;
 
+    if (!process.browser) {
+      app.i18n = {
+        t: function (string, params) {
+          return string
+        }
+      };
+      
+      return next();
+    }
+
     request.get("/locales/app/en.json").end(function (err, res) {
       // var translations = new bindable.Object()
 

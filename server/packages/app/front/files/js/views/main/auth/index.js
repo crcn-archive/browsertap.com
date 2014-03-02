@@ -57,6 +57,8 @@ module.exports = mojo.View.extend({
       },
       transition: function (from, to, next) {
 
+        if (!process.browser) return next();
+
         felms = (from ? from.$() : $("<div>")).filter(function (index, elm) {
           return elm.nodeType === 1;
         })

@@ -1,0 +1,19 @@
+{
+  "users": {
+    "u1": {
+      "email": "u1@browsertap.com",
+      "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "_id": "531281cd192ed58611bda1e1"
+    },
+    "forgotPassword": {
+      "email": "u2@browsertap.com",
+      "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "_id": "531281cd192ed58611bda1e2",
+      "resetPasswordCode": "531281cd192ed58611bda1e3"
+    },
+    "notSignedUp": {
+      "email": "u3@browsertap.com",
+      "password": "password"
+    }
+  }
+}

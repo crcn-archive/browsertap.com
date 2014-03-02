@@ -25,9 +25,9 @@ module.exports = {
 		app.models.set("login.flash.message", undefined);
 
 		app.get("models.users").login(message.data, outcome.e(next).s(function (user) {
-			console.log(user);
 			app.models.set("user", user);
 			app.router.redirect("home");
+			next();
 		}));
 	},
 
@@ -37,8 +37,6 @@ module.exports = {
 	resetPassword: function (message, next) {
 
 		var app = message.mediator.application;
-
-		console.log(message.data)
 
 		app.get("models.users").resetPassword(message.data, outcome.e(next).s(function () {
 			app.models.set("login.flash.message", "You can now login")

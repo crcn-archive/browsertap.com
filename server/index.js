@@ -1,4 +1,5 @@
-var deepExtend = require("deep-extend"),
-config = require("./config");
-
-require("./bootstrap")(deepExtend(config.default, config[process.env.NODE_ENV] || config.development));
+require("./entry")({
+  env  : process.env.NODE_ENV,
+  type : process.env.TYPE,
+  port : process.env.PORT
+});

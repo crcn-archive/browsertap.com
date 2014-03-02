@@ -4,6 +4,12 @@ shoe      = require("shoe");
 module.exports = {
   "pre bootstrap": function (message, next) {
 
+    // testing mode - don't use dnode
+    if (!process.browser) {
+      message.mediator.application.models.set("users", global.apiApp.models.createModel("users"));
+      return next();
+    }
+
 
     function connect (next) {
       var stream = shoe("/dnode"),

@@ -24,10 +24,10 @@ mojo.Application.extend(BrowserTap, {
   /**
    */
 
-  initialize: function (placeholder) {
+  initialize: function (placeholder, next) {
     var self = this;
     this.mediator.execute("bootstrap", function () {
-      self.createView("main").attach(placeholder);
+      self.mainView = self.createView("main").attach(placeholder);
     });
   }
 });

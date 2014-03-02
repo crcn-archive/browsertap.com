@@ -23,6 +23,11 @@ BaseCollection.extend(Users, {
 
   public: ["login", "signup", "resetPassword", "sendResetPasswordEmail"],
 
+  /**
+   */
+
+  fiberize: ["login", "signup", "resetPassword", "sendResetPasswordEmail"],
+
 
   /**
    * 1. create session
@@ -58,6 +63,9 @@ BaseCollection.extend(Users, {
       },
 
       function onFoundUser (user, next) {
+
+        if (!user) return next(comerr.notFound());
+
         // todo - make session object here with ttl
         next(null, user);
       }
@@ -120,11 +128,13 @@ BaseCollection.extend(Users, {
       },
 
       function onPasswordCode (c, next) {
+        if (!c) return next(comerr.notFound("code not found"));
         code = c;
         self.app.models.findOne("user", {_id: {$oid: code.get("user") }}, next);
       },
 
       function onUser (user, next) {
+        if (!user) return next(comerr.notFound("user not found"));
         user.resetPassword(options.password, next);
       },
 
@@ -162,7 +172,6 @@ BaseCollection.extend(Users, {
         var body = forgotTemplate.bind(new bindable.Object({
           resetLink : resetLink
         })).render().toString();
-
 
         self.app.emailer.send({
           title : "You requested a password reset",

@@ -23,11 +23,11 @@
     "node": ">=0.10.25"
   },
   "dependencies": {
-    "mojojs": "~0.7.x",
-    "paperclip": "~0.3.57",
+    "mojojs": "0.7.x",
+    "paperclip": "0.3.x",
     "ditto": "0.0.x",
     "packages": "0.0.x",
-    "bindable": "~0.5.26",
+    "bindable": "0.5.x",
     "dnode": "~1.2.0",
     "express": "~3.4.8",
     "less": "~1.6.3",
@@ -46,7 +46,7 @@
     "mojo-model": "~0.1.1",
     "moment": "~2.5.1",
     "superagent": "~0.16.0",
-    "bindable-call": "~0.1.0",
+    "bindable-call": "0.1.x",
     "paperclip-component": "~0.2.5",
     "comerr": "0.0.6",
     "fastclick": "~0.6.11",

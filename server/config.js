@@ -2,6 +2,7 @@
 module.exports = function (ops) {
   return {
     default: {
+      env: ops.env,
       fibers: ops.fibers,
       type: ops.type,
       domains: {
@@ -28,13 +29,18 @@ module.exports = function (ops) {
         "app": "localhost"
       },
       "mongo": {
+        "host": "mongodb://testing:a1c5ee280b@troup.mongohq.com:10032/browsertap-dev"
+      }
+    },
+    testing: {
+      "domains": {
+        "app": "localhost"
+      },
+      "mongo": {
         "host": "mongodb://127.0.0.1:27017/browsertap-dev"
       }
     },
     staging: {
-      "mongo": {
-        "host": "mongodb://testing:a1c5ee280b@troup.mongohq.com:10032/browsertap-dev"
-      }
     },
     production: {
 

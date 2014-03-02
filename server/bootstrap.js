@@ -9,7 +9,7 @@ module.exports = function (config, next) {
 
   if (!next) next = function () { };
 
-  console.log("starting %s", config.type);
+  console.log("starting %s in %s mode", config.type, config.env);
 	
   var pkg = packages().
   require({

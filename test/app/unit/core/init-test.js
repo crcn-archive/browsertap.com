@@ -19,7 +19,7 @@ after(function (next) {
 
 before(function (next) {
   browsertap({
-    env    : "development",
+    env    : "testing",
     type   : "app",
     fibers : true
   }, function (err, exports) {

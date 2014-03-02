@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": "true",
   "scripts": {
-    "website": "TYPE=website node server",
-    "app": "TYPE=app node server",
+    "website": "TYPE=website NODE_ENV=development node server",
+    "app": "TYPE=app NODE_ENV=development node server",
     "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:80 --port 81 --verbose",
     "test": "make test-node"
   },

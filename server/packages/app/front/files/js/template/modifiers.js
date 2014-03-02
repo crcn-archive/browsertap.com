@@ -52,8 +52,6 @@ module.exports = function (app) {
         { c: 0,  n: "weak"         }
       ];
 
-      console.log(score);
-
       for (var i = 0, n = scores.length; i < n; i++) {
         var s = scores[i];
         if (score >= s.c) {

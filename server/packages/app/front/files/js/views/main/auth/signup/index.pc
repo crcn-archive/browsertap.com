@@ -3,7 +3,9 @@
     {{ ("signup.errors." + error.code) | t() }}
   {{/}}
 
-  password strength: {{ user.password | passwordStrength() }}
+  {{ user.password | passwordStrength() }}
+
+  <div class="password-strength password-strength-{{ user.password | passwordStrength() }}"></div>
 
   <form data-bind="{{ onSubmit: signup() }}">
     <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>

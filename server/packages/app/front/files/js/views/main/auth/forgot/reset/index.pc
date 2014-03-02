@@ -1,9 +1,11 @@
-{{#if:error}}
-  {{ ("forgotReset.errors." + error.code) | t() }}
-{{/}}
+<div>
+  {{#if:error}}
+    {{ ("forgotReset.errors." + error.code) | t() }}
+  {{/}}
 
-<form data-bind="{{ onSubmit: resetPassword() }}">
-  <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
-  <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Confirm Password"></input>
-  <input type="submit" name="login" value="Reset Password"></input>
-</form>
+  <form data-bind="{{ onSubmit: resetPassword() }}">
+    <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
+    <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Confirm Password"></input>
+    <input type="submit" name="login" value="Reset Password"></input>
+  </form>
+</div>

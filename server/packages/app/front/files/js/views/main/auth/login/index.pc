@@ -1,16 +1,17 @@
+<div>
+  {{#if: models.login.flash }}
+    {{ models.login.flash.message }}
+  {{/}}
 
-{{#if: models.login.flash }}
-  {{ models.login.flash.message }}
-{{/}}
+  {{#if: error }}
+    {{ ("login.errors." + error.code) | t() }}
+  {{/}}
 
-{{#if: error }}
-  {{ ("login.errors." + error.code) | t() }}
-{{/}}
-
-<form data-bind="{{ onSubmit: login() }}">
-  <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>
-  <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
-  <input type="submit" name="login" value="Login"></input>
-  <a href="#" id="login-reset-password-button" data-bind="{{ onClick: 'forgotPassword' | redirect() }}">Reset Password</a>
-  <a href="#" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">Signup</a>
-</form>
+  <form data-bind="{{ onSubmit: login() }}">
+    <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>
+    <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
+    <input type="submit" name="login" value="Login"></input>
+    <a href="#" id="login-reset-password-button" data-bind="{{ onClick: 'forgotPassword' | redirect() }}">Reset Password</a>
+    <a href="#" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">Signup</a>
+  </form>
+</div>

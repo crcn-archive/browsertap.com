@@ -1,13 +1,15 @@
-{{#if: error }}
-  {{ ("signup.errors." + error.code) | t() }}
-{{/}}
+<div>
+  {{#if: error }}
+    {{ ("signup.errors." + error.code) | t() }}
+  {{/}}
 
-password strength: {{ user.password | passwordStrength() }}
+  password strength: {{ user.password | passwordStrength() }}
 
-<form data-bind="{{ onSubmit: signup() }}">
-  <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>
-  <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
-  <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Password"></input>
-  <input type="submit" name="signup" value="Signup"></input>
-  <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">Return to Login</a>
-</form>
+  <form data-bind="{{ onSubmit: signup() }}">
+    <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>
+    <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
+    <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Password"></input>
+    <input type="submit" name="signup" value="Signup"></input>
+    <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">Return to Login</a>
+  </form>
+</div>

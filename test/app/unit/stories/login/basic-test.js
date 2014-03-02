@@ -1,7 +1,7 @@
 var expect = require("expect.js"),
 helpers    = require("../../../../helpers");
 
-describe("#login", function () {
+describe("login#", function () {
   
   it("can navigate to the login page", function () {
     frontApp.router.redirect("login");
@@ -14,11 +14,6 @@ describe("#login", function () {
     frontApp.router.redirect("login");
   });
 
-  it("can navigate to the forgot password page from the login page", function () {
-    $(document.body).find("#login-reset-password-button").click();
-    expect(frontApp.router.get("current").name).to.be("forgotPassword");
-    frontApp.router.redirect("login");
-  })
 
   var loginView;
 
@@ -76,5 +71,9 @@ describe("#login", function () {
       expect(success).to.be(true);
       next()
     }})
+  });
+
+  it("has navigated to the home page", function () {
+    expect(frontApp.router.get("current").name).to.be("home");
   })
 });

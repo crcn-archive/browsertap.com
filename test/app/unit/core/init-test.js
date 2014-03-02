@@ -20,6 +20,11 @@ before(function (next) {
     fibers : true
   }, function (err, exports) {
     global.apiApp   = exports["api.application"];
+    apiApp.emailer = {
+      send: function (options, next) {
+        next();
+      }
+    }
     next();
   })
 });

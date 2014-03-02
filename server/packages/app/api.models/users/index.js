@@ -162,6 +162,8 @@ BaseCollection.extend(Users, {
       },
 
       function createResetPasswordCode (user, next) {
+        if (!user) return next(comerr.notFound("user not found"));
+        
         self.app.models.createModel("resetPasswordCode", { user: user }).save(next);
       },
 

@@ -6,22 +6,21 @@ module.exports = mojo.View.extend({
   /**
    */
 
-  paper: require("./index.pc"),
+  name: "forgotFormView",
 
+  /**
+   */
+
+  paper: require("./index.pc"),
   
   /**
    */
 
   bindings: {
     "resetPasswordRequest.error": "error",
-    "models.users": "users",
-    "resetPasswordRequest.success": function (v) {
-      if (!v) return;
-      this.application.router.redirect("home");
-    }
+    "models.users": "users"
   },
 
-  
   /**
    */
 

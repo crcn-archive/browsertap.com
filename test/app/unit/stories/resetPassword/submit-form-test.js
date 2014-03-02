@@ -44,6 +44,4 @@ describe("reset-password-form#", function () {
       next();
     }}).now();
   });
-
-
 });

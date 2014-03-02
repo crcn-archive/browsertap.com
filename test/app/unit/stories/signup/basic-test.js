@@ -72,4 +72,8 @@ describe("signup#", function () {
       next();
     }}).now();
   });
+
+  it("is on the home page", function () {
+    expect(application.router.get("current").name).to.be("home");
+  });
 });

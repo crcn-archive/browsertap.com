@@ -44,6 +44,12 @@ module.exports = function (ops) {
       }
     },
     staging: {
+      "mongo": {
+        "host": "mongodb://testing:a1c5ee280b@troup.mongohq.com:10032/browsertap-dev"
+      },
+      http: {
+        port: 80
+      }
     },
     production: {
 

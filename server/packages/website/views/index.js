@@ -2,7 +2,7 @@ var bindable = require("bindable"),
 glob         = require("glob"),
 path         = require("path");
 
-exports.require = ["paperclip.plugins.layout"];
+exports.require = ["common.paperclip.plugins.layout"];
 exports.load = function (layouts) {
 
   glob.sync(__dirname + "/layouts/*.pc").forEach(function (layoutPath) {

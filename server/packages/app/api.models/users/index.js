@@ -43,13 +43,10 @@ BaseCollection.extend(Users, {
     async.waterfall([
 
       function validate (next) {
-        console.log("Verify");
         verify.that(credentials).has("email", "password").then(next);
       },
 
       function findUser (next) {
-
-        console.log("find");
         self.findOne({ 
           email    : credentials.email, 
           password : {
@@ -66,9 +63,6 @@ BaseCollection.extend(Users, {
       },
 
       function onFoundUser (user, next) {
-
-        console.log("found", !!user);
-
         if (!user) return next(comerr.notFound());
 
         // todo - make session object here with ttl

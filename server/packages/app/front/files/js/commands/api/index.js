@@ -36,9 +36,12 @@ module.exports = {
 
 		app.models.set("login.flash.message", undefined);
 
+		console.log("LOGIN");
+
 		app.get("models.users").login(message.data, outcome.e(next).s(function (user) {
 			app.models.set("user", user);
 			app.router.redirect("home");
+			console.log("NADA");
 			next();
 		}));
 	},

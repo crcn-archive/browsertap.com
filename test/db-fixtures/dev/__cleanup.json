@@ -1,0 +1,12 @@
+
+[
+  {
+    "query": {
+      "email": {
+        "$in": ["u3@browsertap.com"]
+      }
+    },
+    "collection": "users",
+    "method": "remove"
+  }
+]

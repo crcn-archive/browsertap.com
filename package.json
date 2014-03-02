@@ -63,7 +63,7 @@
     "dref": "~0.1.2",
     "postmark": "~0.2.0",
     "amanda": "~0.4.7",
-    "verify": "0.1.x",
+    "verify": "0.1.1",
     "shoe": "0.0.15",
     "flatstack": "0.0.10",
     "toarray": "0.0.1",

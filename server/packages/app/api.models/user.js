@@ -51,7 +51,7 @@ BaseModel.extend(User, {
 
   updateLastLogin: function (next) {
     this.set("lastLoggedInAt", new Date());
-    this.update(next);
+    this.save(next);
   },
 
   /**

@@ -6,13 +6,6 @@ describe("reset-password-form#", function () {
 
   after(helpers.flushDb);
 
-  it("can navigate to the forgot password page from the login page", function () {
-    frontApp.router.redirect("login");
-    $(document.body).find("#login-reset-password-button").click();
-    expect(frontApp.router.get("current").name).to.be("forgotPassword");
-    frontApp.router.redirect("login");
-  });
-
   var forgotView;
 
   it("shows a 404 NOT FOUND error if the user doesn't exist", function (next) {
@@ -52,5 +45,5 @@ describe("reset-password-form#", function () {
     }}).now();
   });
 
-  
+
 });

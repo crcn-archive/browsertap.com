@@ -10,9 +10,20 @@ module.exports = {
 
 		var app = message.mediator.application;
 
-		app.get("models.users").signup(message.data, outcome.e(next).s(function (user) {
+		var d = message.data;
+
+    if (!d.email || !d.confirmPassword || !d.password) {
+      return next(comerr.invalid());
+    }
+
+    if (d.confirmPassword !== d.password) {
+      return next(comerr.incorrectInput())
+    }
+
+		app.get("models.users").signup(d, outcome.e(next).s(function (user) {
 			app.models.set("user", user);
 			app.router.redirect("home");
+			next();
 		}));
 	},
 

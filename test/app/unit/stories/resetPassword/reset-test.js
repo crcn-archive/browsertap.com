@@ -19,10 +19,16 @@ describe("reset-password#", function () {
 
   });
 
+  it("can redirect to the reset password page", function (next) {
+    frontApp.router.bind("location", { max: 1, to: function () {
+      next();
+    }});
+    frontApp.router.redirect("/forgot/reset/" + helpers.fixtures.users.forgotPassword.resetPasswordCode);
+  })
+
   var resetPasswordView;
 
   it("shows a 601 INCORRECT INPUT if the passwords don't match", function (next) {
-    frontApp.router.redirect("/forgot/reset/" + helpers.fixtures.users.forgotPassword.resetPasswordCode);
     resetPasswordView = frontApp.getViewByName("resetPasswordView");
 
     resetPasswordView.get("user").setProperties({
@@ -64,8 +70,8 @@ describe("reset-password#", function () {
 
     resetPasswordView.bind("resetPasswordRequest.success", { max: 1, to: function (success) {
       expect(success).to.be(true);
-      expect(frontApp.router.get("current").name).to.be("login");
-      expect($(document.body).html()).to.contain("You can now login");
+      expect(frontApp.router.get("current").name).to.be("home");
+      frontApp.router.redirect("login");
       next();
     }}).now();
   });

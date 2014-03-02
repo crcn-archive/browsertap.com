@@ -17,8 +17,7 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "loginRequest.error": "error",
-    "models.users": "users"
+    "loginRequest.error": "error"
   },
 
   /**

@@ -3,9 +3,14 @@
     {{ ("forgotReset.errors." + error.code) | t() }}
   {{/}}
 
-  <form data-bind="{{ onSubmit: resetPassword() }}">
-    <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
-    <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Confirm Password"></input>
-    <input type="submit" name="login" value="Reset Password"></input>
-  </form>
+  {{#if: code }}
+    <form data-bind="{{ onSubmit: resetPassword() }}">
+      <input type="text" name="email" data-bind="{{ model: code.user }}" disabled="disabled"></input>
+      <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
+      <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Confirm Password"></input>
+      <input type="submit" name="login" value="Reset Password"></input>
+    </form>
+  {{/else}}
+    Whoops, doesn't look like that code exists.
+  {{/}}
 </div>

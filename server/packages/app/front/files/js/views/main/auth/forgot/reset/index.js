@@ -18,8 +18,8 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "models.params.code": "code",
-    "resetPasswordRequest.error": "error"
+    "models.params.code"         : "code",
+    "resetPasswordRequest.error" : "error"
   },
 
   /**

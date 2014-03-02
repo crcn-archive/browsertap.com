@@ -5,6 +5,7 @@ toarray       = require("toarray");
 function DbModel (options, application) {
   BaseModel.apply(this, arguments);
   this.collection = application.db.collection(this.collectionName);
+  this.models = application.models;
 }
 
 BaseModel.extend(DbModel, {

@@ -1,5 +1,6 @@
-var dnode = require("dnode"),
-shoe      = require("shoe");
+var dnode      = require("dnode"),
+shoe           = require("shoe"),
+_wrapBindables = require("./utils/wrapBindables");
 
 module.exports = {
   "pre bootstrap": function (message, next) {
@@ -15,7 +16,7 @@ module.exports = {
       var stream = shoe("/dnode"),
       d = dnode();
       d.on("remote", function (users) {
-        message.mediator.application.models.set("users", users);
+        message.mediator.application.models.set("users", _wrapBindables(users));
         if (next) next();
       });
 

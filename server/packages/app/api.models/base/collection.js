@@ -8,7 +8,7 @@ function BaseCollection (options, application) {
 
 Collection.extend(BaseCollection, {
   private: ["application"],
-  public: ["bind", "set", "get", "on", "once", "off", "emit"]
+  public: ["bind", "set", "get", "on", "once", "off", "emit", "__isBindable", "__isBindableCollection", "_source"]
 });
 
 module.exports = BaseCollection;

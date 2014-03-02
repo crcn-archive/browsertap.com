@@ -18,6 +18,7 @@ BaseModel.extend(User, {
   public: [
     "settings", 
     "browsers",
+    "resetPassword",
     "__context.email",
     "__context._id"
   ],
@@ -31,17 +32,17 @@ BaseModel.extend(User, {
     "session": function (next) {
 
       // automatically create a new session
-      return this._application.createModel("session", { user: this }).save(next);
+      // return this.app.createModel("session", { user: this }).save(next);
     },
 
     // the settings for the user
     "settings": function (next) {
-      return this._application.createModel("settings", { user: this }).load(next);
+      // return this._application.createModel("settings", { user: this }).load(next);
     },
 
     // application launchers
     "launchers": function (next) {
-      return this._application.createModel("launchers", { user: this }).load(next);
+      // return this._application.createModel("launchers", { user: this }).load(next);
     }
   },
 
@@ -71,7 +72,6 @@ BaseModel.extend(User, {
       _id: this.get("_id") 
     }, {
       $set: {
-        email: this.get("email"),
         password: this.get("password")
       }
     }, next);

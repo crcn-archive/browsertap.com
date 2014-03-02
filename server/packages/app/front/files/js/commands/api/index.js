@@ -65,10 +65,14 @@ module.exports = {
 			return next(comerr.incorrectInput());
 		}
 
+		var code = d.code;
 
-		app.get("models.users").resetPassword(message.data, outcome.e(next).s(function () {
-			app.models.set("login.flash.message", "You can now login")
-			app.router.redirect("login");
+		code.resetPassword(d.password, outcome.e(next).s(function () {
+
+			// TODO 
+			message.mediator.execute("flashMessage", { message: "Successfuly reset password" });
+			app.models.set("user", code.get("user"));
+			app.router.redirect("home");
 			next();
 		}));
 	}

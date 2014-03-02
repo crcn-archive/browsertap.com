@@ -2,6 +2,10 @@ module.exports = function (app) {
 
   var router = app.router;
 
+  router.
+  param("code", function (request, next, _id) {
+    app.models.get("users").getResetPasswordCode(_id, next);
+  })
 
   router.
     route("/").

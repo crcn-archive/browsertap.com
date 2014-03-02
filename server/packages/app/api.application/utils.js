@@ -7,6 +7,7 @@ module.exports = function (app) {
       if (!app.get("config.fibers") || !obj.fiberize) return;
       for (var i = obj.fiberize.length; i--;) {
         var fnName = obj.fiberize[i];
+        if (!fnName) throw new Error("function " + fnName + " doesn't exist");
         obj[fnName + "Sync"] = _fiberize(_.bind(obj[fnName], obj));
       }
     }

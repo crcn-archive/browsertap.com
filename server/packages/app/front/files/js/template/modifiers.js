@@ -47,18 +47,16 @@ module.exports = function (app) {
      var score = scorePassword(String(password));
 
       var scores = [
-        { c: 90, n: "very-secure"  },
-        { c: 80, n: "secure"       },
-        { c: 70, n: "very-strong"  },
-        { c: 60, n: "strong"       },
-        { c: 50, n: "average"      },
-        { c: 25, n:  "weak"        },
-        { c: 0,  n: "very-weak"    }
+        { c: 50, n: "strong"       },
+        { c: 30, n: "average"      },
+        { c: 0,  n: "weak"         }
       ];
+
+      console.log(score);
 
       for (var i = 0, n = scores.length; i < n; i++) {
         var s = scores[i];
-        if (score > s.c) {
+        if (score >= s.c) {
           return s.n;
         }
       }

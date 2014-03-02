@@ -49,6 +49,14 @@ BaseModel.extend(User, {
   /**
    */
 
+  updateLastLogin: function (next) {
+    this.set("lastLoggedInAt", new Date());
+    this.update(next);
+  },
+
+  /**
+   */
+
   resetPassword: function (password, next) {
     this.set("password", crypto.createHash('md5').update(password).digest("hex").toString());
     this.save(next);
@@ -72,8 +80,9 @@ BaseModel.extend(User, {
       _id: this.get("_id") 
     }, {
       $set: {
-        name     : this.get("name"),
-        password : this.get("password")
+        name           : this.get("name"),
+        password       : this.get("password"),
+        lastLoggedInAt : this.get("lastLoggedInAt")
       }
     }, next);
   }

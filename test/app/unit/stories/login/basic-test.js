@@ -16,6 +16,7 @@ describe("login#", function () {
   });
 
   it("can navigate to the signup page from the login page", function () {
+    frontApp.models.set("inviteOnly", false);
     $(document.body).find("#login-signup-button").click();
     expect(frontApp.router.get("current").name).to.be("signup");
     frontApp.router.redirect("login");

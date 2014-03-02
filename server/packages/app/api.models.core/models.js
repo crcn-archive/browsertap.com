@@ -86,20 +86,24 @@ protoclass(Models, {
       return self.createModel(modelName, { data: item });
     }
 
-    return function (err, items) {
+    function _onItems (err, items) {
+      if (err) return complete(err);
+      complete(null, items.map(_createModel));
+    }
+
+    return function (err, itemOrCursor) {
 
       if (err) return complete(err);
+      if (!itemOrCursor) return complete(null, null);
 
 
-      if (!items) {
-        return complete(null, null);
-      } else if (items.map) {
-        items = items.map(_createModel);
-      } else if(items) {
-        items = _createModel(items);
+      if (itemOrCursor.toArray) {
+        return itemOrCursor.toArray(_onItems);
+      } else {
+        return complete(null, _createModel(itemOrCursor))
       }
 
-      complete(null, items);
+      complete(null, null);
     }
   }
 });

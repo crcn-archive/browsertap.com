@@ -8,6 +8,11 @@ module.exports = function (app) {
   })
 
   router.
+  param("invitee", function (request, next, _id) {
+    app.models.get("users").getInvitee(_id, next);
+  })
+
+  router.
     route("/").
     name("home").
     states({
@@ -34,6 +39,14 @@ module.exports = function (app) {
   router.
     route("/signup").
     name("signup").
+    states({
+      main : "auth",
+      auth : "signup"
+    })
+
+  router.
+    route("/signup/:invitee").
+    name("signupInvitee").
     states({
       main : "auth",
       auth : "signup"

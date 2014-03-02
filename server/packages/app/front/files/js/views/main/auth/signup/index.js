@@ -17,7 +17,9 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "signupRequest.error": "error"
+    "signupRequest.error"   : "error",
+    "models.params.invitee" : "invitee",
+    "invitee.email": "user.email"
   },
 
   /**
@@ -27,6 +29,7 @@ module.exports = mojo.View.extend({
     var self = this;
 
     var d = this.get("user").toJSON();
+    d.inviteCode = this.get("invitee._id");
 
     this.set("signupRequest", bindableCall(function (next) {
       self.application.mediator.execute("signup", d, next);

@@ -6,7 +6,7 @@ module.exports = {
 	/**
 	 */
 
-	"signup": function (message, next) {
+	signup: function (message, next) {
 
 		var app = message.mediator.application;
 
@@ -30,7 +30,7 @@ module.exports = {
 	/**
 	 */
 
-	"login": function (message, next) {
+	login: function (message, next) {
 
 		var app = message.mediator.application;
 
@@ -75,5 +75,13 @@ module.exports = {
 			app.router.redirect("home");
 			next();
 		}));
+	},
+
+	/**
+	 */
+
+	requestInvite: function (message, next) {
+		var email = message.data.email, app = message.mediator.application;
+		app.get("models.users").requestInvite(email, next);
 	}
 }

@@ -27,6 +27,9 @@ BaseModel.extend(DbModel, {
       return this._update(_complete);
     }
   },
+  serialize: function () {
+    return this.toJSON();
+  },
   remove: function (complete) {
     if (!this.get("_id")) return next(new Error("doesn't exist"));
     this._remove(complete);
@@ -35,7 +38,11 @@ BaseModel.extend(DbModel, {
     next();
   },
   _update: function (next) {
-    next();
+    this.collection.update({ 
+      _id: this.get("_id") 
+    }, {
+      $set: this.serialize()
+    }, next);
   },
   _remove: function (next) {
     this.collection.remove({ _id: this.get("_id") }, next);

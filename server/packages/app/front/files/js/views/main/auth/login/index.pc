@@ -13,8 +13,8 @@
     <input type="submit" name="login" value="Login"></input>
     <a href="#" id="login-reset-password-button" data-bind="{{ onClick: 'forgotPassword' | redirect() }}">Reset Password</a>
 
-    {{#if: models.inviteOnly && false }}
-      <a href="#" id="login-signup-button" data-bind="{{ onClick: 'requestInvite' | redirect() }}">Request an invite</a>
+    {{#if: models.inviteOnly }}
+      <a href="#" id="login-request-invite-button" data-bind="{{ onClick: 'requestInvite' | redirect() }}">Request Invite</a>
     {{/else}} 
       <a href="#" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">Signup</a>
     {{/}}

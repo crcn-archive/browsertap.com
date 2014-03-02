@@ -21,7 +21,8 @@
   "signup": {
     "errors": {
       "602": "Please make sure your email is valid.",
-      "604": "That email address is already used"
+      "604": "That email address is already used",
+      "401": "Browsertap is invite only at this point"
     }
   }
 }

@@ -5,8 +5,10 @@ comerr                   = require("comerr"),
 crypto                   = require('crypto'),
 bindable                 = require("bindable"),
 pc                       = require("paperclip"),
+_                        = require("underscore"),
 validatePasswordStrength = require("./utils/validatePasswordStrength"),
-forgotTemplate           = pc.template(require("./views/forgot.pc"));
+forgotTemplate           = pc.template(require("./views/forgot.pc")),
+inviteTemplate           = pc.template(require("./views/invite.pc"));
 
 function Users () {
   BaseCollection.apply(this, arguments);
@@ -23,12 +25,26 @@ BaseCollection.extend(Users, {
   /**
    */
 
-  public: ["login", "signup", "sendResetPasswordEmail", "getResetPasswordCode", "inviteOnly"],
+  public: [
+    "login", 
+    "signup", 
+    "sendResetPasswordEmail", 
+    "getResetPasswordCode", 
+    "inviteOnly", 
+    "requestInvite",
+    "getInvitee"
+  ],
 
   /**
    */
 
-  fiberize: ["login", "signup", "sendResetPasswordEmail", "getResetPasswordCode"],
+  fiberize: [
+    "login", 
+    "signup", 
+    "sendResetPasswordEmail", 
+    "getResetPasswordCode",
+    "sendUserInvitations"
+  ],
 
 
   /**
@@ -67,7 +83,7 @@ BaseCollection.extend(Users, {
         if (!user) return next(comerr.notFound());
 
         // todo - make session object here with ttl
-        next(null, user);
+        user.updateLastLogin(next);
       }
 
     ], complete);
@@ -82,6 +98,7 @@ BaseCollection.extend(Users, {
 
   signup: function (credentials, complete) {
 
+
     var self = this;
 
     async.waterfall([
@@ -92,16 +109,16 @@ BaseCollection.extend(Users, {
 
       validatePasswordStrength(credentials),
 
-      function findUser (next) {
+      function validateInviteCode (next) {
+        self._validateInvite(credentials, next);
+      },
+
+      function findUser (code, next) {  
         self.findOne({ email: credentials.email }, next);
       },
 
-      function onFoundUser (user, next) {
+      function signupUser (user, next) {
         if (user) return next(comerr.alreadyExists());
-        next();
-      },
-
-      function signupUser (next) {
         self.app.models.createModel("user", { 
           data: {
             name     : credentials.name,
@@ -116,8 +133,63 @@ BaseCollection.extend(Users, {
   /**
    */
 
+  requestInvite: function (email, complete) {
+    var self = this;
+    async.waterfall([
+
+      function validate (next) {
+        verify.that({ email: email }).has("email").then(next)
+      },
+
+      function findInvite (next) {
+        self.models.findOne("invitee", { email: email }, next);
+      },
+
+      function inviteUser (invitee, next) {
+        if (invitee) return next(null, invitee);
+        self.models.createModel("invitee", { data: { email: email } }).save(next);
+      }
+
+    ], complete);
+  },
+
+  /**
+   */
+
+  _validateInvite: function (credentials, complete) {
+
+    if (this.inviteOnly && !credentials.inviteCode) {
+      return complete(comerr.unauthorized("invite only"));
+    }
+
+    var self = this;
+
+    async.waterfall([
+
+      function findInviteCode (next) {
+        self.models.findOne("invitee", { _id: {$oid: credentials.inviteCode}}, next);
+      },
+
+      function onInviteCode (code, next) {
+        if (!code) return next(comerr.unauthorized("code not found"));
+        if (!code.get("invited")) return next(comerr.unauthorized("not invited yet"));
+        next(null, code);
+      }
+    ], complete);
+  },
+
+  /**
+   */
+
   getResetPasswordCode: function (_id, complete) {
-    this.app.models.findOne("resetPasswordCode", { _id: {$oid: _id }}, complete);
+    this.app.models.findOne("resetPasswordCode", { _id: { $oid: _id }}, complete);
+  },
+
+  /**
+   */
+
+  getInvitee: function (_id, complete) {
+    this.app.models.findOne("invitee", { _id: { $oid: _id }}, complete);
   },
 
   /**
@@ -159,6 +231,66 @@ BaseCollection.extend(Users, {
 
       }
     ], complete);
+  },
+
+  /**
+   */
+
+  sendUserInvitations: function (options, complete) {
+    if (!options.limit) return complete(comerr.invalid("Please provide number of users"));
+
+    var self = this;
+
+    async.waterfall([
+
+      function findInvitees (next) {
+        self.models.find("invitee", { invited: false }, { limit: options.limit }, next);
+      },
+
+      function onInvitees (invitees, next) {
+
+        async.eachSeries(invitees, _.bind(self._sendInviteeEmail, self), next);
+      }
+    ], complete);
+  },
+
+  /**
+   */
+
+  _sendInviteeEmail: function (invitee, complete) {
+    var e;
+
+    console.log("inviting %s", e = invitee.get("email"));
+
+    if (!e) {
+      console.log("skip invitee %s", invitee.get("_id"));
+      return invitee.remove(complete);
+    }
+
+
+    var link = this.app.get("config.http.secureProtocol") + "//" + this.app.get("config.domains.app") + "/signup/" + invitee.get("_id")
+
+    var body = inviteTemplate.bind(new bindable.Object({
+      link : link
+    })).render().toString();
+
+    var self = this;
+
+    async.waterfall([
+      function sendEmail (next) {
+        self.app.emailer.send({
+          title : "You've been invited to BrowserTap",
+          to    : e,
+          body  : body
+        }, function() { next(); });
+      },
+      function updateUser (next) {
+        invitee.setProperties({ invited: true }).save(next);
+      }
+    ], complete)
+
+
+
   }
 });
 

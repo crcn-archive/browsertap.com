@@ -1,19 +1,23 @@
-<div>
-  {{#if: error }}
-    {{ ("signup.errors." + error.code) | t() }}
-  {{/}}
+{{#if: models.inviteOnly && !invitee}}
+  {{ "signup.errors.401" | t() }}
+{{/else}}
+  <div>
+    {{#if: error }}
+      {{ ("signup.errors." + error.code) | t() }}
+    {{/}}
 
 
-  {{ user.password | passwordStrength() }}
+    {{ user.password | passwordStrength() }}
 
-  <div class="password-strength password-strength-{{ user.password | passwordStrength() }}"></div>
+    <div class="password-strength password-strength-{{ user.password | passwordStrength() }}"></div>
 
-  <form data-bind="{{ onSubmit: signup() }}">
-    <input type="text" name="name" placeholder="What's your name?" data-bind="{{ model: user }}"></div>
-    <input type="text" name="email" data-bind="{{ model: user, disable: invitee }}" placeholder="Email"></input>
-    <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input> 
-    <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Password"></input> 
-    <input type="submit" name="signup" value="Signup"></input>
-    <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">Return to Login</a>
-  </form>
-</div>
+    <form data-bind="{{ onSubmit: signup() }}">
+      <input type="text" name="name" placeholder="What's your name?" data-bind="{{ model: user }}"></div>
+      <input type="text" name="email" data-bind="{{ model: user, disable: invitee }}" placeholder="Email"></input>
+      <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input> 
+      <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Password"></input> 
+      <input type="submit" name="signup" value="Signup"></input>
+      <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">Return to Login</a>
+    </form>
+  </div>
+{{/}}

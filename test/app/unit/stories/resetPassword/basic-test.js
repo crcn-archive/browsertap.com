@@ -1,5 +1,6 @@
 var expect = require("expect.js"),
-helpers    = require("../../../../helpers");
+helpers    = require("../../../../helpers"),
+sinon      = require("sinon");
 
 describe("reset-password#", function () {
 
@@ -40,12 +41,17 @@ describe("reset-password#", function () {
 
   it("can successfully reset a user's password", function (next) {
     forgotView.get("user").setProperties(helpers.fixtures.users.u1);
+    var spy = sinon.spy(apiApp.emailer, "send");
     forgotView.resetPassword();
     forgotView.bind("resetPasswordRequest.success", { max: 1, to: function (success) {
       expect(success).to.be(true);
+      expect(spy.callCount).to.be(1);
+      expect(spy.args[0][0].body).to.contain("http://localhost/resetPassword/")
+      spy.restore();
       next();
     }}).now();
   });
+
 
 
 });

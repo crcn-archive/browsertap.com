@@ -1,0 +1,36 @@
+[
+  {
+    "data": {
+      "email": "u3@browsertap.com",
+      "invited": true,
+      "_id": {
+        "__type": "ObjectID",
+        "value": "53140f9c235970360fa3ec10"
+      }
+    },
+    "collection": "invitees",
+    "refs": {
+      "invitees": [
+        "_id"
+      ]
+    },
+    "method": "insert"
+  },
+  {
+    "data": {
+      "email": "u4@browsertap.com",
+      "invited": false,
+      "_id": {
+        "__type": "ObjectID",
+        "value": "53140f9c235970360fa3ec11"
+      }
+    },
+    "collection": "invitees",
+    "refs": {
+      "invitees": [
+        "_id"
+      ]
+    },
+    "method": "insert"
+  }
+]

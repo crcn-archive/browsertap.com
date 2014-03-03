@@ -9,6 +9,8 @@ function DbModel (options, application) {
 }
 
 BaseModel.extend(DbModel, {
+
+  fiberize: ["save", "remove"],
   
   save: function (complete) {
 

@@ -62,7 +62,11 @@ protoclass(Models, {
     // change $oid to object ID
     args[0] = traverse(args[0]).forEach(function (x) {
       if (x && x.$oid) {
-        this.update(new ObjectID(String(x.$oid)));
+        try {
+          this.update(new ObjectID(String(x.$oid)));
+        } catch (e) {
+
+        }
         this.stop();
       }
     });

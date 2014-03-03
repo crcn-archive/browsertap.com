@@ -4,18 +4,30 @@
       "name": "u1",
       "email": "u1@browsertap.com",
       "password": "5f4dcc3b5aa765d61d8327deb882cf99",
-      "_id": "5313a181ec1ee51f19f8d2d5"
+      "_id": "53140f9c235970360fa3ec0d"
     },
     "forgotPassword": {
       "name": "u2",
       "email": "u2@browsertap.com",
       "password": "5f4dcc3b5aa765d61d8327deb882cf99",
-      "_id": "5313a181ec1ee51f19f8d2d6",
-      "resetPasswordCode": "5313a181ec1ee51f19f8d2d7"
+      "_id": "53140f9c235970360fa3ec0e",
+      "resetPasswordCode": "53140f9c235970360fa3ec0f"
     },
     "notSignedUp": {
       "email": "u3@browsertap.com",
       "password": "password"
+    }
+  },
+  "invitees": {
+    "invited": {
+      "email": "u3@browsertap.com",
+      "invited": true,
+      "_id": "53140f9c235970360fa3ec10"
+    },
+    "notInvited": {
+      "email": "u4@browsertap.com",
+      "invited": false,
+      "_id": "53140f9c235970360fa3ec11"
     }
   }
 }

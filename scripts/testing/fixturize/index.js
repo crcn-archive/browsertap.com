@@ -20,10 +20,20 @@ browsertap({
 
   var users = app.models.createModel("users");
 
+  app.set("config.inviteOnly", false);
+
   var u1 = users.signupSync({ name: "u1", email: "u1@browsertap.com", password: "password" }),
   u2     = users.signupSync({ name: "u2", email: "u2@browsertap.com", password: "password" });
 
   users.sendResetPasswordEmailSync({ email: u2.get("email") });
+
+  var invited = users.requestInviteSync("u3@browsertap.com");
+  invited.set("invited", true);
+  invited.saveSync();
+
+  var notInvited = users.requestInviteSync("u4@browsertap.com");
+
+
   u2.set("resetPasswordCode", lastEmailSent.body.match(/resetPassword\/([^\"]+)/)[1]);
 
 
@@ -37,6 +47,10 @@ browsertap({
         email: "u3@browsertap.com",
         password: "password"
       }
+    },
+    invitees: {
+      invited: invited.toJSON(),
+      notInvited: notInvited.toJSON()
     }
   }
 

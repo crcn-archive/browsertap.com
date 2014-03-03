@@ -1,5 +1,7 @@
 var expect = require("expect.js");
 
+// TODO - it cannot request an invite if already registered
+
 describe("invite#", function () {
 
   var inviteOnly, requestInviteView, user;

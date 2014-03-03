@@ -43,7 +43,9 @@ BaseCollection.extend(Users, {
     "signup", 
     "sendResetPasswordEmail", 
     "getResetPasswordCode",
-    "sendUserInvitations"
+    "sendUserInvitations",
+    "requestInvite",
+    "_sendInviteeEmail"
   ],
 
 
@@ -193,7 +195,18 @@ BaseCollection.extend(Users, {
    */
 
   getInvitee: function (_id, complete) {
-    this.app.models.findOne("invitee", { _id: { $oid: _id }}, complete);
+
+    var self = this;
+
+    async.waterfall([
+      function findInvitee (next) {
+        self.app.models.findOne("invitee", { _id: { $oid: _id }}, next);
+      },
+      function onInvitee (invitee, next) {
+        if (!invitee || !invitee.get("invited")) return next(comerr.unauthorized("not invited"));
+        next(null, invitee);
+      }
+    ], complete)
   },
 
   /**

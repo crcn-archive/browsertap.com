@@ -16,6 +16,8 @@ function publicize (object) {
 function copyPublic (context) {
   var pub = findPublicProperties(context).public;
 
+  if (!pub.length) return cloneObj(context);
+
   var clone = {};
 
   for (var i = pub.length; i--;) {
@@ -24,9 +26,21 @@ function copyPublic (context) {
     dref.set(clone, pub[i], v);
   }
 
+
+
   return clone;
 }
 
+/**
+ */
+
+function cloneObj (obj) {
+  var clone = {};
+  for (var property in obj) {
+    clone[property] = copy(obj[property]);
+  }
+  return clone;
+}
 /**
  */
 

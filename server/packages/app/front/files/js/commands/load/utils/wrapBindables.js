@@ -33,6 +33,9 @@ function _copy (value, context) {
     if (Object.prototype.toString.call(value) === "[object Array]") {
       return _copyArray(value);
     } else {
+      if (value.__wrapped) {
+        return value;
+      }
       if (value.__isBindableCollection) {
         return _copyBindableCollection(value);
       } else if (value.__isBindable) {
@@ -71,7 +74,10 @@ function _copyBindableCollection (value) {
 
   var rep = _copyNonIntersectingProperties(clone, rep);
 
+  rep.__wrapped = true;
+
   _syncRemoteBindable(clone, rep);
+
 
   return rep;
 }
@@ -82,19 +88,42 @@ function _copyBindable (value) {
 
   var rep = _copyNonIntersectingProperties(clone, new bindable.Object(clone.__context));
 
+  rep.__wrapped = true;
+
   _syncRemoteBindable(clone, rep);
+
 
   return rep;
 }
 
 function _syncRemoteBindable (remote, local) {
+
+  var watchCache = {}, ctx = {};
+
   remote.on("change", function (key, value) {
-    local.set(key, value);
+    if (value !== local.get(key)) {
+      local.set(key, ctx[key] = value);
+    }
+  });
+
+  local.on("change", function (key, value) {
+    if (ctx[key] === value) return;
+    ctx[key] = value;
+    remote.set(key, value);
   });
 
   local.on("watching", function (property) {
-    remote.bind(property, function (value) {
-      local.set(property, value);
+
+
+    var path = property.join(".");
+
+    if (watchCache[path]) return;
+    watchCache[path] = true;
+
+    remote.bind(path, function (value) {
+      if (local.get(path) !== value) {
+        local.set(path, ctx[path] = value);
+      }
     });
   });
 }

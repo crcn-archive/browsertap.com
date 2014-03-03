@@ -15,7 +15,7 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "models.user.settings.menuPosition": "position"
+    // "models.user.settings.menuPosition": "position"
   },
 
   /**

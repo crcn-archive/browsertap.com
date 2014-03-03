@@ -284,7 +284,6 @@ BaseCollection.extend(Users, {
       return invitee.remove(complete);
     }
 
-
     var link = this.app.get("config.http.secureProtocol") + "//" + this.app.get("config.domains.app") + "/signup/" + invitee.get("_id")
 
     var body = inviteTemplate.bind(new bindable.Object({

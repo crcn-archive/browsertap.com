@@ -14,6 +14,8 @@ BaseModel.extend(DbModel, {
   
   save: function (complete) {
 
+    if (!complete) complete = function() {};
+
     var self = this;
 
     function _complete (err, d) {
@@ -33,11 +35,12 @@ BaseModel.extend(DbModel, {
     return this.toJSON();
   },
   remove: function (complete) {
-    if (!this.get("_id")) return next(new Error("doesn't exist"));
+    if (!complete) complete = function() {};
+    if (!this.get("_id")) return complete(new Error("doesn't exist"));
     this._remove(complete);
   },
   _create: function (next) {
-    next();
+    this.collection.insert(this.serialize(), next);
   },
   _update: function (next) {
     this.collection.update({ 

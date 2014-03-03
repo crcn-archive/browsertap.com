@@ -1,4 +1,4 @@
-var BaseModel = require("./base/model"),
+var BaseModel = require("./base/dbModel"),
 _ = require("underscore");
 
 function Settings () {
@@ -8,11 +8,6 @@ function Settings () {
 	// if settings change by any means on the client-side, automatically
 	// save them in the database
 	this.on("change", _.bind(this._onChange, this));
-
-	// make the entire context public
-	for (var key in this.__context) {
-		this.public.push("__context." + key);
-	}
 }
 
 BaseModel.extend(Settings, {
@@ -20,9 +15,35 @@ BaseModel.extend(Settings, {
 	/**
 	 */
 
+	public: ["__context"],
+
+	/**
+	 */
+
+	collectionName: "settings",
+
+	/**
+	 */
+
 
 	_onChange: function (key, value) {
 		this.save();
+	},
+
+	/**
+	 */
+
+	serialize: function () {
+
+		var clone = {}, d = this.toJSON();
+
+		for (var name in d) {
+			if (name === "userId" && this.get("_id")) continue;
+			if (/_id/.test(name)) continue;
+			clone[name] = d[name];
+		}
+		
+		return clone;
 	}
 });
 

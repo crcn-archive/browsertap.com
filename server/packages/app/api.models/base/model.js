@@ -10,6 +10,7 @@ function BaseModel (options, application) {
   this._janitor = janitor();
   application.utils.fiberize(this);
   this._setupVirtuals();
+  this._virtualizing = {}
 }
 
 bindable.Object.extend(BaseModel, {
@@ -57,8 +58,11 @@ bindable.Object.extend(BaseModel, {
    */
 
   _bindVirtual: function (path) {
+    if (path.length !== 1) return;
     var virtual, v, self = this;
     if (!(virtual = this.virtuals[path[0]])) return;
+    if (this._virtualizing[virtual]) return;
+    this._virtualizing[virtual] = true;
     if (!/undefined|string/.test(typeof (v = this.get(path))) && String(v).length !== 24) return;
 
     virtual.call(this, function (err, item) {

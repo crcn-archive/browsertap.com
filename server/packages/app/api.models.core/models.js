@@ -3,7 +3,7 @@ factories      = require("factories"),
 comerr         = require("comerr"),
 traverse       = require("traverse"),
 ObjectID       = require("mongodb").ObjectID,
-Future         = require("fibers/future")
+async          = require("async");
 
 function Models (application) {
   this._modelClasses = {};
@@ -37,6 +37,29 @@ protoclass(Models, {
 
   find: function (modelName, query) {
     return this._query.apply(this, ["find"].concat(Array.prototype.slice.call(arguments, 0)));
+  },
+
+  /**
+   */
+
+  upsert: function (modelName, query, data, complete) {
+
+    if (arguments.length === 3) {
+      complete = data;
+      data = query;
+    }
+
+
+    var self = this;
+    async.waterfall([
+      function findModel (next) {
+        self.findOne(modelName, query, next);
+      },
+      function createModel (model, next) {
+        if (model) return next(null, model);
+        self.createModel(modelName, { data: data }).save(next);
+      }
+    ], complete);
   },
 
   /**

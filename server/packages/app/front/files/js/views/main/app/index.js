@@ -24,5 +24,13 @@ module.exports = mojo.View.extend({
         { class: require("./controller"), name: "controller" }
       ]
     }
+  },
+
+  /**
+   */
+
+  incCounter: function () {
+    console.log("INC")
+    this.get("models.user.settings").set("counter", (this.get("models.user.settings.counter") || 0) + 1);
   }
 });

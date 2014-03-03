@@ -16,11 +16,11 @@ BaseModel.extend(User, {
    */
 
   public: [
-    "settings", 
     "browsers",
     "resetPassword",
     "__context.email",
-    "__context._id"
+    "__context._id",
+    "__context.settings"
   ],
 
   /**
@@ -36,7 +36,7 @@ BaseModel.extend(User, {
 
     // the settings for the user
     "settings": function (next) {
-      // return this._application.createModel("settings", { user: this }).load(next);
+      return this.app.models.upsert("settings", { userId: this.get("_id") }, next);
     },
 
     // application launchers

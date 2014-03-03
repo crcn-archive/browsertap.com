@@ -56,8 +56,18 @@ module.exports = function (app) {
     route("/iwantin").
     name("requestInvite").
     states({
-      main : "auth",
-      auth : "requestInvite"
+      main          : "auth",
+      auth          : "requestInvite",
+      requestInvite : "form"
+    })
+
+  router.
+    route("/iwantin/done").
+    name("requestInviteDone").
+    states({
+      main          : "auth",
+      auth          : "requestInvite",
+      requestInvite : "complete"
     })
 
   router.

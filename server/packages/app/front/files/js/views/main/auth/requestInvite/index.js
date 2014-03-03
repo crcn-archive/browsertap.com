@@ -6,7 +6,7 @@ module.exports = mojo.View.extend({
   /**
    */
 
-  name: "requestInviteView",
+  name: "requestInvitePagesView",
 
   /**
    */
@@ -17,17 +17,19 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "requestInviteRequest.error"   : "error",
-    "requestInviteRequest.success" : "success"
+    "models.states.requestInvite": "sections.pages.currentName"
   },
 
   /**
    */
 
-  requestInvite: function () {
-    var self = this;
-    this.set("requestInviteRequest", bindableCall(function (next) {
-      self.application.mediator.execute("requestInvite", { email: self.email }, next);
-    }));
+  sections: {
+    pages: {
+      type: "states",
+      views: [
+        { class: require("./form")    , name: "form"     },
+        { class: require("./complete"), name: "complete" }
+      ]
+    }
   }
 });

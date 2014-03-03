@@ -66,9 +66,10 @@ function _copyFn (oldFn, context) {
 
 function _copyBindableCollection (value) {
 
-  var clone = _clone(value);
+  var clone = _clone(value), 
+  rep = new bindable.Collection(clone.__source);
 
-  var rep = _copyNonIntersectingProperties(clone, new bindable.Collection(clone.__source));
+  var rep = _copyNonIntersectingProperties(clone, rep);
 
   _syncRemoteBindable(clone, rep);
 

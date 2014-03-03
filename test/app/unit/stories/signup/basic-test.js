@@ -7,6 +7,15 @@ describe("signup#", function () {
 
   after(helpers.flushDb);
 
+  before(function () {
+    apiApp.set("config.inviteOnly", !apiApp.get("config.inviteOnly"));
+  });
+
+  after(function () {
+    apiApp.set("config.inviteOnly", !apiApp.get("config.inviteOnly"));
+  });
+
+
   var signupView, user;
 
   before(function () {

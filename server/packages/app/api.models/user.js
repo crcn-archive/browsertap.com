@@ -30,7 +30,6 @@ BaseModel.extend(User, {
 
     // creates a session
     "session": function (next) {
-
       // automatically create a new session
       // return this.app.createModel("session", { user: this }).save(next);
     },

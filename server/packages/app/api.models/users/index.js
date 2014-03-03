@@ -12,7 +12,6 @@ inviteTemplate           = pc.template(require("./views/invite.pc"));
 
 function Users () {
   BaseCollection.apply(this, arguments);
-  this.inviteOnly = this.app.get("config.inviteOnly");
 }
 
 BaseCollection.extend(Users, {
@@ -158,7 +157,11 @@ BaseCollection.extend(Users, {
 
   _validateInvite: function (credentials, complete) {
 
-    if (this.inviteOnly && !credentials.inviteCode) {
+
+    if (!this.app.get("config.inviteOnly")) return complete(null, null);
+
+
+    if (!credentials.inviteCode) {
       return complete(comerr.unauthorized("invite only"));
     }
 

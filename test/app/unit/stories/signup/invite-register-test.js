@@ -1,3 +1,5 @@
+var expect = require("expect.js");
+
 /*
 
 1. shows error if invite code is not found
@@ -6,3 +8,8 @@
 4. cannot modify email
 
 */
+
+describe("invite-register#", function () {
+
+
+});

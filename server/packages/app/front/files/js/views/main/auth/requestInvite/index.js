@@ -6,6 +6,11 @@ module.exports = mojo.View.extend({
   /**
    */
 
+  name: "requestInviteView",
+
+  /**
+   */
+
   paper: require("./index.pc"),
 
   /**
@@ -21,7 +26,6 @@ module.exports = mojo.View.extend({
 
   requestInvite: function () {
     var self = this;
-    console.log(this);
     this.set("requestInviteRequest", bindableCall(function (next) {
       self.application.mediator.execute("requestInvite", { email: self.email }, next);
     }));

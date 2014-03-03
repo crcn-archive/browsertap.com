@@ -1,6 +1,16 @@
+var comerr = require("comerr");
+
 module.exports = function (app) {
 
   var router = app.router;
+
+  function auth (request, next) {
+    if (!app.models.get("user")) {
+      router.redirect("login");
+      return next(comerr.unauthorized("not logged in"));
+    }
+    next();
+  }
 
   router.
   param("code", function (request, next, _id) {
@@ -15,6 +25,7 @@ module.exports = function (app) {
   router.
     route("/").
     name("home").
+    enter(auth).
     states({
       main : "app",
       app  : "controller"

@@ -3,7 +3,7 @@
   {
     "query": {
       "email": {
-        "$in": ["u3@browsertap.com"]
+        "$in": ["u3@browsertap.com", "u4@browsertap.com"]
       }
     },
     "collection": "users",

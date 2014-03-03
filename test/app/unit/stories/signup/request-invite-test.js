@@ -1,4 +1,5 @@
-var expect = require("expect.js");
+var expect = require("expect.js"),
+helpers    = require("../../../../helpers");
 
 // TODO - it cannot request an invite if already registered
 
@@ -17,6 +18,8 @@ describe("invite#", function () {
     frontApp.set("models.inviteOnly", inviteOnly);
   });
 
+  after(helpers.flushDb);
+
   it("can click the 'request invite' button from the login page", function () {
     frontApp.router.redirect("login");
     $(document.body).find("#login-request-invite-button").click();
@@ -34,7 +37,7 @@ describe("invite#", function () {
   });
 
   it("can successfuly request an invite to use the application", function (next) {
-    requestInviteView.email = "u4@classdojo.com";
+    requestInviteView.email = "u4@browsertap.com";
     requestInviteView.requestInvite();
     requestInviteView.bind("requestInviteRequest.success", { max: 1, to: function (success) {
       expect(success).to.be(true);

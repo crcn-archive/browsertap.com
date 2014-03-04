@@ -2,6 +2,7 @@
 var modelClasses = {
   user              : require("./user"),
   users             : require("./users"),
+  session           : require("./session"),
   settings          : require("./settings"),
   launcher          : require("./launcher"),
   launchers         : require("./launchers"),

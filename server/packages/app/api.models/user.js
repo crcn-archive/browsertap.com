@@ -30,8 +30,7 @@ BaseModel.extend(User, {
 
     // creates a session
     "session": function (next) {
-      // automatically create a new session
-      // return this.app.createModel("session", { user: this }).save(next);
+      return this.app.models.upsert("session", { userId: this.get("_id"), secret: this.secret }, next);
     },
 
     // the settings for the user

@@ -26,23 +26,20 @@ module.exports = function (ops) {
       http: {
         port: ops.port|| 8080,
         secureProtocol: "http:"
-      }
+      },
+      mongo: {
+        "host": "mongodb://127.0.0.1:27017/browsertap-dev"
+      },
     },
     development: {
       "domains": {
         "app": "localhost"
-      },
-      "mongo": {
-        "host": "mongodb://testing:a1c5ee280b@troup.mongohq.com:10032/browsertap-dev"
       }
     },
     testing: {
       logLevel: Logger.levels.NONE,
       "domains": {
         "app": "localhost"
-      },
-      "mongo": {
-        "host": "mongodb://127.0.0.1:27017/browsertap-dev"
       },
       http: {
         port: 8095

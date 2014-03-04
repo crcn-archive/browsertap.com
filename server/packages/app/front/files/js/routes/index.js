@@ -35,7 +35,7 @@ module.exports = function (app) {
     route("/logout").
     name("logout").
     enter(function (request, next) {
-      router.redirect("login");
+      app.mediator.execute("logout");
       next();
     })
 

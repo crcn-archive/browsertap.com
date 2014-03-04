@@ -32,7 +32,8 @@ BaseCollection.extend(Users, {
     "getResetPasswordCode", 
     "inviteOnly", 
     "requestInvite",
-    "getInvitee"
+    "getInvitee",
+    "getSession"
   ],
 
   /**
@@ -50,7 +51,7 @@ BaseCollection.extend(Users, {
 
 
   /**
-   * 1. create session
+   * 1. create session - TODO - need client secret key for sessions
    */
 
   login: function (credentials, complete) {
@@ -83,6 +84,8 @@ BaseCollection.extend(Users, {
 
       function onFoundUser (user, next) {
         if (!user) return next(comerr.notFound());
+
+        user.secret = credentials.secret;
 
         // todo - make session object here with ttl
         user.updateLastLogin(next);
@@ -189,6 +192,14 @@ BaseCollection.extend(Users, {
 
   getResetPasswordCode: function (_id, complete) {
     this.app.models.findOne("resetPasswordCode", { _id: { $oid: _id }}, complete);
+  },
+
+  /**
+   * TODO - need a few safeguards to prevent session injections
+   */
+
+  getSession: function (secret, _id, complete) {
+    this.app.models.findOne("session", { _id: { $oid: _id }, secret: secret }, complete);
   },
 
   /**

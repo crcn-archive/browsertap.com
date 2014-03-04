@@ -80,6 +80,22 @@ module.exports = {
 	/**
 	 */
 
+	logout: function (message, next) {
+		var app = message.mediator.application;
+
+		if (app.models.get("user")) {
+			app.models.get("user.session").remove();
+			app.models.set("user", undefined);;
+		}
+
+		app.router.redirect("login");
+
+		next();
+	},
+
+	/**
+	 */
+
 	requestInvite: function (message, next) {
 		var email = message.data.email, app = message.mediator.application;
 		app.get("models.users").requestInvite(email, next);

@@ -8,7 +8,7 @@ exports.load    = function (config, mediator) {
 
   mediator.on("post bootstrap", function (message, next) {
 
-	  console.log("HTTP server listening on port %d", port = config.get("http.port"))
+	  logger.info("HTTP server listening on port %d", port = config.get("http.port"))
 
 	  server.listen(port);
 	  next();

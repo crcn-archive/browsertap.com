@@ -277,10 +277,10 @@ BaseCollection.extend(Users, {
   _sendInviteeEmail: function (invitee, complete) {
     var e;
 
-    console.log("inviting %s", e = invitee.get("email"));
+    logger.verbose("inviting %s", e = invitee.get("email"));
 
     if (!e) {
-      console.log("skip invitee %s", invitee.get("_id"));
+      logger.verbose("skip invitee %s", invitee.get("_id"));
       return invitee.remove(complete);
     }
 

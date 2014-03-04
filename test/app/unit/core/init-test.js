@@ -36,8 +36,6 @@ before(function (next) {
 before(function (next) {
   jsdom.env("<html><head></head><body></body></html>", [ publicDir + "/vendor/js/jquery-1.11.0.min.js"], function(err, window) {
 
-    console.log("initializing front-end application");
-
     // set the document to global so that nofactor has access to it
     global.document = window.document;
 

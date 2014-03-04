@@ -9,7 +9,7 @@ module.exports = function (config, next) {
 
   if (!next) next = function () { };
 
-  console.log("starting %s in %s mode", config.type, config.env);
+  logger.info("starting %s in %s mode", config.type, config.env);
 	
   var pkg = packages().
   require({
@@ -20,7 +20,8 @@ module.exports = function (config, next) {
   load();
 
   pkg.exports.mediator.execute("bootstrap", function () {
-    console.log("successfuly started");
+
+    logger.info("successfuly started");
 
     function _next () {
       next(null, pkg.exports);

@@ -1,7 +1,10 @@
+Logger = require("./logger");
+
 
 module.exports = function (ops) {
   return {
     default: {
+      logLevel: Logger.levels.ALL,
       inviteOnly: true,
       env: ops.env,
       fibers: ops.fibers,
@@ -34,6 +37,7 @@ module.exports = function (ops) {
       }
     },
     testing: {
+      logLevel: Logger.levels.NONE,
       "domains": {
         "app": "localhost"
       },
@@ -53,7 +57,7 @@ module.exports = function (ops) {
       }
     },
     production: {
-
+      logLevel: Logger.levels.NOTICE
     }
   }
 }

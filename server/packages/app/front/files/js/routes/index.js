@@ -5,7 +5,8 @@ module.exports = function (app) {
   var router = app.router;
 
   function auth (request, next) {
-    if (!app.models.get("user")) {
+
+    if (!app.models.get("user._id")) {
       router.redirect("login");
       return next(comerr.unauthorized("not logged in"));
     }

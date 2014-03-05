@@ -21,15 +21,8 @@ module.exports = mojo.View.extend({
     pages: {
       type: "states",
       views: [
-        { class: require("./controller"), name: "controller" }
+        { class: require("./browser"), name: "browser" }
       ]
     }
-  },
-
-  /**
-   */
-
-  incCounter: function () {
-    this.get("models.user.settings").set("counter", (this.get("models.user.settings.counter") || 0) + 1);
   }
 });

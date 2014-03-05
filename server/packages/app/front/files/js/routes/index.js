@@ -29,7 +29,7 @@ module.exports = function (app) {
     enter(auth).
     states({
       main : "app",
-      app  : "controller"
+      app  : "browser"
     })
   
   router.

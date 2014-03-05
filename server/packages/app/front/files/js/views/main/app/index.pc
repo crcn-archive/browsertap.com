@@ -1,11 +1,1 @@
-{{ models.user | json() }}
 {{ html: `sections.pages` }}
-
-<br />
-
-<h1> COUNTER </h1>
-<h1>{{ models.user.settings.counter }}</h1>
-
-<br />
-
-<a href="#" data-bind="{{ onClick: incCounter() }}">increment settings counter</a>

@@ -11,7 +11,8 @@ module.exports = mojo.View.extend({
    */
 
   sections: {
-    menu: require("./menu"),
-    settings: require("./settings")
+    menu     : require("./menu"),
+    settings : require("./settings"),
+    screen   : require("./screen")
   }
 });

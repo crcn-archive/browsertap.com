@@ -5,7 +5,7 @@ module.exports = function (ops) {
   return {
     default: {
       logLevel: Logger.levels.ALL,
-      inviteOnly: false,
+      inviteOnly: true,
       env: ops.env,
       fibers: ops.fibers,
       type: ops.type,

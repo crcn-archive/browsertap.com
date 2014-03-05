@@ -1,6 +1,6 @@
 <div class="input-ok-outer" data-bind="{{show: show }}">
   <div class="input-ok-inner">
-    {{#if: ok == true }}
+    {{#if: ok != false }}
       <div class="glyphicon input-ok-success glyphicon-ok"></div>
     {{/else}}
       <div class="glyphicon input-ok-danger glyphicon-remove"></div>

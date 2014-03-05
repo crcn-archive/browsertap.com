@@ -24,7 +24,7 @@
         {{
           inputOk: {
             show: user.name,
-            ok: nameOk,
+            ok: !!user.name,
             loading: false
           }
         }}
@@ -34,9 +34,8 @@
         <input type="text" class="form-control" name="email" data-bind="{{ model: user, disable: invitee }}" placeholder="{{ 'common.placeholders.email' | t() }}"></input>
         {{
           inputOk: {
-            show: user.email,
-            ok: emailOk,
-            loading: false
+            type: 'email',
+            value: user.email
           }
         }}
       </div>
@@ -55,7 +54,7 @@
         {{
           inputOk: {
             show: user.confirmPassword,
-            ok: confirmPasswordOk,
+            ok: user.confirmPassword == user.password,
             loading: false
           }
         }}

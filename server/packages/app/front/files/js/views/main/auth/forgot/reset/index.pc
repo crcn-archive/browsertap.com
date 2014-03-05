@@ -32,7 +32,7 @@
         {{
           inputOk: {
             show: user.confirmPassword,
-            ok: confirmPasswordOk
+            ok: user.password == user.confirmPassword
           }
         }}
       </div>

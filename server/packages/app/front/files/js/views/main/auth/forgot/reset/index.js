@@ -19,15 +19,7 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "models.params.code"         : "code",
-    "resetPasswordRequest.error" : "error",
-
-    "user.password, user.confirmPassword": {
-      "confirmPasswordOk": {
-        "map": function (a, b) {
-          return a == b;
-        }
-      }
-    }
+    "resetPasswordRequest.error" : "error"
   },
 
   /**

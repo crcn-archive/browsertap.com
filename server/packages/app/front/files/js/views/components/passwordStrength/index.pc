@@ -1,12 +1,11 @@
-<div class="password-strength-outer">
+<div class="password-strength-outer" data-bind="{{ show: show }}">
   <div class="password-strength progress">
     <div class="progress-bar" data-bind="{{
       style: {
         width: (password | passwordStrength() | passwordStrengthProgress()) + "%"
       },
       css: {
-        'progress-bar-danger': (password | passwordStrength()) == 'weak',
-        'progress-bar-warning': (password | passwordStrength()) == 'average',
+        'progress-bar-warning': (password | passwordStrength()) == 'average' || (password | passwordStrength()) == 'weak',
         'progress-bar-success': (password | passwordStrength()) == 'strong'
       }
     }}"></div>

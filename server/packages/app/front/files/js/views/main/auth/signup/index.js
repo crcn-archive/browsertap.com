@@ -8,6 +8,11 @@ module.exports = mojo.View.extend({
   /**
    */
 
+  minPwLength: 5,
+
+  /**
+   */
+
   name: "signupView",
 
   /**

@@ -1,5 +1,5 @@
-{{ html: `sections.menu`     }}
-{{ html: `sections.screen`   }}
+{{ html: sections.menu     }}
+{{ html: sections.screen   }}
 
 <a href="#" data-bind="{{ onClick: 'logout' | redirect() }}">logout</a>
 

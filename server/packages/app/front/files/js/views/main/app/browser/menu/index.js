@@ -16,7 +16,6 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "models.user.settings.menuPosition": {
-      bothWays: true,
       to: "position"
     }
   },
@@ -25,6 +24,6 @@ module.exports = mojo.View.extend({
    */
 
   move: function () {
-    this.set("position", (this.get("position") + 1) % 4);
+    this.set("models.user.settings.menuPosition", (this.get("models.user.settings.menuPosition") + 1) % 4);
   }
 });

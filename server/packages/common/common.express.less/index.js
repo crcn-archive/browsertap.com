@@ -6,7 +6,7 @@ exports.require = ["config", "express.server"]
 exports.load = function (config, server) {
   var cssParser = new less.Parser();
   server.get("/css/app.css", function (req, res) {
-    var lessFiles = glob.sync(config.get("directories.root") + "/**/*.less"),
+    var lessFiles = glob.sync(config.get("directories.root") + "/**/*.less").concat(glob.sync(__dirname + "/../**/*.less")),
     buffer  = [];
 
     for (var i = lessFiles.length; i--;) {

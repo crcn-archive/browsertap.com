@@ -1,1 +1,0 @@
-Successfuly reset password <a href="#">Login</a>

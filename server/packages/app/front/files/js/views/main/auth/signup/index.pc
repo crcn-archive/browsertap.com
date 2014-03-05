@@ -1,23 +1,42 @@
-{{#if: models.inviteOnly && !invitee}}
-  {{ "signup.errors.401" | t() }}
-{{/else}}
-  <div>
+<fieldset>
+
+  {{#if: models.inviteOnly && !invitee}}
+    {{ "signup.errors.401" | t() }}
+  {{/else}}
+
+    <legend>Signup</legend>
+
     {{#if: error }}
       {{ ("signup.errors." + error.code) | t() }}
     {{/}}
 
-
-    {{ user.password | passwordStrength() }}
-
-    <div class="password-strength password-strength-{{ user.password | passwordStrength() }}"></div>
+    <!--div class="password-strength password-strength-{{ user.password | passwordStrength() }}"></div-->
 
     <form data-bind="{{ onSubmit: signup() }}">
-      <input type="text" name="name" placeholder="What's your name?" data-bind="{{ model: user }}"></div>
-      <input type="text" name="email" data-bind="{{ model: user, disable: invitee }}" placeholder="Email"></input>
-      <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input> 
-      <input type="password" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Password"></input> 
-      <input type="submit" name="signup" value="Signup"></input>
+
+      <div class="form-group">
+        <input type="text" class="form-control" name="name" placeholder="What's your name?" data-bind="{{ model: user }}"></div>
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" name="email" data-bind="{{ model: user, disable: invitee }}" placeholder="Email"></input>
+      </div>
+
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" data-bind="{{ model: user }}" placeholder="Password"></input> 
+      </div>
+
+      <div class="form-group">
+        <input type="password" class="form-control" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Repeat Password"></input> 
+      </div>
+
+
+      <div class="form-group">
+        <input type="submit" name="signup" value="Signup" class="btn btn-primary"></input>
+      </div>
+
       <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">Return to Login</a>
     </form>
-  </div>
-{{/}}
+  {{/}}
+
+</fieldset>

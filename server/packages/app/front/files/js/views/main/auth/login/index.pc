@@ -1,4 +1,4 @@
-<div>
+<fieldset>
   {{#if: models.login.flash }}
     {{ models.login.flash.message }}
   {{/}}
@@ -8,15 +8,28 @@
   {{/}}
 
   <form data-bind="{{ onSubmit: login() }}">
-    <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email"></input>
-    <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password"></input>
-    <input type="submit" name="login" value="Login"></input>
-    <a href="#" id="login-reset-password-button" data-bind="{{ onClick: 'forgotPassword' | redirect() }}">Reset Password</a>
 
-    {{#if: models.inviteOnly }}
-      <a href="#" id="login-request-invite-button" data-bind="{{ onClick: 'requestInvite' | redirect() }}">Request Invite</a>
-    {{/else}} 
-      <a href="#" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">Signup</a>
-    {{/}}
+    <legend>Login</legent>
+
+    <div class="form-group">
+      <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email" class="form-control"></input>
+    </div>
+
+    <div class="form-group">
+      <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password" class="form-control"></input>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" name="login" value="Login" class="btn btn-primary"></input>
+    </div>
   </form>
-</div>
+
+  <a href="#" class="pull-left" id="login-reset-password-button" data-bind="{{ onClick: 'forgotPassword' | redirect() }}">Reset Password</a>
+
+  {{#if: models.inviteOnly }}
+    <a href="#" class="pull-right" id="login-request-invite-button" data-bind="{{ onClick: 'requestInvite' | redirect() }}">Request Invite</a>
+  {{/else}} 
+    <a href="#" class="pull-right" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">Signup</a>
+  {{/}}
+
+</fieldset>

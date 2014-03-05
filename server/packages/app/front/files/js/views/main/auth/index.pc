@@ -1,3 +1,5 @@
-<div class="auth-container">
-  {{ html: `sections.pages` }}
+<div id="auth-container">
+  <div id="auth-container-content" class="well">
+    {{ html: `sections.pages` }}
+  </div>
 </div>

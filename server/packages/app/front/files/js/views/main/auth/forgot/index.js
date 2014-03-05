@@ -21,7 +21,6 @@ module.exports = mojo.View.extend({
     pages: {
       type: "states",
       views: [
-        { class: require("./complete")  , name: "complete"  },
         { class: require("./form")      , name: "form"      },
         { class: require("./reset")     , name: "reset"     }
       ]

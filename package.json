@@ -8,7 +8,7 @@
     "website": "TYPE=website NODE_ENV=staging node server",
     "app": "TYPE=app NODE_ENV=staging node server",
     "app-dev": "TYPE=app NODE_ENV=development node server",
-    "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:80 --port 81 --verbose",
+    "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:8080 --port=8090 --verbose --watch='./server/**'",
     "test": "make test-node"
   },
   "repository": {
@@ -70,7 +70,7 @@
     "toarray": "0.0.1",
     "factories": "0.0.7",
     "nofactor": "0.0.x",
-    "platform": "~1.0.0",
+    "platform": "git+https://github.com/bestiejs/platform.js.git",
     "request": "~2.34.0",
     "paperclip-bootstrap": "0.0.3",
     "password-strength": "0.0.1",

@@ -1,11 +1,24 @@
-<div>
+<fieldset>
+
   {{#if:success}}
     Invite sent
   {{/elseif: error}} 
     nada
   {{/}}
+
   <form data-bind="{{ onSubmit: requestInvite() }}">
-    <input type="text" name="email" placeholder="Email" data-bind="{{ model: this }}"></input>
-    <input type="submit" value="Request Invite"></input>
+
+    <legend>Request Invite</legend>
+
+    <div class="form-group">
+      <input type="text" name="email" class="form-control" placeholder="Email" data-bind="{{ model: this }}"></input>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" value="Request Invite" class="btn btn-primary"></input>
+    </div>
   </form>
-</div>
+
+  <a href="#" class="pull-left" data-bind="{{ onClick: 'login' | redirect() }}">Login</a>
+
+</fieldset>

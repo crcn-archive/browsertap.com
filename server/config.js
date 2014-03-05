@@ -17,7 +17,7 @@ module.exports = function (ops) {
         configPath: __dirname + "/../lang"
       },
       directories: {
-        root: __dirname + "/packages/" + ops.type
+        root: __dirname + "/packages"
       },
       postmark: {
         key: "ef4b649e-1df9-43f2-a467-0046154c3d72",

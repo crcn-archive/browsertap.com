@@ -4,38 +4,68 @@
     {{ "signup.errors.401" | t() }}
   {{/else}}
 
-    <legend>Signup</legend>
 
     {{#if: error }}
-      {{ ("signup.errors." + error.code) | t() }}
+      <div class="alert alert-danger">
+        {{ "signup.errors" | te(error) }}
+      </div>
     {{/}}
+
+
 
     <!--div class="password-strength password-strength-{{ user.password | passwordStrength() }}"></div-->
 
     <form data-bind="{{ onSubmit: signup() }}">
 
+      <legend>{{ "signup.title" | t() }}</legend>
+
       <div class="form-group">
-        <input type="text" class="form-control" name="name" placeholder="What's your name?" data-bind="{{ model: user }}"></div>
+        <input type="text" class="form-control" name="name" placeholder="{{ 'common.placeholders.name' | t() }}" data-bind="{{ model: user }}"></div>
+        {{
+          inputOk: {
+            show: user.name,
+            ok: nameOk,
+            loading: false
+          }
+        }}
       </div>
 
       <div class="form-group">
-        <input type="text" class="form-control" name="email" data-bind="{{ model: user, disable: invitee }}" placeholder="Email"></input>
+        <input type="text" class="form-control" name="email" data-bind="{{ model: user, disable: invitee }}" placeholder="{{ 'common.placeholders.email' | t() }}"></input>
+        {{
+          inputOk: {
+            show: user.email,
+            ok: emailOk,
+            loading: false
+          }
+        }}
       </div>
 
       <div class="form-group">
-        <input type="password" class="form-control" name="password" data-bind="{{ model: user }}" placeholder="Password"></input> 
+        <input type="password" class="form-control" name="password" data-bind="{{ model: user }}" placeholder="{{ 'common.placeholders.password' | t() }}"></input> 
+        {{
+          passwordStrength: {
+            password: user.password
+          }
+        }}
       </div>
 
       <div class="form-group">
-        <input type="password" class="form-control" name="confirmPassword" data-bind="{{ model: user }}" placeholder="Repeat Password"></input> 
+        <input type="password" class="form-control" name="confirmPassword" data-bind="{{ model: user }}" placeholder="{{ 'common.placeholders.confirmPassword' | t() }}"></input> 
+        {{
+          inputOk: {
+            show: user.confirmPassword,
+            ok: confirmPasswordOk,
+            loading: false
+          }
+        }}
       </div>
-
 
       <div class="form-group">
-        <input type="submit" name="signup" value="Signup" class="btn btn-primary"></input>
+        <input type="submit" name="signup" value="{{ 'signup.buttons.signup' | t() }}" class="btn btn-primary"></input>
       </div>
 
-      <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">Return to Login</a>
+      <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">{{ 'signup.buttons.returnToLogin' | t() }}</a>
     </form>
   {{/}}
 

@@ -1,3 +1,7 @@
 <div>
-  Thanks for signing up!
+  <p>{{ 'requestInvite.success' | t() }}</p>
+
+  <a href="#" data-bind="{{ onClick: 'login' | redirect() }}">
+    {{ 'requestInvite.buttons.backToLogin' | t() }}
+  </a>
 </div>

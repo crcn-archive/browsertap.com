@@ -1,0 +1,18 @@
+@inputHeight: 32px;
+@progressHeight: 12px;
+
+.password-strength-outer {
+  position: relative;
+  float: right;
+  margin-right: 65px;
+}
+
+.password-strength {
+  width: 50px;
+  height: @progressHeight;
+  background-color: #000;
+  position: absolute;
+  top: -@inputHeight+@progressHeight/2;
+  margin-right: 10px;
+  .border-radius(5px);
+}

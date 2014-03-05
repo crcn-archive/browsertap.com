@@ -1,3 +1,4 @@
 module.exports = {
-  passwordStrength: require("./passwordStrength")
+  passwordStrength: require("./passwordStrength"),
+  inputOk: require("./inputOk")
 }

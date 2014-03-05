@@ -8,11 +8,11 @@ describe("signup#", function () {
   after(helpers.flushDb);
 
   before(function () {
-    apiApp.set("config.inviteOnly", !apiApp.get("config.inviteOnly"));
+    apiApp.set("config.inviteOnly", false);
   });
 
   after(function () {
-    apiApp.set("config.inviteOnly", !apiApp.get("config.inviteOnly"));
+    apiApp.set("config.inviteOnly", true);
   });
 
 
@@ -61,7 +61,7 @@ describe("signup#", function () {
     }}).now();
   });
 
-  it("shows an exists error", function (next) {
+  it("shows a 604 exists error", function (next) {
     user.setProperties(helpers.fixtures.users.u1);
     user.setProperties({ confirmPassword: helpers.fixtures.users.u1.password })
 

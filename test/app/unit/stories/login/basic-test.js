@@ -42,6 +42,23 @@ describe("login#", function () {
     }}).now();
   });
 
+  it("gets a 401 UNAUTHORIZED if the password is invalid", function (next) {
+
+    loginView = frontApp.getViewByName("LoginView");
+
+    loginView.get("user").setProperties({
+      email    : helpers.fixtures.users.u1.email,
+      password : "baddddd password"
+    });
+
+    loginView.login();
+
+    loginView.bind("loginRequest.error", { max: 1, to: function (error) {
+      expect(error.code).to.be("401");
+      next();
+    }}).now();
+  });
+
   it("gets a 602 INVALID if the email is incorrecty formatted", function (next) {
 
     loginView.get("user").setProperties({

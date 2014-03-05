@@ -35,14 +35,23 @@ module.exports = function (app) {
     redirect: function (location) {
       app.router.redirect(location);
     },
+
     t: function (string, params) {
       return app.i18n.t(string, params);
+    },
+
+    te: function (string, error) {
+      var t = modifiers.t(string = (string + "." + (error ? error.code : "undefined")));
+      if (t === string) return modifiers.t("common.errors.undefined");
+      return t;
     },
 
     // http://stackoverflow.com/questions/948172/password-strength-meter
     passwordStrength: function (password) {
 
      if (!password) password = "";
+
+     if (!password.length) return "none";
      
      var score = scorePassword(String(password));
 
@@ -58,6 +67,15 @@ module.exports = function (app) {
           return s.n;
         }
       }
+    },
+
+    passwordStrengthProgress: function (strength) {
+      var avail = ["weak", "average", "strong"],
+      i = avail.indexOf(strength);
+
+      if (!~i) return 0;
+
+      return ((i + 1) / avail.length) * 100;
     }
   };
 

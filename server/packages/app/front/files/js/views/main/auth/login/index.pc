@@ -1,22 +1,25 @@
 <fieldset>
+
   {{#if: models.login.flash }}
     {{ models.login.flash.message }}
   {{/}}
 
   {{#if: error }}
-    {{ ("login.errors." + error.code) | t() }}
+    <div class="alert alert-danger">
+      {{ "login.errors" | te(error) }}
+    </div>
   {{/}}
 
   <form data-bind="{{ onSubmit: login() }}">
 
-    <legend>Login</legent>
+    <legend>{{ "login.title" | t() }}</legent>
 
     <div class="form-group">
-      <input type="text" name="email" data-bind="{{ model: user }}" placeholder="Email" class="form-control"></input>
+      <input type="text" name="email" data-bind="{{ model: user }}" placeholder="{{ 'common.placeholders.email' | t() }}" class="form-control"></input>
     </div>
 
     <div class="form-group">
-      <input type="password" name="password" data-bind="{{ model: user }}" placeholder="Password" class="form-control"></input>
+      <input type="password" name="password" data-bind="{{ model: user }}" placeholder="{{ 'common.placeholders.password' | t() }}" class="form-control"></input>
     </div>
 
     <div class="form-group">
@@ -24,12 +27,12 @@
     </div>
   </form>
 
-  <a href="#" class="pull-left" id="login-reset-password-button" data-bind="{{ onClick: 'forgotPassword' | redirect() }}">Reset Password</a>
+  <a href="#" class="pull-left" id="login-reset-password-button" data-bind="{{ onClick: 'forgotPassword' | redirect() }}">{{ 'login.buttons.resetPassword' | t() }}</a>
 
   {{#if: models.inviteOnly }}
-    <a href="#" class="pull-right" id="login-request-invite-button" data-bind="{{ onClick: 'requestInvite' | redirect() }}">Request Invite</a>
+    <a href="#" class="pull-right" id="login-request-invite-button" data-bind="{{ onClick: 'requestInvite' | redirect() }}">{{ 'login.buttons.requestInvite' | t() }}</a>
   {{/else}} 
-    <a href="#" class="pull-right" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">Signup</a>
+    <a href="#" class="pull-right" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">{{ 'login.buttons.signup' | t() }}</a>
   {{/}}
 
 </fieldset>

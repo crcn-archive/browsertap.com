@@ -2,6 +2,7 @@ var BaseCollection       = require("../base/dbCollection"),
 async                    = require("async"),
 verify                   = require("verify")(),
 comerr                   = require("comerr"),
+sift                     = require("sift"),
 crypto                   = require('crypto'),
 bindable                 = require("bindable"),
 pc                       = require("paperclip"),
@@ -68,22 +69,28 @@ BaseCollection.extend(Users, {
 
       function findUser (next) {
         self.findOne({ 
-          email    : credentials.email, 
-          password : {
-            $in: [
-
-              // hash it
-              crypto.createHash('md5').update(credentials.password).digest("hex").toString(),
-
-              // could also be a hash
-              credentials.password
-            ]
-          }
+          email    : credentials.email
         }, next);
       },
 
       function onFoundUser (user, next) {
-        if (!user) return next(comerr.notFound());
+        if (!user) return next(comerr.notFound("user not found"));
+
+        var samePassword = sift({
+          $in: [
+            // hash it
+            crypto.createHash('md5').update(credentials.password).digest("hex").toString(),
+            // could also be a hash
+            credentials.password
+          ]
+        }).test(user.get("password"));
+
+        if (!samePassword) return next(comerr.unauthorized("Incorrect password"));
+
+        next(null, user);
+      },
+
+      function loginUser (user, next) {
 
         user.secret = credentials.secret;
 

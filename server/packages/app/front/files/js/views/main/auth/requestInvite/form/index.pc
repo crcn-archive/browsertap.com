@@ -1,5 +1,11 @@
 <fieldset>
 
+  {{
+    loader: {
+      show: loading
+    }
+  }}
+
   {{#if: error}} 
     <div class="alert alert-danger">
       {{ "requestInvite.errors" | te(error) }}

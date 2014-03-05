@@ -18,7 +18,8 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "loginRequest.error": "error"
+    "loginRequest.error": "error",
+    "loginRequest.loading": "loading"
   },
 
   /**

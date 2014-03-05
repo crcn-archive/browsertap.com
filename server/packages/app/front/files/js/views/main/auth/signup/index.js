@@ -20,6 +20,7 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "signupRequest.error"   : "error",
+    "signupRequest.loading" : "loading",
     "models.params.invitee" : "invitee",
     "invitee.email"         : "user.email",
   },

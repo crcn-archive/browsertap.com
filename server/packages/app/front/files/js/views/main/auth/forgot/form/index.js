@@ -17,7 +17,8 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "resetPasswordRequest.error": "error"
+    "resetPasswordRequest.error"   : "error",
+    "resetPasswordRequest.loading" : "loading"
   },
 
   /**

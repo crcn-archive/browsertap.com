@@ -18,6 +18,7 @@ module.exports = mojo.View.extend({
 
   bindings: {
     "requestInviteRequest.error"   : "error",
+    "requestInviteRequest.loading": "loading",
     "requestInviteRequest.success" : {
       when: /true/,
       to: function () {

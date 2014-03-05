@@ -1,5 +1,11 @@
 <fieldset>
 
+  {{
+    loader: {
+      show: loading
+    }
+  }}
+
   {{#if: models.inviteOnly && !invitee}}
     {{ "signup.errors.401" | t() }}
   {{/else}}
@@ -10,7 +16,6 @@
         {{ "signup.errors" | te(error) }}
       </div>
     {{/}}
-
 
 
     <!--div class="password-strength password-strength-{{ user.password | passwordStrength() }}"></div-->
@@ -24,7 +29,7 @@
         {{
           inputOk: {
             show: user.name,
-            ok: !!user.name,
+            ok: user.name,
             loading: false
           }
         }}

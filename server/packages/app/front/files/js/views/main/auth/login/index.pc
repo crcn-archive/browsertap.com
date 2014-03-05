@@ -1,4 +1,10 @@
 <fieldset>
+  
+  {{ 
+    loader: {
+      show: loading
+    } 
+  }}
 
   {{#if: models.login.flash }}
     {{ models.login.flash.message }}

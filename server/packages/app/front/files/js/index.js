@@ -1,5 +1,5 @@
 var BrowserTap = require("./app");
 
 $(document).ready(function () {
-  new BrowserTap().initialize($("#application"))
+  (window.app = new BrowserTap()).initialize($("#application"))
 });

@@ -53,7 +53,7 @@ describe("invite-register#", function () {
     });
 
     it("is showing the signup form", function () {
-      expect($(document.body).html()).to.contain("Return to Login");
+      expect($(document.body).html()).to.contain("signup.buttons.returnToLogin");
     });
 
     it("is showing the user's email in the signup form, and it's disabled", function () {

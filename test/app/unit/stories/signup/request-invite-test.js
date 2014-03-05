@@ -47,6 +47,6 @@ describe("invite#", function () {
 
   it("is showing the request invite done page", function () {
     expect(frontApp.router.get("current").name).to.be("requestInviteDone");
-    expect($(document.body).html()).to.contain("Thanks for");
+    expect($(document.body).html()).to.contain("requestInvite.success");
   });
 }); 

@@ -1,4 +1,7 @@
 <div id="auth-container">
+  <div class="center auth-logo">
+    <img src="/img/browsertap%20logo.png"></img>
+  </div>
   <div id="auth-container-content" class="well">
     {{ html: `sections.pages` }}
   </div>

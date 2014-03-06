@@ -50,7 +50,7 @@
         {{
           passwordStrength: {
             password: user.password,
-            show: user.password.length > minPwLength
+            show: user.password.length >= minPwLength
           }
         }}
         {{

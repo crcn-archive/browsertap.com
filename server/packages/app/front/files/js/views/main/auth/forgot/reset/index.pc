@@ -27,7 +27,14 @@
         <input type="password" class="form-control" name="password" data-bind="{{ model: user }}" placeholder="{{ 'common.placeholders.password' | t() }}"></input>
         {{
           passwordStrength: {
+            show: user.password.length >= minPwLength,
             password: user.password
+          }
+        }}
+        {{
+          inputOk: {
+            show: user.password.length < minPwLength,
+            ok: user.password.length > minPwLength
           }
         }}
       </div>

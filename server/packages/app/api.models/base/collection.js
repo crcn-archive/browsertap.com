@@ -3,6 +3,7 @@ var Collection = require("bindable").Collection;
 function BaseCollection (options, application) {
   Collection.call(this);
   this.app = application;
+  this.options = options || {};
   application.utils.fiberize(this);
 }
 

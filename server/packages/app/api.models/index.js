@@ -4,8 +4,8 @@ var modelClasses = {
   users             : require("./users"),
   session           : require("./session"),
   settings          : require("./settings"),
-  launcher          : require("./launcher"),
-  launchers         : require("./launchers"),
+  // launcher          : require("./launcher"),
+  // launchers         : require("./launchers"),
   invitee           : require("./invitee"),
   resetPasswordCode : require("./resetPasswordCode")
 };

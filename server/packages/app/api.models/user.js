@@ -3,6 +3,8 @@ crypto        = require("crypto");
 
 function User () {
   BaseModel.apply(this, arguments);
+  this.users = this.options.users;
+  // this.remoteAdress = this.users.stream.remoteAddress;
 }
 
 BaseModel.extend(User, {
@@ -40,7 +42,7 @@ BaseModel.extend(User, {
 
     // application launchers
     "launchers": function (next) {
-      // return this._application.createModel("launchers", { user: this }).load(next);
+      return this.app.createModel("launchers", { user: this }).load(next);
     }
   },
 

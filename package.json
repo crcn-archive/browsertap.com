@@ -8,7 +8,6 @@
     "website": "TYPE=website NODE_ENV=staging node server",
     "app": "TYPE=app NODE_ENV=staging node server",
     "app-dev": "TYPE=app NODE_ENV=development node server",
-    "provision-dev": "PORT=8081 TYPE=provision NODE_ENV=development node server",
     "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:8080 --port=8090 --verbose --watch='./server/**'",
     "test": "make test-node"
   },
@@ -74,7 +73,8 @@
     "request": "~2.34.0",
     "paperclip-bootstrap": "0.0.3",
     "password-strength": "0.0.1",
-    "store": "~1.3.14"
+    "store": "~1.3.14",
+    "closest-ec2-region": "0.0.1"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

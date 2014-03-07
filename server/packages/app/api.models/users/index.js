@@ -14,6 +14,7 @@ inviteTemplate           = pc.template(require("./views/invite.pc"));
 function Users () {
   BaseCollection.apply(this, arguments);
   this.app.bind("config.inviteOnly", { target: this, to: "inviteOnly" }).now();
+  this.stream = this.options.stream || {};
 }
 
 BaseCollection.extend(Users, {
@@ -70,7 +71,7 @@ BaseCollection.extend(Users, {
       function findUser (next) {
         self.findOne({ 
           email    : credentials.email
-        }, next);
+        }, { users: self }, next);
       },
 
       function onFoundUser (user, next) {
@@ -126,12 +127,13 @@ BaseCollection.extend(Users, {
       },
 
       function findUser (code, next) {  
-        self.findOne({ email: credentials.email }, next);
+        self.findOne({ email: credentials.email }, { users: self }, next);
       },
 
       function signupUser (user, next) {
         if (user) return next(comerr.alreadyExists());
         self.app.models.createModel("user", { 
+          users: this,
           data: {
             name     : credentials.name,
             email    : credentials.email,
@@ -206,7 +208,7 @@ BaseCollection.extend(Users, {
    */
 
   getSession: function (secret, _id, complete) {
-    this.app.models.findOne("session", { _id: { $oid: _id }, secret: secret }, complete);
+    this.app.models.findOne("session", { _id: { $oid: _id }, secret: secret }, { users: this }, complete);
   },
 
   /**
@@ -241,7 +243,7 @@ BaseCollection.extend(Users, {
       },
 
       function findUser (next) {
-        self.findOne({ email: credentials.email }, next);
+        self.findOne({ email: credentials.email }, { users: self }, next);
       },
 
       function createResetPasswordCode (user, next) {

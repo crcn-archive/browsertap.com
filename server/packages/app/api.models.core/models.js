@@ -3,7 +3,8 @@ factories      = require("factories"),
 comerr         = require("comerr"),
 traverse       = require("traverse"),
 ObjectID       = require("mongodb").ObjectID,
-async          = require("async");
+async          = require("async"),
+_              = require("underscore");
 
 function Models (application) {
   this._modelClasses = {};
@@ -28,14 +29,14 @@ protoclass(Models, {
   /**
    */
 
-  findOne: function (modelName, query) {
+  findOne: function (modelName, query, data) {
     return this._query.apply(this, ["findOne"].concat(Array.prototype.slice.call(arguments, 0)));
   },
 
   /**
    */
 
-  find: function (modelName, query) {
+  find: function (modelName, query, data) {
     return this._query.apply(this, ["find"].concat(Array.prototype.slice.call(arguments, 0)));
   },
 
@@ -65,7 +66,7 @@ protoclass(Models, {
   /**
    */
 
-  _query: function (method, modelName) {
+  _query: function (method, modelName, query, data, next) {
 
     var args = Array.prototype.slice.call(arguments, 0);
     var methodName = args.shift(),
@@ -79,7 +80,10 @@ protoclass(Models, {
 
     var collection = this.application.db.collection(modelClass.prototype.collectionName);
 
-    args.push(this._mapComplete(modelName, args.pop()));
+    var next = args.pop(),
+    data     = arguments.length === 5 ? args.pop() : undefined;
+
+    args.push(this._mapComplete(modelName, data, next));
 
 
     // change $oid to object ID
@@ -106,11 +110,16 @@ protoclass(Models, {
   },
 
 
-  _mapComplete: function (modelName, complete) {
+  _mapComplete: function (modelName, data, complete) {
     var self = this;
 
+    if (typeof data === "function") {
+      complete = data;
+      data = {};
+    }
+
     function _createModel (item) {
-      return self.createModel(modelName, { data: item });
+      return self.createModel(modelName, _.extend({}, { data: item }, data));
     }
 
     function _onItems (err, items) {

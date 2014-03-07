@@ -18,7 +18,8 @@ exports.load = function (server, mediator, publicize) {
 
     var sock = shoe(function (stream) {
 
-      mediator.execute("getDNodeObject", function (err, obj) {
+
+      mediator.execute("getDNodeObject", stream, function (err, obj) {
         if (err) return logger.error(err);
         var d = dnode(publicize(obj));
         d.pipe(stream).pipe(d);

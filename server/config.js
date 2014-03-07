@@ -31,6 +31,16 @@ module.exports = function (ops) {
       mongo: {
         "host": "mongodb://127.0.0.1:27017/browsertap-dev"
       },
+      aws: {
+        "key"    : "AKIAJKP54HI4S4Z235CA",
+        "secret" : "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",
+        "log": {
+          "level": "verbose"
+        },
+        "ec2": {
+          "regions": ["us-east-1", "us-west-1", "us-west-2"]
+        }
+      }
     },
     development: {
       "domains": {

@@ -11,7 +11,8 @@ module.exports = function (ops) {
       type: ops.type,
       domains: {
         app: "app.browsertap.com",
-        website: "www.browsertap.com"
+        website: "www.browsertap.com",
+        provision: "provision.browsertap.com"
       },
       i18n: {
         configPath: __dirname + "/../lang"

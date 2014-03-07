@@ -20,7 +20,8 @@ module.exports = mojo.View.extend({
         { class : require("./extensions"),  name: "extensions"  },
         { class : require("./quality"),     name: "quality"     },
         { class : require("./payments") ,   name: "payments"    },
-        { class : require("./setupTunnel"), name: "setupTunnel" }
+        { class : require("./setupTunnel"), name: "setupTunnel" },
+        { class : require("./switcher"),    name: "switcher"    }
       ]
     }
   }

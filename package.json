@@ -8,6 +8,7 @@
     "website": "TYPE=website NODE_ENV=staging node server",
     "app": "TYPE=app NODE_ENV=staging node server",
     "app-dev": "TYPE=app NODE_ENV=development node server",
+    "provision-dev": "PORT=8081 TYPE=provision NODE_ENV=development node server",
     "hotswap": "./node_modules/.bin/ditto-proxy http://127.0.0.1:8080 --port=8090 --verbose --watch='./server/**'",
     "test": "make test-node"
   },

@@ -3,7 +3,7 @@
 
 <a href="#" data-bind="{{ onClick: 'logout' | redirect() }}">logout</a>
 
-<div class="enter-url">
+<!--div class="enter-url">
   <input type="text" class="form-control" placeholder="Browser URL"></input>
   <input type="submit" class="test-button btn btn-primary" value="Test"></input>
-</div>
+</div-->

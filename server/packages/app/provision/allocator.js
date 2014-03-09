@@ -1,7 +1,7 @@
 var _            = require("underscore"),
 async            = require("async"),
 bindable         = require("bindable"),
-closestEC2Region = require("closest-ec2-Region"),
+closestEC2Region = require("closest-ec2-region"),
 comerr           = require("comerr");
 
 /**

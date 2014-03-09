@@ -2,7 +2,9 @@ var _            = require("underscore"),
 async            = require("async"),
 bindable         = require("bindable"),
 closestEC2Region = require("closest-ec2-region"),
-comerr           = require("comerr");
+comerr           = require("comerr"),
+outcome          = require("outcome"),
+hurryup          = require("hurryup");
 
 /**
  */
@@ -45,19 +47,36 @@ bindable.Object.extend(InstanceAllocator, {
    * assigns an instance to a user
    */
 
-  allocate: function () {
+  allocate: function (complete) {
+
+    logger.info("allocating instance for %s", self._userId);
+    var start = Date.now();
 
 
     var self = this;
 
+    this.set("step", 0);
+
+    // 1. find region
+    // 2. allocate instance
+    // 3. ping instance
+    this.set("steps", 3);
+
 
     // at this point, the instance should
     // be running, and connectable
-    function complete (err, instance) {
+    function complete2 (err, instance) {
 
       // TODO - check pool
       self.set("error", err);
       self.set("instance", instance);
+
+      if (instance) {
+        self._step();
+        self.info("allocated instance in %d seconds", (start - Date.now()) / 1000);
+      }
+
+      if (complete) complete(err, instance);
     }
 
     var q = {};
@@ -72,10 +91,59 @@ bindable.Object.extend(InstanceAllocator, {
       /**
        */
 
+      function getInstance (next) {
+        self._getInstance(next);
+      },
+
+      /**
+       */
+
+      function tagInstance (instance, next) {
+        instance.tags.update({ "userId": self.userId, "ready": "yes" }, outcome.e(next).s(function () {
+          next(null, instance);
+        }));
+      },
+
+      /**
+       * try to ping the instance to make sure it's alive. Don't 
+       */
+
+      function pingInstance (instance, next) {
+        self._pingInstance(instance, next);
+      },
+
+
+    ], complete2);
+
+    return this;
+  },
+
+  /**
+   */
+
+  _step: function () {
+    this.set("step", this.get("step") + 1);
+    this.set("percentDone", (this.get("step") / this.get("steps")) * 100);
+  },
+
+  /**
+   */
+
+  _getInstance: function (q, complete) {
+
+    var self = this, region;
+
+    async.waterfall([
+
+      /**
+       */
+
       function validate (next) {
+
         if (self.maxAge <= 0) {
           return complete(comerr.unauthorized("cannot allocate instance"))
         }
+
         next();
       },
 
@@ -86,6 +154,8 @@ bindable.Object.extend(InstanceAllocator, {
        */
 
       function findClosestRegionName () {
+
+        logger.verbose("finding closest region");
 
         // TODO later - want to only use us-west-1 for now
         // closestEC2Region(self._ip, next);
@@ -98,27 +168,73 @@ bindable.Object.extend(InstanceAllocator, {
        */
 
       function findRegion (regionName, next) {
+        self._step();
         self.regions.findOne({ name: regionName }, next);
       },
 
       /**
-       * once the region is found (there's NO 404), then
-       * find a free instance that has been used by a user.
-       * This is a LOT faster than creating a pristine image each time.
        */
 
-      function findFreeInstance (region, next) {
-        var search = { "userId" : self._userId };
-        region.instances.find(_.extend(search, q), next);
+      function onRegion (r, next) {
+        region = r;
+        next()
       },
 
       /**
-       * if there's a free instance based on the given query, return
-       * it back to the user
+      * try to find an instance that's already assigned to the user
        */
 
-      function onFreeInstance (instance, next) {
-        if (instance) return instance.start(complete);
+      function findAssignedInstance (region, next) {
+        logger.verbose("finding assigned instance");
+        var search = { "tags.userId": self.userId };
+        region.instances.findOne(_.extend(search, q), next);
+      },
+
+      /**
+       * when an assigned instance is found, just return it
+       */
+
+      function onAssignedInstance (instance, next) {
+        if (instance) return complete(next, instance);
+        return next();
+      },
+
+      /**
+       * if not, try to find another running instance
+       * with the query specified by the user
+       */
+
+      function findRunningInstance (next) {
+        logger.verbose("finding running instance");
+        var search = { "tags.userId" : undefined, "tags.ready": "yes", "state": "running" };
+        region.instances.findOne(_.extend(search, q), next);
+      },
+
+      /**
+       */
+
+      function onRunningInstance (instance, next) {
+        if (instance) return complete(null, instance);
+        next();
+      },
+
+      /**
+       * If there are no running instances, try to find a stopped instance.
+       * This is much faster than creating an image.
+       */
+
+      function findStoppedInstance () {
+        logger.verbose("finding stopped instance");
+        var search = { "state": "stopped" };
+        region.instances.findOne(_.extend(search, q), next);
+      },
+
+      /** 
+       * start the instance, then return back to the user
+       */
+
+      function onStoppedInstance (instance, next) {
+        if (instance) return instance.start(next);
         next();
       },
 
@@ -128,7 +244,8 @@ bindable.Object.extend(InstanceAllocator, {
        */
 
       function findImage (next) {
-        self.images.findOne(q, next);
+        logger.verbose("creating instance from image");
+        region.images.findOne(q, next);
       },
 
       /**
@@ -141,23 +258,57 @@ bindable.Object.extend(InstanceAllocator, {
       },
 
       /**
-       * start the instance
+       * Just incase the image is in the stopped state, start it.
        */
 
-      function onInstance (instance, next) {
+      function startInstance (instance, next) {
         instance.start(next);
+      }
+
+    ], complete);
+  },
+
+  /**
+   */
+
+  _pingInstance: function (instance, complete) {
+    var self = this;
+
+    function complete2 (err) {
+
+      if (err) {
+        logger.warn("instance %s not healthy. Destroying and re-allocating", instance.get("_id"));
+        return self._destryAndRetryGetInstance(instance, complete);
+      }
+
+      complete(null, instance);
+    }
+
+    async.waterfall([
+      function pingInstance () {
+        self._step();
+        logger.verbose("checking on instance health");
+        hurryup(function (next) {
+          request(self._getStatusUrl(instance), next);
+        }, { timeout: 1000 * 60 })(next);
       },
+    ], complete2);
+  },
 
-      /**
-       * ping the instance
-       */
+  /**
+   */
 
-      function pingInstance (instance, next) {
-        next();
+  _destryAndRetryGetInstance: function (instance, complete) {
+    var self = this;
+    async.waterfall([
+      function tagNotReady (next) {
+        instance.tags.update({ ready: "no" }, next);
+      },
+      function destroyInstance (next) {
+        instance.destroy();
+        self.allocate(next);
       }
     ], complete);
-
-    return this;
   },
 
   /**
@@ -218,7 +369,7 @@ bindable.Object.extend(InstanceAllocator, {
   _checkInstanceActivity: function () {
 
     var self = this;
-    request(this.get("instance.addresses.publicDNS") + "/status", function (err, res, body) {
+    request(this._getStatusUrl(this.get("instance")), function (err, res, body) {
 
       if (!body.timeout >= 1000 * 30) {
         return self.deallocate(comerr.timeout());
@@ -227,5 +378,12 @@ bindable.Object.extend(InstanceAllocator, {
       // TODO
       self._timeoutPingInstance();
     });
+  },
+
+  /**
+   */
+
+  _getStatusUrl: function (instance) {
+    return instance.get("addresses.publicDNS") + "/status"
   }
 }); 

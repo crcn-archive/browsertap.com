@@ -1,12 +1,10 @@
 var protoclass = require("protoclass"),
-async          = require("async"),
-memoize        = require("memoizee"),
-_              = require("underscore"),
-request        = require("request");
+async          = require("async");
 
-function InstancePool (aws) {
-  this.aws = aws;
-  setTimeout(_.bind(this._removeInstances, this), 1000 * 10);
+
+// creates a reserve of instances on standby
+function InstancePool (options) {
+  this.min = options.min || 0;
 }
 
 protoclass(InstancePool, {
@@ -14,57 +12,51 @@ protoclass(InstancePool, {
   /**
    */
 
-  getInstance: function (options, instance) {
-
-    var q = {};
-
-    // looking for tags such as { firefox: "6,7,8,9,10" }
-    q["tags." + options.browserName] = new RegExp(options.browserVersion);
-
-    var self = this;
-    async.waterfall([
-
-      /**
-       * find the region based on the IP address
-       */
-
-      function findRegion (next) {
-
-      }
-
-      /**
-       * first find a free instance that's not being used
-       */
-
-      function findFreeInstance (next) {
-        self.aws.instances.find(_.extend({ "tags.user": undefined }, q), this);
-      },
-
-      /**
-       * if there is a free instance, then return it back to the user
-       */
-
-      function onFreeInstance (instance, next) {
-        if (instance) return complete(null, instance);
-        next();
-      },
-
-      /**
-       * no free instance? create one
-       */
-
-      function createInstance (next) {
-
-      }
-    ])
+  start: function () {
+    if (this._started) return this;
+    this._started = true;
+    this.check();
+    return this;
   },
 
   /**
-   * takes instances out that have been sitting for a while
    */
 
-  _removeInstances: function () {
-    // ping instances to see if there's anyone connected to them
+  checkTimeout: function () {
+    this._checkTimeout = setTimeout(_.bind(this.check, this), 1000 * 10);
+  },
+
+  /**
+   */
+
+  check: function () {
+    var self = this;
+
+    clearTimeout(this._checkTimeout);
+
+    // allocate instance
+    this.allocate(function () {
+      self.deallocate(function () {
+        self.checkTimeout();
+      });
+    })
+  },
+
+  /**
+   * allocate instances on min run count
+   */
+
+  allocate: function (complete) {
+    async.waterfall([
+    ], complete);
+  },
+
+  /**
+   */
+
+  deallocate: function (complete) {
+    async.waterfall([
+    ], complete);
   }
 });
 

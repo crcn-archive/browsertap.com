@@ -7,7 +7,7 @@ comerr           = require("comerr");
 /**
  */
 
-function InstanceAllocator (options) {
+function InstanceAllocator (options, pool) {
 
   // TODO - bind max time from user object
   // to the instance allocator incase the time
@@ -20,6 +20,8 @@ function InstanceAllocator (options) {
   this._ip     = options.ip;
 
   this.aws     = options.aws;
+
+  this.pool    = pool;
 
   this.app          = options.app;
   this.appName      = options.appName;
@@ -52,6 +54,8 @@ bindable.Object.extend(InstanceAllocator, {
     // at this point, the instance should
     // be running, and connectable
     function complete (err, instance) {
+
+      // TODO - check pool
       self.set("error", err);
       self.set("instance", instance);
     }

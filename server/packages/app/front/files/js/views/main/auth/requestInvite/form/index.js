@@ -33,7 +33,7 @@ module.exports = mojo.View.extend({
   requestInvite: function () {
     var self = this;
     this.set("requestInviteRequest", bindableCall(function (next) {
-      self.application.mediator.execute("requestInvite", { email: self.email }, next);
+      self.application.mediator.execute("requestInvite", { email: self.get("user.email") }, next);
     }));
   }
 });

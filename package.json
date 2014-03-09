@@ -74,7 +74,8 @@
     "paperclip-bootstrap": "0.0.3",
     "password-strength": "0.0.1",
     "store": "~1.3.14",
-    "closest-ec2-region": "0.0.1"
+    "closest-ec2-region": "0.0.1",
+    "memoizee": "~0.2.6"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

@@ -37,7 +37,7 @@ describe("invite#", function () {
   });
 
   it("can successfuly request an invite to use the application", function (next) {
-    requestInviteView.email = "u4@browsertap.com";
+    requestInviteView.get("user").setProperties({ email: "u4@browsertap.com" });
     requestInviteView.requestInvite();
     requestInviteView.bind("requestInviteRequest.success", { max: 1, to: function (success) {
       expect(success).to.be(true);

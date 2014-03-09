@@ -17,11 +17,11 @@
     <legend>{{ "requestInvite.title" | t() }}</legend>
 
     <div class="form-group">
-      <input type="text" name="email" class="form-control" placeholder="{{ 'common.placeholders.email' | t() }}" data-bind="{{ model: this }}"></input>
+      <input type="text" name="email" class="form-control" placeholder="{{ 'common.placeholders.email' | t() }}" data-bind="{{ model: user }}"></input>
       {{
         inputOk: {
           type: 'email',
-          value: email
+          value: user.email
         }
       }}
     </div>

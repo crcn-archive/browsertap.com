@@ -13,7 +13,10 @@ module.exports = {
 
 
     function connect (next) {
-      var stream = shoe("/dnode"),
+
+      var domain = ~window.location.host.indexOf("localhost") ? window.location.host : "api.browsertap.com";
+
+      var stream = shoe("http://" + domain + "/dnode"),
       d = dnode();
       d.on("remote", function (users) {
 

@@ -1,5 +1,6 @@
 var protoclass = require("protoclass"),
-async          = require("async");
+async          = require("async"),
+_              = require("underscore");
 
 
 // creates a reserve of instances on standby

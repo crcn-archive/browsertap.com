@@ -284,15 +284,11 @@ bindable.Object.extend(InstanceAllocator, {
       complete(null, instance);
     }
 
-    async.waterfall([
-      function pingInstance () {
-        self._step();
-        logger.verbose("checking on instance health");
-        hurryup(function (next) {
-          request(self._getStatusUrl(instance), next);
-        }, { timeout: 1000 * 60 })(next);
-      },
-    ], complete2);
+    self._step();
+    logger.verbose("checking on instance health");
+    hurryup(function (next) {
+      request(self._getStatusUrl(instance), next);
+    }, { timeout: 1000 * 60 })(next);
   },
 
   /**

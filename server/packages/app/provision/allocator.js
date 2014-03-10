@@ -4,12 +4,15 @@ bindable         = require("bindable"),
 closestEC2Region = require("closest-ec2-region"),
 comerr           = require("comerr"),
 outcome          = require("outcome"),
-hurryup          = require("hurryup");
+hurryup          = require("hurryup"),
+request          = require("request");
 
 /**
  */
 
 function InstanceAllocator (options, pool) {
+
+  bindable.Object.call(this);
 
   // TODO - bind max time from user object
   // to the instance allocator incase the time
@@ -22,6 +25,7 @@ function InstanceAllocator (options, pool) {
   this._ip     = options.ip;
 
   this.aws     = options.aws;
+  this.regions = options.aws.ec2.regions;
 
   this.pool    = pool;
 
@@ -34,11 +38,9 @@ function InstanceAllocator (options, pool) {
   // kick the user out after N 
   this._maxAge = options.maxAge || -1;
 
-  this.allocate();
-
   // when the instance is set, then ping it every once in a while to check
   // whether it's still actively being used
-  self.bind("instance", { max: 1, to: _.bind(this._onInstance, this) }).now();
+  this.bind("instance", { max: 1, to: _.bind(this._onInstance, this) }).now();
 }
 
 bindable.Object.extend(InstanceAllocator, {
@@ -49,7 +51,7 @@ bindable.Object.extend(InstanceAllocator, {
 
   allocate: function (complete) {
 
-    logger.info("allocating instance for %s", self._userId);
+    logger.info("allocating %s@%s instance for %s", this.appName, this.appVersion, this._userId);
     var start = Date.now();
 
 
@@ -73,7 +75,9 @@ bindable.Object.extend(InstanceAllocator, {
 
       if (instance) {
         self._step();
-        self.info("allocated instance in %d seconds", (start - Date.now()) / 1000);
+        logger.info("allocated instance in %d seconds", (Date.now() - start) / 1000);
+      } else if (err) {
+        logger.error(err.message);
       }
 
       if (complete) complete(err, instance);
@@ -86,20 +90,21 @@ bindable.Object.extend(InstanceAllocator, {
     // way easier to add tags if they're coma delimited
     q["tags." + this.appName] = new RegExp(this.appVersion);
 
+
     async.waterfall([
 
       /**
        */
 
       function getInstance (next) {
-        self._getInstance(next);
+        self._getInstance(q, next);
       },
 
       /**
        */
 
       function tagInstance (instance, next) {
-        instance.tags.update({ "userId": self.userId, "ready": "yes" }, outcome.e(next).s(function () {
+        instance.tags.update({ "userId": self._userId, "ready": "yes" }, outcome.e(next).s(function () {
           next(null, instance);
         }));
       },
@@ -133,6 +138,7 @@ bindable.Object.extend(InstanceAllocator, {
 
     var self = this, region;
 
+
     async.waterfall([
 
       /**
@@ -153,14 +159,14 @@ bindable.Object.extend(InstanceAllocator, {
        * and ultimately improves the UX of the application
        */
 
-      function findClosestRegionName () {
+      function findClosestRegionName (next) {
 
         logger.verbose("finding closest region");
 
         // TODO later - want to only use us-west-1 for now
         // closestEC2Region(self._ip, next);
 
-        next(null, "us-west-1");
+        next(null, "us-east-1");
       },
 
       /**
@@ -184,9 +190,9 @@ bindable.Object.extend(InstanceAllocator, {
       * try to find an instance that's already assigned to the user
        */
 
-      function findAssignedInstance (region, next) {
+      function findAssignedInstance (next) {
         logger.verbose("finding assigned instance");
-        var search = { "tags.userId": self.userId };
+        var search = { "tags.userId": self._userId, state: "running" };
         region.instances.findOne(_.extend(search, q), next);
       },
 
@@ -195,7 +201,9 @@ bindable.Object.extend(InstanceAllocator, {
        */
 
       function onAssignedInstance (instance, next) {
-        if (instance) return complete(next, instance);
+        if (instance) {
+          return complete(next, instance);
+        }
         return next();
       },
 
@@ -223,7 +231,7 @@ bindable.Object.extend(InstanceAllocator, {
        * This is much faster than creating an image.
        */
 
-      function findStoppedInstance () {
+      function findStoppedInstance (next) {
         logger.verbose("finding stopped instance");
         var search = { "state": "stopped" };
         region.instances.findOne(_.extend(search, q), next);
@@ -284,11 +292,11 @@ bindable.Object.extend(InstanceAllocator, {
       complete(null, instance);
     }
 
+    return complete2();
+
     self._step();
     logger.verbose("checking on instance health");
-    hurryup(function (next) {
-      request(self._getStatusUrl(instance), next);
-    }, { timeout: 1000 * 60 })(next);
+    instance.getStatus(complete2);
   },
 
   /**
@@ -365,7 +373,8 @@ bindable.Object.extend(InstanceAllocator, {
   _checkInstanceActivity: function () {
 
     var self = this;
-    request(this._getStatusUrl(this.get("instance")), function (err, res, body) {
+
+    this.get("instance").getStatus(function (err, body) {
 
       if (!body.timeout >= 1000 * 30) {
         return self.deallocate(comerr.timeout());
@@ -374,12 +383,8 @@ bindable.Object.extend(InstanceAllocator, {
       // TODO
       self._timeoutPingInstance();
     });
-  },
-
-  /**
-   */
-
-  _getStatusUrl: function (instance) {
-    return instance.get("addresses.publicDNS") + "/status"
   }
 }); 
+
+
+module.exports = InstanceAllocator

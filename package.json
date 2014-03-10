@@ -36,7 +36,7 @@
     "protoclass": "0.0.5",
     "sift": "0.0.12",
     "outcome": "0.0.18",
-    "awsm": "0.0.x",
+    "awsm": "0.0.42",
     "async": "~0.2.10",
     "awsm-ssh": "0.0.17",
     "browserify": "~3.30.1",

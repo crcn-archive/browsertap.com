@@ -5,6 +5,7 @@ exports.load    = function (config, mediator) {
 
   var port,
   server = express()
+  server.use(express.compress())
 
   mediator.on("post bootstrap", function (message, next) {
 

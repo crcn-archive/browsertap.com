@@ -147,7 +147,7 @@ bindable.Object.extend(InstanceAllocator, {
       function validate (next) {
 
         if (self.maxAge <= 0) {
-          return complete(comerr.unauthorized("cannot allocate instance"))
+          return complete(comerr.unauthorized("cannot allocate instance"));
         }
 
         next();

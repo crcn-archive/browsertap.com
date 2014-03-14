@@ -9,29 +9,22 @@ desktopDecor          = require("./decor/desktop");
  * connection between the provisioner and the application
  */
 
-exports.require = ["aws"];
-exports.load = function (aws) {
+exports.require = ["aws", "config", "api.application"];
+exports.load = function (aws, config, app) {
 
 
   aws.use(desktopDecor);
 
-  
-  var allocator = new InstanceAllocator({
-    aws: aws,
-    instanceType: "t1.micro",
-    userId: "abcde",
-    appName: "firefox",
-    appVersion: 16,
-    maxAge: 10
-  });
-
-  // allocator.allocate();
-  
   var pool = new InstancePool({}).start();
-  
-  return function (options) {
-    return new InstanceAllocator(_.extend({
-      aws: aws
-    }, options), pool).allocate();
+
+  var provisioner = {
+    allocateInstance: function (options, complete) {
+      return new InstanceAllocator(_.extend({
+        aws: aws,
+        config: config,
+      }, options), pool).allocate(complete);
+    }
   }
+
+  app.provisioner = provisioner;
 }

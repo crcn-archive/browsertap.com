@@ -1,10 +1,18 @@
 var traverse = require("traverse"),
 _            = require("underscore"),
-dref         = require("dref");
+dref         = require("dref"),
+bindable     = require("bindable");
 
 exports.load = function () {
   return publicize;
 }
+
+var col = new bindable.Collection();
+col.public = ["_source"];
+
+var person = new bindable.Object({ name: "abba" });
+person.public = ["__context"];
+col.push(person);
 
 function publicize (object) {
   return copy(object);
@@ -25,8 +33,6 @@ function copyPublic (context) {
     v = copy(v, context);
     dref.set(clone, pub[i], v);
   }
-
-
 
   return clone;
 }
@@ -79,7 +85,7 @@ function copy (value, context) {
       oldFn.apply(context, args);
     }
   } else if (t === "object") {
-    if (t.constructor === Array) {
+    if (value.constructor === Array) {
       value = cloneArray(value);
     } else if(String(value) === "[object Object]") {
       value = copyPublic(value);

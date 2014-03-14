@@ -45,7 +45,8 @@ module.exports = function (ops) {
     development: {
       "domains": {
         "app": "localhost"
-      }
+      },
+      "desktopHost": "win2008rc2.local"
     },
     testing: {
       logLevel: Logger.levels.NONE,

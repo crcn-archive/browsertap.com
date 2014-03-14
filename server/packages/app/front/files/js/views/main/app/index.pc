@@ -1,1 +1,4 @@
 {{ html: `sections.pages` }}
+
+{{ html: sections.desktop }}
+{{ html: `sections.launchers` }}

@@ -1,0 +1,3 @@
+<li>
+  {{model.appName}}@{{model.appVersion}} <a href="#" data-bind="{{ onClick: launch() }}">launch</a>
+</li>

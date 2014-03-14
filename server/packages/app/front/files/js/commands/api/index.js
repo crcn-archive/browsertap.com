@@ -1,5 +1,8 @@
-var outcome = require("outcome"),
-comerr      = require("comerr");
+var outcome    = require("outcome"),
+comerr         = require("comerr"),
+dnode          = require("dnode"),
+shoe           = require("shoe"),
+_wrapBindables = require("../utils/wrapBindables");
 
 module.exports = {
 
@@ -69,7 +72,7 @@ module.exports = {
 
 		code.resetPassword(d.password, outcome.e(next).s(function () {
 
-			// TODO 
+			// TODO
 			message.mediator.execute("flashMessage", { message: "Successfuly reset password" });
 			app.models.set("user", code.get("user"));
 			app.router.redirect("home");
@@ -99,5 +102,47 @@ module.exports = {
 	requestInvite: function (message, next) {
 		var email = message.data.email, app = message.mediator.application;
 		app.get("models.users").requestInvite(email, next);
+	},
+
+	/**
+	 */
+
+	launch: function (message, next) {
+
+		var launcher = message.data;
+
+		launcher.launch(outcome.e(next).s(function (desktop) {
+
+			var domain = desktop.addresses.publicIp;
+
+			console.log("connecting to %s", domain);
+
+			var stream = shoe("http://" + domain + "/dnode"),
+			d = dnode();
+			d.on("remote", function (desktop) {
+
+				console.log("connected to %s", domain);
+
+				var _desktop = _wrapBindables(desktop);
+
+				message.mediator.application.models.set("desktop", _desktop);
+
+				next();
+			});
+
+			d.pipe(stream).pipe(d);
+		}));
+	},
+
+	/**
+	 */
+
+
+	setMainScreen: function (message, next) {
+		var screen = message.data;
+		screen.stream.start();
+		console.log("OK");
+		message.mediator.application.models.set("mainScreen", screen);
+		next();
 	}
 }

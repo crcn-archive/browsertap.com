@@ -25,6 +25,7 @@ function InstanceAllocator (options, pool) {
   this._ip     = options.ip;
 
   this.aws     = options.aws;
+  this.config  = options.config;
   this.regions = options.aws.ec2.regions;
 
   this.pool    = pool;
@@ -35,7 +36,7 @@ function InstanceAllocator (options, pool) {
   this.instanceType = options.instanceType || "m3.large";
 
   // max age for the user. If under a trial account, we'll
-  // kick the user out after N 
+  // kick the user out after N
   this._maxAge = options.maxAge || -1;
 
   // when the instance is set, then ping it every once in a while to check
@@ -46,13 +47,22 @@ function InstanceAllocator (options, pool) {
 bindable.Object.extend(InstanceAllocator, {
 
   /**
+   */
+
+  public: ["__context", "on", "__isBindable", "bind"],
+
+  /**
    * assigns an instance to a user
    */
 
   allocate: function (complete) {
 
+    if (!complete) complete = function () {};
+
     logger.info("allocating %s@%s instance for %s", this.appName, this.appVersion, this._userId);
     var start = Date.now();
+
+
 
 
     var self = this;
@@ -70,8 +80,8 @@ bindable.Object.extend(InstanceAllocator, {
     function complete2 (err, instance) {
 
       // TODO - check pool
-      self.set("error", err);
-      self.set("instance", instance);
+      if (err) self.set("error", err);
+      if (instance) self.set("instance", instance);
 
       if (instance) {
         self._step();
@@ -81,6 +91,11 @@ bindable.Object.extend(InstanceAllocator, {
       }
 
       if (complete) complete(err, instance);
+    }
+
+
+    if (this.config.get("env") === "development") {
+      return this._allocateDevInstance(complete2);
     }
 
     var q = {};
@@ -110,7 +125,7 @@ bindable.Object.extend(InstanceAllocator, {
       },
 
       /**
-       * try to ping the instance to make sure it's alive. Don't 
+       * try to ping the instance to make sure it's alive. Don't
        */
 
       function pingInstance (instance, next) {
@@ -119,6 +134,27 @@ bindable.Object.extend(InstanceAllocator, {
 
 
     ], complete2);
+
+    return this;
+  },
+
+
+  /**
+   */
+
+  _allocateDevInstance: function (complete) {
+
+    var host = this.config.get("desktopHost");
+
+    logger.info("allocating development instance %s", host);
+
+    setTimeout(function () {
+      complete(null, {
+        addresses: {
+          publicIp: host
+        }
+      });
+    }, 0);
 
     return this;
   },
@@ -154,7 +190,7 @@ bindable.Object.extend(InstanceAllocator, {
       },
 
       /**
-       * first find the closest EC2 region based on the IP 
+       * first find the closest EC2 region based on the IP
        * address of the specific user. THis reduces latency
        * and ultimately improves the UX of the application
        */
@@ -237,7 +273,7 @@ bindable.Object.extend(InstanceAllocator, {
         region.instances.findOne(_.extend(search, q), next);
       },
 
-      /** 
+      /**
        * start the instance, then return back to the user
        */
 
@@ -246,7 +282,7 @@ bindable.Object.extend(InstanceAllocator, {
         next();
       },
 
-      /** 
+      /**
        * At this point, there are no more free instances, so create
        * one from the given query.
        */
@@ -374,6 +410,8 @@ bindable.Object.extend(InstanceAllocator, {
 
     var self = this;
 
+    if (this.config.get("env") === "development") return;
+
     this.get("instance").getStatus(function (err, body) {
 
       if (!body.timeout >= 1000 * 30) {
@@ -384,7 +422,7 @@ bindable.Object.extend(InstanceAllocator, {
       self._timeoutPingInstance();
     });
   }
-}); 
+});
 
 
 module.exports = InstanceAllocator

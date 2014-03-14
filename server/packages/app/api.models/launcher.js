@@ -1,10 +1,6 @@
 var BaseModel    = require("./base/model"),
-async            = require("async"),
-closestEC2Region = require("closest-ec2-region")();
+async            = require("async");
 
-closestEC2Region("54.84.220.75", function (err, regionName) {
-  console.log(regionName);
-})
 
 function Launcher () {
   BaseModel.apply(this, arguments);
@@ -16,37 +12,23 @@ BaseModel.extend(Launcher, {
   /**
    */
 
-  deserialize: function (data) {
-    return {
-      os             : data.os,
-      browserName    : data.name,
-      browserVersion : data.version,
-      status         : data.status
-    }
-  },
+  public: ["launch"],
 
   /**
    */
 
-  launch: function (next) {
+  launch: function (complete) {
 
-    var self = this;
+    if (!complete) complete = function () {}
 
-    async.waterfall([
+    var allocator = this.app.provisioner.allocateInstance({
+      userId: "abcd",
+      appName: this.get("appName"),
+      appVersion: this.get("appVersion"),
+      maxAge: -1
+    }, complete);
 
-      function foind (next) {
-        closestEC2Region(self.user.remoteAddress, function (err, regionName) {
-          next(null, regionName || "us-east-1");
-        })
-      },
-
-      function allocateInstance (regionName, next) {
-        // fetch from pool
-        // this.application.instancePool.allocate(regionName, )
-      },
-
-
-    ]);
+    this.set("allocator", allocator);
   }
 });
 

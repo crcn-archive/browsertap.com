@@ -23,6 +23,8 @@ module.exports = mojo.View.extend({
       views: [
         { class: require("./browser"), name: "browser" }
       ]
-    }
+    },
+    launchers: require("./launchers"),
+    desktop: require("./desktop")
   }
 });

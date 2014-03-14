@@ -5,6 +5,20 @@ module.exports = function (obj) {
 }
 
 
+/*var obj = module.exports({
+  __isBindableCollection: true,
+  on: function(){},
+  _source: [
+    {
+      __isBindable: true,
+      __context: { name: "abba" },
+      on: function(){},
+    }
+  ]
+});
+
+console.log(obj);*/
+
 
 function _clone (obj) {
   var clone = {};
@@ -17,7 +31,7 @@ function _clone (obj) {
 function _copyArray (value) {
   var clone = new Array(value.length);
   for (var i = value.length; i--;) {
-    clone[i] = value[i];
+    clone[i] = _copy(value[i]);
   }
   return clone;
 }
@@ -67,10 +81,10 @@ function _copyFn (oldFn, context) {
 }
 
 
-function _copyBindableCollection (value) {
+function _copyBindableCollection (remote) {
 
-  var clone = _clone(value), 
-  rep = new bindable.Collection(clone.__source);
+  var clone = _clone(remote),
+  rep = new bindable.Collection(clone._source);
 
   var rep = _copyNonIntersectingProperties(clone, rep);
 
@@ -78,20 +92,39 @@ function _copyBindableCollection (value) {
 
   _syncRemoteBindable(clone, rep);
 
+  remote.on("insert", function (item) {
+    rep.push(_copy(item));
+  });
+
+  function removeItem (item) {
+    item = _copy(item);
+    var _id = item.get("_id");
+    var item = rep.filter(function (model) {
+      return model.get("_id") === _id;
+    }).pop();
+
+    if (item) rep.splice(rep.indexOf(item), 1);
+  }
+
+  remote.on("remove", removeItem);
+
+  remote.on("replace", function (newItems, oldItems) {
+    oldItems.forEach(removeItem);
+  })
+
 
   return rep;
 }
 
-function _copyBindable (value) {
+function _copyBindable (remote) {
 
-  var clone = _clone(value);
+  var clone = _clone(remote);
 
   var rep = _copyNonIntersectingProperties(clone, new bindable.Object(clone.__context));
 
   rep.__wrapped = true;
 
   _syncRemoteBindable(clone, rep);
-
 
   return rep;
 }

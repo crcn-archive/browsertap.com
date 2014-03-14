@@ -1,6 +1,6 @@
 var dnode      = require("dnode"),
 shoe           = require("shoe"),
-_wrapBindables = require("./utils/wrapBindables");
+_wrapBindables = require("../utils/wrapBindables");
 
 module.exports = {
   "pre bootstrap": function (message, next) {

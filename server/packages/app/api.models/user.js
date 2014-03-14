@@ -42,8 +42,10 @@ BaseModel.extend(User, {
 
     // application launchers
     "launchers": function (next) {
-      return this.app.createModel("launchers", { user: this }).load(next);
+      return this.app.models.createModel("launchers", { user: this }).load(next);
     }
+
+
   },
 
   /**
@@ -76,8 +78,8 @@ BaseModel.extend(User, {
    */
 
   _update: function (next) {
-    this.collection.update({ 
-      _id: this.get("_id") 
+    this.collection.update({
+      _id: this.get("_id")
     }, {
       $set: {
         name           : this.get("name"),

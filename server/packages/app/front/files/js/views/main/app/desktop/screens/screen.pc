@@ -1,0 +1,3 @@
+<li>
+  {{ model.className }} <a href="#" data-bind="{{ onClick: show() }}">show</a>
+</li>

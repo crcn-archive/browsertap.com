@@ -33,4 +33,8 @@ npm run website-dev # run website in dev mode
 ```
 
 
+### Resources
 
+Installing libvpx + ffmpeg: http://wiki.webmproject.org/ffmpeg/building-with-libvpx
+
+native -> browser webrtc: http://sourcey.com/webrtc-native-to-browser-video-streaming-example/

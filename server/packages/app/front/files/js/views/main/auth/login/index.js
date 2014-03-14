@@ -34,5 +34,12 @@ module.exports = mojo.View.extend({
     this.set("loginRequest", bindableCall(function (next) {
       self.application.mediator.execute("login", d, next);
     }));
+  },
+
+  /**
+   */
+
+  connectWithGithub: function () {
+    
   }
 });

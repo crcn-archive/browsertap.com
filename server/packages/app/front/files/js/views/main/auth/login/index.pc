@@ -1,9 +1,9 @@
 <fieldset>
-  
-  {{ 
+
+  {{
     loader: {
       show: loading
-    } 
+    }
   }}
 
   {{#if: models.login.flash }}
@@ -30,6 +30,9 @@
 
     <div class="form-group">
       <input type="submit" name="login" value="Login" class="btn btn-primary"></input>
+      {{#if: false}}
+        <button class="btn btn-github" data-bind="{{ onClick: connectWithGithub() }}"><i class="fa fa-github"></i> | Connect with GitHub</button>
+      {{/}}
     </div>
   </form>
 
@@ -37,7 +40,7 @@
 
   {{#if: models.inviteOnly }}
     <a href="#" class="pull-right" id="login-request-invite-button" data-bind="{{ onClick: 'requestInvite' | redirect() }}">{{ 'login.buttons.requestInvite' | t() }}</a>
-  {{/else}} 
+  {{/else}}
     <a href="#" class="pull-right" id="login-signup-button" data-bind="{{ onClick: 'signup' | redirect() }}">{{ 'login.buttons.signup' | t() }}</a>
   {{/}}
 

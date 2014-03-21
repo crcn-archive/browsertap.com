@@ -32,6 +32,14 @@ module.exports = ColumnView = mojo.View.extend({
 
   selectRow: function (model) {
 
+    if (this.currentModel) {
+      this.currentModel.set("selected", false);
+    }
+
+    this.currentModel = model;
+
+    model.set("selected", true);
+
     if (!model.get("child")) {
       return this._selectItem(model);
     }
@@ -47,5 +55,15 @@ module.exports = ColumnView = mojo.View.extend({
   _selectItem: function (model) {
     if (!this.has("onSelectItem")) return;
     this.get("onSelectItem").call(this, model);
+  },
+
+  /**
+   */
+
+  remove: function () {
+    ColumnView.__super__.remove.call(this);
+    if (this.currentModel) {
+      this.currentModel.set("selected", false);
+    }
   }
 });

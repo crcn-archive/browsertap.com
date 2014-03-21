@@ -7,6 +7,11 @@ module.exports = ColumnView = mojo.View.extend({
   /**
    */
 
+  percWidth: 50,
+
+  /**
+   */
+
   paper: require("./index.pc"),
 
   /**

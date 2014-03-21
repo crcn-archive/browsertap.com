@@ -1,4 +1,8 @@
-<ul class="picker-column">
+<ul class="picker-column" data-bind="{{
+  style: {
+    width: percWidth + "%"
+  }
+}}">
   {{ html: `sections.rows` }}
 </ul>
 

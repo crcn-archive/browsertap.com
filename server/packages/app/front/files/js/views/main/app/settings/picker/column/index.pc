@@ -1,0 +1,5 @@
+<ul class="picker-column">
+  {{ html: `sections.rows` }}
+</ul>
+
+{{ html: sections.child }}

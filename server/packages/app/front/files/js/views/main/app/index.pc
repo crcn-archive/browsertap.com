@@ -1,4 +1,5 @@
-{{ html: `sections.pages` }}
 
-{{ html: sections.desktop }}
-{{ html: `sections.launchers` }}
+
+{{ html: sections.settings }}
+
+<!--{{ html: `sections.wkm` }}-->

@@ -13,18 +13,11 @@ module.exports = mojo.View.extend({
   bindings: {
     "models.states.app": "sections.pages.currentName"
   },
-
-  /**
-   */
-
   sections: {
-    pages: {
-      type: "states",
-      views: [
-        { class: require("./browser"), name: "browser" }
-      ]
-    },
-    launchers: require("./launchers"),
-    desktop: require("./desktop")
+    // controller for the application, including launchers and stuff
+    settings: require("./settings"),
+
+    // windows / keyboard / mouse controller. This thing is full screen
+    wkm: require("./wkm")
   }
 });

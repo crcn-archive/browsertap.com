@@ -1,0 +1,5 @@
+<div id="settings-outer">
+  <div id="settings-inner">
+    {{ html: `sections.pages` }}
+  </div>
+</div>

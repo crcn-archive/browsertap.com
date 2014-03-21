@@ -141,7 +141,6 @@ module.exports = {
 	setMainScreen: function (message, next) {
 		var screen = message.data;
 		screen.stream.start();
-		console.log("OK");
 		message.mediator.application.models.set("mainScreen", screen);
 		next();
 	}

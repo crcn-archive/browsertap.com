@@ -1,1 +1,9 @@
 {{ html: `sections.columns` }}
+
+
+
+{{
+  loader: {
+    show: loading
+  }
+}}

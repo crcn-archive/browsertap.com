@@ -10,6 +10,7 @@ module.exports = mojo.View.extend({
   paper: require("./index.pc"),
 
 
+
   /**
    */
 
@@ -17,6 +18,11 @@ module.exports = mojo.View.extend({
     "models.user.launchers": {
       "sections.columns.source": {
         "map": transformLaunchers
+      },
+      "loading": {
+        "map": function (launchers) {
+          return !launchers;
+        }
       }
     }
   },

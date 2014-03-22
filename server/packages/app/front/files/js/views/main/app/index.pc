@@ -1,3 +1,7 @@
+{{#if: models.launcher}}
+  <div style="icon-brw-{{models.launcher.appName}}">
+  </div>
+{{/}}
 
-pc
-<!--{{ html: `sections.wkm` }}-->
+{{html:`sections.desktop`}}
+{{ html: `sections.wkm` }}

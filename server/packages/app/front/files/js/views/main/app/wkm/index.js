@@ -5,19 +5,19 @@ wkmEvents = require("./events");
 
 
 var tpl = _.template(
-  '<div class="screen">' + 
-    '<object type="application/x-shockwave-flash" width="100%" height="100%">' + 
-      '<param name="movie" value="<%-src %>" />' + 
-      '<param name="quality" value="high" />' + 
-      '<param name="scale" value="noscale" />' + 
-      '<param name="align" value="tl" />' + 
-      '<param name="debug" value="true" />' + 
-      '<param name="host" value="host" />' + 
-      '<param name="channel" value="<%-channel %>" />' + 
-      '<param name="flashVars" value="host=<%-host %>" />' + 
-      '<param name="wmode" value="gpu" />' + 
-      '<embed src="<%-src->" host="host" quality="high" flashVars="host=abba" type="application/x-shockwave-flash" allowscriptaccess="always" />' + 
-    '</object>' + 
+  '<div class="screen">' +
+    '<object type="application/x-shockwave-flash" width="100%" height="100%">' +
+      '<param name="movie" value="<%-src %>" />' +
+      '<param name="quality" value="high" />' +
+      '<param name="scale" value="noscale" />' +
+      '<param name="align" value="tl" />' +
+      '<param name="debug" value="true" />' +
+      '<param name="host" value="host" />' +
+      '<param name="channel" value="<%-channel %>" />' +
+      '<param name="flashVars" value="host=<%-host %>" />' +
+      '<param name="wmode" value="gpu" />' +
+      '<embed src="<%-src->" host="host" quality="high" flashVars="host=abba" type="application/x-shockwave-flash" allowscriptaccess="always" />' +
+    '</object>' +
   '</div>'
 );
 
@@ -64,15 +64,15 @@ module.exports = mojo.View.extend({
     });
 
 
-    $win.mousemove(_.throttle(function(event) {
+    /*$win.mousemove(_.throttle(function(event) {
 
       var coords = { x: event.clientX, y: event.clientY };
 
       self._mouseEvent(wkmEvents.mouse.MOUSEEVENTF_ABSOLUTE | wkmEvents.mouse.MOUSEEVENTF_MOVE, coords);
-    }, 20));
+    }, 20));*/
 
     window.desktopEvents = {
-      // mouseMove  : _.bind(this._onMouseMove, this),
+      mouseMove  : _.bind(this._onMouseMove, this),
       keyDown    : _.bind(this._onKeyDown, this),
       keyUp      : _.bind(this._onKeyUp, this),
       mouseWheel : _.bind(this._onMouseWheel, this),
@@ -88,7 +88,7 @@ module.exports = mojo.View.extend({
 
     document.body.appendChild(div);
 
-    swfobject.embedSWF(this.get("src"), 
+    swfobject.embedSWF(this.get("src"),
       "tmpSwf",
       "100%",
       "100%",
@@ -106,16 +106,29 @@ module.exports = mojo.View.extend({
       });
   },
   "_onMouseMove": function (coords) {
-    // console.log("MOUSE MOVE")
+
+    // var sx = this.screen.get("width")
+    var sx = this.$(".screen").width() / 2 - this.screen.get("width") / 2;
+    var sy = this.$(".screen").height() / 2 - this.screen.get("height") / 2;
+
+    var rx = coords.x - sx;
+    var ry = coords.y - sy;
+
+    this._mouseEvent(wkmEvents.mouse.MOUSEEVENTF_ABSOLUTE | wkmEvents.mouse.MOUSEEVENTF_MOVE, {
+      x: rx,
+      y: ry
+    });
   },
   "_onMouseWheel": function (data) {
     // console.log("wheel")
+    //this._keyboardEvent(data.keyCode, 0, 0)
   },
   "_onKeyDown": function (data) {
-    // console.log("key down")
+    console.log(data, this.screen);
+    if(this.screen) this.screen.keybdEvent(data);
   },
   "_onKeyUp": function (coords) {
-    // console.log("key up")
+    //if(this.screen) this.screen.keybdEvent(data.keyCode, 0, wkmEvents.keyboard.KEYEVENTF_KEYUP)
   },
   "_onResize": function (data) {
     this.screen.resize(data.width, data.height);

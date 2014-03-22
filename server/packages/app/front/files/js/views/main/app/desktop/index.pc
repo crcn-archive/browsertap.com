@@ -1,1 +1,3 @@
-{{ html: sections.screens }}
+{{#if:!models.mainScreen}}
+  {{ html: sections.screens }}
+{{/}}

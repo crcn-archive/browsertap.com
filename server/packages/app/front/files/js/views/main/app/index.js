@@ -15,6 +15,7 @@ module.exports = mojo.View.extend({
   },
   sections: {
 
+    desktop: require("./desktop"),
     // windows / keyboard / mouse controller. This thing is full screen
     wkm: require("./wkm")
   }

@@ -111,6 +111,8 @@ module.exports = {
 
 		var launcher = message.data;
 
+		message.mediator.application.models.set("launcher", launcher);
+
 		launcher.launch(outcome.e(next).s(function (desktop) {
 
 			var domain = desktop.addresses.publicIp;

@@ -24,12 +24,12 @@ package
 	import flash.desktop.*;
 	import flash.filters.*;
 
-	
+
 		[SWF(frameRate=30,backgroundColor='#CFCFCF')]
-	
+
 	public class DesktopPlayer extends Sprite
 	{
-		
+
 		private var _connection: NetConnection;
 		private var _stream: NetStream;
 		private var _video: Video;
@@ -45,17 +45,17 @@ package
 		private var _mask:Sprite;
 		private var _padding:Object;
 		private var _border:Sprite;
-		
-		
-		
-		
+
+
+
+
 		public function DesktopPlayer()
 		{
 			this._server  =  this.root.loaderInfo.parameters.host   || "rtmp://win2008rc2.local:1935/live";
 			this._channel = this.root.loaderInfo.parameters.channel || "default";
-			this._debug =   Boolean(this.root.loaderInfo.parameters.debug) || true;
+			this._debug =   Boolean(this.root.loaderInfo.parameters.debug);
 			//this._setClipboard = String(this.root.loaderInfo.parameters.clipboard);
-			
+
 			this._copyPaste = new TextField();
 			this._copyPaste.width = 0;
 			this._copyPaste.height = 0;
@@ -67,7 +67,7 @@ package
 			this.addChild(this._border);
 			this.addChild(this._mask);
 			this.addChild(this._copyPaste);
-			
+
 			this._debugInfo = new TextField();
 			this._debugInfo.text = "connecting to " + this._server;
 			this._debugInfo.autoSize = 'left';
@@ -78,22 +78,22 @@ package
 			this._debugInfo.alpha = 0.5;
 			if(this._debug) this.addChild(this._debugInfo);
 			this.addChild(this._copyPaste);
-			
-			
+
+
 			this.stage.align = StageAlign.TOP_LEFT;
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			this._copyPaste.addEventListener(Event.PASTE, onPaste);
-			
+
 			this.openStream();
-			
-			
+
+
 			this.stage.showDefaultContextMenu = false;
-			
+
 			this.stage.addEventListener(Event.RESIZE, onStageResize);
-			
-			var mouseEvents:Array = [MouseEvent.CLICK, 
-				MouseEvent.DOUBLE_CLICK, 
-				MouseEvent.MOUSE_DOWN, 
+
+			var mouseEvents:Array = [MouseEvent.CLICK,
+				MouseEvent.DOUBLE_CLICK,
+				MouseEvent.MOUSE_DOWN,
 				MouseEvent.MOUSE_MOVE,
 				MouseEvent.MOUSE_OUT,
 				MouseEvent.MOUSE_OVER,
@@ -101,15 +101,15 @@ package
 				MouseEvent.MOUSE_WHEEL];
 
 			_trace("ev listen")
-			
+
 			var keyboardEvents:Array = [KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_UP];
-			
+
 			for each(var mouseEvent:String in mouseEvents)
 			{
 				this.stage.addEventListener(mouseEvent, onMouseEvent);
 			}
 
-			
+
 			for each(var keyboardEvent:String in keyboardEvents)
 			{
 				this.stage.addEventListener(keyboardEvent, onKeyboardEvent);
@@ -123,14 +123,14 @@ package
 			ExternalInterface.addCallback("getClipboard", getClipboard);
 			this.stage.focus = this._copyPaste;
 		}
-		
+
 		private function onMouseEvent(event:MouseEvent):void
 		{
 
-			if(event.type == MouseEvent.MOUSE_DOWN && this._setClipboard) 
+			if(event.type == MouseEvent.MOUSE_DOWN && this._setClipboard)
 			{
 				_trace("set clipboard data to " + this._setClipboard);
-				try 
+				try
 				{
 					Clipboard.generalClipboard.clear();
 					//Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT, this._clipboard = this._setClipboard);
@@ -140,59 +140,59 @@ package
 				}
 				this._setClipboard = null;
 			}
-			
+
 			ExternalInterface.call('desktopEvents.' + event.type, { x: event.stageX, y: event.stageY, delta: event.delta, ctrlKey: event.ctrlKey, shiftKey: event.shiftKey });
 		}
-		
+
 		private function onKeyboardEvent(event:KeyboardEvent):void
-		{   
+		{
 			clearCopyPaste();
 
-			if(this._setClipboard) 
+			if(this._setClipboard)
 			{
 				this._copyPaste.text = this._clipboard = this._setClipboard;
 				this._copyPaste.setSelection(0, this._setClipboard.length)
-			} 
+			}
 
 
 			this.stage.focus = this._copyPaste;
 			setTimeout(onKeyEventDelayed, 1, event);
 		}
 
-		private function onKeyEventDelayed(event:KeyboardEvent): void 
+		private function onKeyEventDelayed(event:KeyboardEvent): void
 		{
-			if(event.ctrlKey) 
+			if(event.ctrlKey)
 			{
 				var newClipboardText:String = this._copyPaste.text;
-				if(event.charCode == "v".charCodeAt(0) && newClipboardText != this._clipboard) 
+				if(event.charCode == "v".charCodeAt(0) && newClipboardText != this._clipboard)
 				{
 					_trace("set external clipboard to " + newClipboardText);
 					this._clipboard = newClipboardText;
 					ExternalInterface.call("desktopEvents.setClipboard", this._clipboard);
 				} else
-				if(event.charCode == "c".charCodeAt(0) && this._setClipboard) 
+				if(event.charCode == "c".charCodeAt(0) && this._setClipboard)
 				{
 					_trace("set clipboard to " + this._setClipboard);
 					this._setClipboard = null;
-				}	
+				}
 			}
 
 			ExternalInterface.call('desktopEvents.' + event.type, { keyCode: event.keyCode, altKey: event.altKey, shiftKey: event.shiftKey, ctrlKey: event.ctrlKey });
 		}
 
 
-		private function clearCopyPaste():void 
+		private function clearCopyPaste():void
 		{
 			this._copyPaste.text = "";
 		}
 
-		private function onPaste(e:Event):void 
+		private function onPaste(e:Event):void
 		{
 			_trace("PASTE")
 		}
 
-		
-		
+
+
 		private function openVideo():void
 		{
 			_trace("selecting stream " + this._channel);
@@ -200,21 +200,21 @@ package
 			if(this._video) {
 				this.removeChild(this._video);
 			}
-			
+
 			var video:Video = this._video = new Video(this.stage.stageWidth, this.stage.stageHeight);
 			video.attachNetStream(this._stream);
 			video.mask = this._mask;
-			
+
 			video.deblocking = 2;
 			video.smoothing = true;
-			
+
 			this._stream.play(this._channel);
 			this.addChildAt(this._video, 0);
 			this.addChildAt(this._border, 0);
-			
+
 			this.onStageResize();
 		}
-		
+
 
 		private function _trace(arg:String): void
 		{
@@ -223,15 +223,15 @@ package
 
 			trace(arg);
 		}
-			
-		
+
+
 		private function openStream():void
 		{
 
 			//_trace("Connecting to " + this._server);
 
 
-			
+
 			this._connection = new NetConnection();
 			this._connection.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus, false, 0, true);
 			this._connection.addEventListener(IOErrorEvent.IO_ERROR, onError, false, 0, true);
@@ -239,39 +239,39 @@ package
 			this._connection.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onError, false, 0, true);
 			this._connection.objectEncoding = ObjectEncoding.AMF0;
 			this._connection.connect(this._server);
-			
-			
+
+
 		}
-		
+
 		private var _status:String;
-		
+
 		/*private function log(status:String):void
 		{
 			if(status) this._status = status;
-			
+
 			var fps:String = '--';
-			
+
 			if(this._stream) fps = this._stream.currentFPS;
-			
+
 			this._debugInfo.text = 'Status: ' + _status + ', fps: ' + fps + '';
 		}*/
-		
-		
+
+
 		private function onStageResize(event:Event = null):void
 		{
 			if(!this._video) return;
-				
+
 			this._video.x = Math.floor(this.stage.stageWidth / 2 - this._video.width / 2);
 			this._video.y = Math.floor(this.stage.stageHeight / 2 - this._video.height / 2);
 			this._mask.x = this._border.x = this._video.x;
 			this._mask.y = this._border.y = this._video.y;
-			
+
 			//this._video.width = this.stage.stageWidth;
 			//this._video.height = this.stage.stageHeight;
 
 			this._debugInfo.y = this.stage.stageHeight - 200;
 		}
-		
+
 		private function onNetStatus(event:NetStatusEvent):void
 		{
 		//	_trace(event.info.code);
@@ -297,7 +297,7 @@ package
 
 
 
-		public function onMetaData(obj:Object):void 
+		public function onMetaData(obj:Object):void
 		{
 			_trace(obj.width + " " + obj.height+" "+obj.framerate);
 			this._video.width = obj.width;
@@ -319,13 +319,13 @@ package
 		{
 			this._setClipboard = value;
 		}
-		
+
 		private function onError(event:*):void
 		{
 			_trace("IO ERROR");
 			_trace(event);
 		}
-		
+
 		private function onSecurityError(event:SecurityErrorEvent):void
 		{
 			_trace("SEC ERROR");
@@ -338,7 +338,7 @@ package
 
 			if(!this._video) return;
 
-			with(this._mask.graphics) 
+			with(this._mask.graphics)
 			{
 				clear();
 				beginFill(0);
@@ -346,7 +346,7 @@ package
 				endFill();
 			}
 
-			with(this._border.graphics) 
+			with(this._border.graphics)
 			{
 				clear();
 				beginFill(0);
@@ -357,7 +357,7 @@ package
 			//this._border.filters = [new GlowFilter(0, 1, 6, 6, 2, 1)];
 		}
 
-		private function _checkFramerate():void 
+		private function _checkFramerate():void
 		{
 
 			if(!this._stream) return;
@@ -375,12 +375,12 @@ package
 			else if(fps > 0) {
 				this._checkCount = 0;
 			}
-		} 
+		}
 
 		private function onStatus(event:*):void
 		{
 			_trace("stream status");
 		}
-		
+
 	}
 }

@@ -72,10 +72,10 @@ module.exports = mojo.View.extend({
     }, 20));*/
 
     window.desktopEvents = {
-      mouseMove  : _.bind(this._onMouseMove, this),
+      mouseMove  : _.throttle(_.bind(this._onMouseMove, this), 2),
       keyDown    : _.bind(this._onKeyDown, this),
       keyUp      : _.bind(this._onKeyUp, this),
-      mouseWheel : _.bind(this._onMouseWheel, this),
+      mouseWheel : _.throttle(_.bind(this._onMouseWheel, this), 1),
       resize     : _.bind(this._onResize, this)
     }
   },
@@ -119,9 +119,8 @@ module.exports = mojo.View.extend({
       y: ry
     });
   },
-  "_onMouseWheel": function (data) {
-    // console.log("wheel")
-    //this._keyboardEvent(data.keyCode, 0, 0)
+  "_onMouseWheel": function (coords) {
+		if(this.screen) this.screen.mouseEvent(wkmEvents.mouse.MOUSEEVENTF_WHEEL, coords, coords.delta);
   },
   "_onKeyDown": function (data) {
     console.log(data, this.screen);
@@ -131,7 +130,7 @@ module.exports = mojo.View.extend({
     //if(this.screen) this.screen.keybdEvent(data.keyCode, 0, wkmEvents.keyboard.KEYEVENTF_KEYUP)
   },
   "_onResize": function (data) {
-    this.screen.resize(data.width, data.height);
+    if(this.screen) this.screen.resize(data.width, data.height);
   },
   "_mouseEvent": function(code, coords, data) {
 

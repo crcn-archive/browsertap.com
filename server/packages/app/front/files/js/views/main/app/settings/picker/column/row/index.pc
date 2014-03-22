@@ -4,5 +4,10 @@
   },
   onClick: selectRow(model)
 }}">
-  {{ model.label }}
+
+  {{#if: model.icon }}
+    <span class="picker-row-icon icon-brw-{{ model.icon }}"></span>
+  {{/}}
+
+  {{ model.label | titlecase() }}
 </li>

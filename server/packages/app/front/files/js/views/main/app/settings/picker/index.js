@@ -1,5 +1,6 @@
-var mojo = require("mojojs"),
-transformLaunchers = require("./utils/transformLaunchers");
+var mojo           = require("mojojs"),
+transformLaunchers = require("./utils/transformLaunchers"),
+bindable           = require("bindable");
 
 
 module.exports = mojo.View.extend({
@@ -8,8 +9,6 @@ module.exports = mojo.View.extend({
    */
 
   paper: require("./index.pc"),
-
-
 
   /**
    */
@@ -31,7 +30,9 @@ module.exports = mojo.View.extend({
    */
 
   sections: {
-    columns: require("./column")
+    columns: {
+      type: require("./column")
+    }
   },
 
   /**

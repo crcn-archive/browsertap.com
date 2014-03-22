@@ -12,6 +12,9 @@ module.exports = function (launchers) {
   return browsers;
 }
 
+labels = {
+  explorer: "Internet Explorer"
+}
 
 
 function _addBrowsers (src, browsers) {
@@ -25,7 +28,8 @@ function _addBrowsers (src, browsers) {
 
     if (!(model = models[launcher.get("appName")])) {
       model = models[launcher.get("appName")] = new bindable.Object({
-        label: launcher.get("appName"),
+        label: labels[launcher.get("appName")] || launcher.get("appName"),
+        icon: launcher.get("appName"),
         child: new bindable.Collection()
       });
       browsers.push(model);

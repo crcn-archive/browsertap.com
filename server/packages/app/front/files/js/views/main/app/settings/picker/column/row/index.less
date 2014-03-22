@@ -1,15 +1,50 @@
+@columnRowHeight: 60px;
+@arrowSize: @columnRowHeight/2;
+@selectedColor: rgba(0,0,0,0.1);
+
 .picker-row-icon {
   margin-right: 8px;
 }
 
 .picker-column-row {
   width: 100px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  padding-left: 10px;
+  height: @columnRowHeight;
+  border-top: 1px solid rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+
   cursor: pointer;
-  color: #FFF;
+  color: #CFCFCF;
   width: 100%;
-  padding: 10px;
   font-size:20px;
+}
+
+.picker-column-row-label {
+  position: relative;
+  top: 13px;
+  margin-left: 13px;
+}
+
+
+.picker-column-row-selected-bg {
+  width: 100%;
+  margin-right: 20px;
+  height: 100%;
+  background-color: @selectedColor;
+  float: left;
+  clear: none;
+  position: relative;
+
+}
+
+.picker-column-row-arrow {
+  width: 0;
+  height: 0;
+
+  // background-color: #000;
+  border-top: @arrowSize solid transparent;
+  border-bottom: @arrowSize solid transparent;
+  border-left: 20px solid @selectedColor;
+  float: right;
+  left: -10px;
+  position: absolute;
 }

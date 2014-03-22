@@ -5,9 +5,19 @@
   onClick: selectRow(model)
 }}">
 
-  {{#if: model.icon }}
-    <span class="picker-row-icon icon-brw-{{ model.icon }}"></span>
+  {{#if: model.selected && false}}
+    <div class="picker-column-row-sele">
+    </div>
+    <div class="picker-column-row-arrow">
+    </div>
   {{/}}
 
-  {{ model.label | titlecase() }}
+  <div class="picker-column-row-label">
+    {{#if: model.icon }}
+      <span class="picker-row-icon icon-brw-{{ model.icon }}"></span>
+    {{/}}
+
+    {{ model.label | titlecase() }}
+  </div>
+
 </li>

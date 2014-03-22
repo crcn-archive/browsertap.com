@@ -3,7 +3,8 @@ var commands = [
   require("./load/dom"),
   require("./load/i18n"),
   require("./load/session"),
-  require("./api")
+  require("./api"),
+  require("./popup")
 ];
 
 module.exports = function (app) {

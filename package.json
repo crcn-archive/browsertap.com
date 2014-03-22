@@ -77,7 +77,8 @@
     "closest-ec2-region": "0.0.1",
     "memoizee": "~0.2.6",
     "passport": "~0.2.0",
-    "passport-github": "~0.1.5"
+    "passport-github": "~0.1.5",
+    "mousetrap": "0.0.1"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

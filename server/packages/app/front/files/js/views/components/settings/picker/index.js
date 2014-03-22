@@ -39,6 +39,12 @@ module.exports = mojo.View.extend({
    */
 
   onSelectItem: function (item) {
-    console.log(item.get("launcher"));
+
+    this.application.mediator.execute("launch", item.get("launcher"));
+
+    var self = this;
+    setTimeout(function () {
+      self.bubble("close");
+    }, 100);
   }
 });

@@ -1,5 +1,6 @@
 module.exports = {
   passwordStrength : require("./passwordStrength"),
   inputOk          : require("./inputOk"),
-  loader           : require("./loader")
+  loader           : require("./loader"),
+  settings         : require("./settings")
 }

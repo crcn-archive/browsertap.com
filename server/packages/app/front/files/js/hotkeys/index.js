@@ -1,3 +1,9 @@
+var mousetrap = require("mousetrap");
+
 module.exports = function (app) {
-  // TODO
+
+
+  mousetrap.bind("alt+space", function (e) {
+    app.mediator.execute("showSettings");
+  })
 };

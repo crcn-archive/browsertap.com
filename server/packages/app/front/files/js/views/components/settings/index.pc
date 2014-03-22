@@ -1,0 +1,10 @@
+<div id="settings-outer">
+  <div id="settings-inner">
+    <a id="close-settings-button" data-bind="{{ onClick: close() }}">
+      &times;
+    </a>
+    <div id="settings-inner-body">
+      {{ html: `sections.pages` }}
+    </div>
+  </div>
+</div>

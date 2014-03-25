@@ -4,30 +4,13 @@ _        = require("underscore"),
 wkmEvents = require("./events");
 
 
-var tpl = _.template(
-  '<div class="screen">' +
-    '<object type="application/x-shockwave-flash" width="100%" height="100%">' +
-      '<param name="movie" value="<%-src %>" />' +
-      '<param name="quality" value="high" />' +
-      '<param name="scale" value="noscale" />' +
-      '<param name="align" value="tl" />' +
-      '<param name="debug" value="true" />' +
-      '<param name="host" value="host" />' +
-      '<param name="channel" value="<%-channel %>" />' +
-      '<param name="flashVars" value="host=<%-host %>" />' +
-      '<param name="wmode" value="gpu" />' +
-      '<embed src="<%-src->" host="host" quality="high" flashVars="host=abba" type="application/x-shockwave-flash" allowscriptaccess="always" />' +
-    '</object>' +
-  '</div>'
-);
+var swfid = 0;
 
 module.exports = mojo.View.extend({
   src   : "/as3/wkm/bin/DesktopPlayer.swf?" + Date.now(),
-  host  : "rtmp://win2008rc2.local:1935/liv",
-  channel: "",
+  paper: require("./index.pc"),
   bindings: {
-    "models.mainScreen": "screen",
-    "models.mainScreen.stream.url": function (url) {
+    "screen.stream.url": function (url) {
 
       if (!url) return;
 
@@ -36,18 +19,20 @@ module.exports = mojo.View.extend({
       channel = pathParts.pop();
       var host = urlParts.protocol + "//" + urlParts.hostname + pathParts.join("/");
 
-      this.set("host", host);
-      this.set("channel", channel);
+      this.setProperties({
+        host: host,
+        channel: channel
+      });
     }
   },
   initialize: function () {
     mojo.View.prototype.initialize.call(this);
     this.on("render", this._renderSWF = _.bind(this._renderSWF, this));
-    this.on("change", this._renderSWF);
+    this.bind("channel, host", this._renderSWF)
 
     var $win = $(window), self = this;
     $win.resize(_.debounce(function (event) {
-      self._onResize({ width: $win.prop("innerWidth"), height: $win.prop("innerHeight") });
+      self._onResize();
     }, 100));
 
 
@@ -79,17 +64,20 @@ module.exports = mojo.View.extend({
       resize     : _.bind(this._onResize, this)
     }
   },
-  _renderSWF: function () {
+  _renderSWF: function (channel, host) {
+
+    if (!channel || !host) return;
+
     if (!this.section) return;
 
-    this.section.hide();
+    var sid = "tmp" + (swfid++);
 
-    var div = $("<div class='screen'><div id='tmpSwf'></div></div>")[0], self = this;
+    var div = $("<div><div id='"+sid+"'></div></div>")[0], self = this;
 
     document.body.appendChild(div);
 
     swfobject.embedSWF(this.get("src"),
-      "tmpSwf",
+      sid,
       "100%",
       "100%",
       "9.0.0",
@@ -102,14 +90,16 @@ module.exports = mojo.View.extend({
       }, {
         allowscriptaccess: "always",
       }, {}, function () {
-        self.section.replaceChildNodes(div);
+        self.$(".wkm").html("");
+        self.$(".wkm").append(div.childNodes[0]);
+        div.parentNode.removeChild(div);
       });
   },
   "_onMouseMove": function (coords) {
 
     // var sx = this.screen.get("width")
-    var sx = this.$(".screen").width() / 2 - this.screen.get("width") / 2;
-    var sy = this.$(".screen").height() / 2 - this.screen.get("height") / 2;
+    var sx = this.$(".wkm").width() / 2 - this.screen.get("width") / 2;
+    var sy = this.$(".wkm").height() / 2 - this.screen.get("height") / 2;
 
     var rx = coords.x - sx;
     var ry = coords.y - sy;
@@ -120,7 +110,7 @@ module.exports = mojo.View.extend({
     });
   },
   "_onMouseWheel": function (coords) {
-		if(this.screen) this.screen.mouseEvent(wkmEvents.mouse.MOUSEEVENTF_WHEEL, coords, coords.delta);
+		if(this.screen) this._mouseEvent(wkmEvents.mouse.MOUSEEVENTF_WHEEL, coords, coords.delta);
   },
   "_onKeyDown": function (data) {
     console.log(data, this.screen);
@@ -130,7 +120,8 @@ module.exports = mojo.View.extend({
     //if(this.screen) this.screen.keybdEvent(data.keyCode, 0, wkmEvents.keyboard.KEYEVENTF_KEYUP)
   },
   "_onResize": function (data) {
-    if(this.screen) this.screen.resize(data.width, data.height);
+    if(!this.screen) return;
+    this.screen.resize(this.$(".screen").width(), this.$(".screen").height());
   },
   "_mouseEvent": function(code, coords, data) {
 

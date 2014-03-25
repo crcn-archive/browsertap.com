@@ -1,0 +1,15 @@
+<div class="screen" data-bind="{{
+  style: {
+    top: top || 0,
+    left: left || 0,
+    width: screen.width,
+    height: screen.height
+  }
+}}">
+  {{ html: `sections.wkm` }}
+  <!--div class="screen-border">
+  </div-->
+
+  {{ html: `sections.border` }}
+  {{ html: `sections.header` }}
+</div>

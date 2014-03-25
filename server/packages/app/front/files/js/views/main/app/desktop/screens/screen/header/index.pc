@@ -1,0 +1,4 @@
+<div class="screen-header" data-bind="{{ onMouseDown: startDragHeader(event) }}">
+  <div class="screen-maximize">
+  </div>
+</div>

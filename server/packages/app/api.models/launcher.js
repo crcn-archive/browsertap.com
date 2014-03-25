@@ -43,6 +43,8 @@ BaseModel.extend(Launcher, {
 
   _onDesktop: function (desktop) {
 
+    return; // tmp
+
     hurryup(function (self, next) {
 
       logger.info("ping %s", desktop.addresses.publicIp);
@@ -54,7 +56,8 @@ BaseModel.extend(Launcher, {
           maxAge: -1,
           address: desktop.addresses.publicIp
         }
-      })
+      }, next);
+      
     })(this, function(){});
   }
 });

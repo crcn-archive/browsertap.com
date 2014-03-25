@@ -1,7 +1,1 @@
-{{#if: models.launcher}}
-  <div style="icon-brw-{{models.launcher.appName}}">
-  </div>
-{{/}}
-
 {{html:`sections.desktop`}}
-{{ html: `sections.wkm` }}

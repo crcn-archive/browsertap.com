@@ -12,8 +12,8 @@ module.exports = mojo.View.extend({
 
     function onMouseMove (event) {
         self.parent.setProperties({
-          top: event.clientY - oy,
-          left: event.clientX - ox
+          y: event.clientY - oy,
+          x: event.clientX - ox
         });
     }
 

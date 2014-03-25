@@ -1,9 +1,0 @@
-
-  <div class="screen-border screen-border-left">
-  </div>
-  <div class="screen-border screen-border-top">
-  </div>
-  <div class="screen-border screen-border-right">
-  </div>
-  <div class="screen-border screen-border-bottom">
-  </div>

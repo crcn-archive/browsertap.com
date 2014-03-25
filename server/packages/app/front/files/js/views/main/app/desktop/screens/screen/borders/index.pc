@@ -1,0 +1,10 @@
+{{#if:!maximize}}
+  <div class="screen-border-left" data-bind="{{ onMouseDown: startBorderDrag('left', event) }}"></div>
+  <div class="screen-border-right" data-bind="{{ onMouseDown: startBorderDrag('right', event) }}"></div>
+  <div class="screen-border-top" data-bind="{{ onMouseDown: startBorderDrag('top', event) }}"></div>
+  <div class="screen-border-top-left" data-bind="{{ onMouseDown: startBorderDrag('top-left', event) }}"></div>
+  <div class="screen-border-top-right" data-bind="{{ onMouseDown: startBorderDrag('top-right', event) }}"></div>
+  <div class="screen-border-bottom" data-bind="{{ onMouseDown: startBorderDrag('bottom', event) }}"></div>
+  <div class="screen-border-bottom-left" data-bind="{{ onMouseDown: startBorderDrag('bottom-left', event) }}"></div>
+  <div class="screen-border-bottom-right" data-bind="{{ onMouseDown: startBorderDrag('bottom-right', event) }}"></div>
+{{/}}

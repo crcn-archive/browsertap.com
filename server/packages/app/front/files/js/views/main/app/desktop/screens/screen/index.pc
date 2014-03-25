@@ -2,8 +2,8 @@
   style: {
     top: top || 0,
     left: left || 0,
-    width: screen.width,
-    height: screen.height
+    width: maximize ? '100%' : screen.width,
+    height: maximize ? '100%' : screen.height
   }
 }}">
   {{ html: `sections.wkm` }}

@@ -121,7 +121,7 @@ module.exports = mojo.View.extend({
   },
   "_onResize": function (data) {
     if(!this.screen) return;
-    this.screen.resize(this.$(".screen").width(), this.$(".screen").height());
+    this.screen.resize(this.$(".wkm").width(), this.$(".wkm").height());
   },
   "_mouseEvent": function(code, coords, data) {
 

@@ -4,6 +4,8 @@ module.exports = mojo.View.extend({
   paper: require("./index.pc"),
   startDragHeader: function (event) {
 
+    if (this.get("maximize")) return;
+
     var ox = event.offsetX,
     oy     = event.offsetY,
     self = this;

@@ -1,20 +1,5 @@
 <div id="browser-picker-outer">
   <div id="browser-picker-inner">
-
-    <div id="browser-picker-header">
-      <input type="text" data-bind="{{ model: <=>browserQuery, focus: true, onKeyDown: checkDownKey(event) }}" placeholder="Chrome 24"  />
-    </div>
-
-
-    <div id="browser-picker-list">
-      <ul>
-        {{ html: =sections.browsers }}
-      </ul>
-
-
-      {{#if: !sections.browsers.length }}
-        <div id="browser-licker-list-none">No browsers found</div>
-      {{/}}
-    </div>
+    {{ html: sections.pages }}
   </div>
-</div>
+<div>

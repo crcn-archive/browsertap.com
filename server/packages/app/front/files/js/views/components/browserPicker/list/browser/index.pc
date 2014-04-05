@@ -1,6 +1,11 @@
 <li
   class="browser-picker-list-item {{model.appName}}"
-  data-bind="{{ onClick: launch() }}">
+  data-bind="{{ 
+    onClick: selectLauncher(model),
+    css: {
+      selected: selected
+    }
+  }}">
 
   <span class="browser-picker-row-icon model.appName icon-brw-{{ model.appName }}"></span>
 

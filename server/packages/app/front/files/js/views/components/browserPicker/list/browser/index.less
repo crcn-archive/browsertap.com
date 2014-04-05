@@ -27,7 +27,7 @@
   padding-right: @padding;
   padding-top: @padding;
 
-  &:hover {
+  &.selected {
     color: #fff;
 
     & .browser-picker-app-version {
@@ -39,13 +39,26 @@
   }
 
 
+  &.firefox.selected {
+    background-color: @red;
+  }
+
   &.firefox:hover {
     background-color: @red;
+  }
+
+  &.chrome.selected {
+    background-color: @green;
   }
 
   &.chrome:hover {
     background-color: @green;
   }
+
+  &.explorer.selected {
+    background-color: @blue;
+  }
+
 
   &.explorer:hover {
     background-color: @blue;

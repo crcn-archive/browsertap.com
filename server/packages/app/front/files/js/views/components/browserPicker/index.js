@@ -1,37 +1,35 @@
 var mojo = require("mojojs");
 
 module.exports = mojo.View.extend({
-
-  /**
-   */
-
   paper: require("./index.pc"),
-
-  /**
-   */
-
-  bindings: {
-    "models.user.launchers": "sections.browsers.source",
-
-    // applies a filter against the list when browser
-    "browserQuery": function (search) {
-      if (!search) search = "";
-      search = search.toLowerCase();
-      this.set("browserFilter", function (model) {
-        var fullName = (model.get("appName") + " " + model.get("appVersion")).toLowerCase();
-        return ~fullName.indexOf(search);
-      });
-    }
-  },
   sections: {
-    browsers: {
-      type: "list",
-      modelViewClass: require("./browser"),
-      filter: "browserFilter"
+    pages: {
+      type: "states",
+      index: 0,
+      views: [
+        { class: require("./list")   , name: "list"   },
+        { class: require("./search") , name: "search" }
+      ]
     }
   },
-  checkDownKey: function (event) {
-    if (event.keyCode !== 40) return;
-    console.log("SELECT LIST");
+  _render: function () {
+    var self = this;
+  },
+  selectLauncher: function (launcher) {
+    this.set("launcher", launcher);
+    this.set("sections.pages.currentName", "search");
+  },
+  highlightLauncher: function (launcher) {
+    this.set("highlightedLauncher", launcher);
+  },
+  search: function (url) {
+    console.log(url);
+    this.close();
+  },
+  close: function () {
+    var self = this;
+    this.$("#browser-picker-outer").transit({ scale: 1.25, opacity: 0 }, 300, "easeOutCubic", function () {
+      self.remove();
+    });
   }
-});
+})

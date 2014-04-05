@@ -4,7 +4,7 @@ module.exports = function (app) {
 
 
   mousetrap.bind("alt+space", function (e) {
-    app.mediator.execute("showSettings");
+    app.mediator.execute("showBrowserPicker");
   });
 
 

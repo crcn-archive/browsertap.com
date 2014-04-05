@@ -26,9 +26,23 @@
   padding-left: @padding*2;
   padding-right: @padding;
   padding-top: @padding;
+  outline: 0;
 
   &.selected {
     color: #fff;
+    outline: 0;
+
+    & .browser-picker-app-version {
+      color: #fff;
+      & div {
+        color: #fff;
+      }
+    }
+  }
+
+  &:hover {
+    color: #fff;
+    outline: 0;
 
     & .browser-picker-app-version {
       color: #fff;
@@ -39,28 +53,27 @@
   }
 
 
-  &.firefox.selected {
-    background-color: @red;
-  }
-
   &.firefox:hover {
     background-color: @red;
   }
 
-  &.chrome.selected {
-    background-color: @green;
+  &.firefox.selected {
+    background-color: @red;
   }
 
   &.chrome:hover {
     background-color: @green;
   }
 
-  &.explorer.selected {
+  &.chrome.selected {
+    background-color: @green;
+  }
+
+  &.explorer:hover {
     background-color: @blue;
   }
 
-
-  &.explorer:hover {
+  &.explorer.selected {
     background-color: @blue;
   }
 

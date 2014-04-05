@@ -1,0 +1,17 @@
+<li
+  class="browser-picker-list-item {{model.appName}}"
+  data-bind="{{ onClick: launch() }}">
+
+  <span class="browser-picker-row-icon model.appName icon-brw-{{ model.appName }}"></span>
+
+  <span class="browser-picker-app-name">
+    {{ =model.appName | titlecase() }}
+  </span>
+
+
+
+  <span class="browser-picker-app-version">
+     Version <div>{{ =model.appVersion }}</div>
+  </span>
+
+</li>

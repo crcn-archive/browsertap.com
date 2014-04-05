@@ -1,0 +1,62 @@
+@pickerBgColor: #ececec;
+@pickerWidth: 300px;
+@pickerListWidth: @pickerWidth - 16;
+@borderRadius: 5px;
+@padding: 8px;
+
+#browser-picker-outer {
+  position: fixed;
+  width: 100%;
+  top: 30%;
+}
+
+#browser-picker-inner {
+  width: @pickerWidth;
+  margin: 0px auto;
+}
+
+#browser-picker-header {
+
+  background-color: @pickerBgColor;
+  padding: @padding;
+  .border-radius(@borderRadius);
+  .drop-shadow(0px, 5px, 3px, rgba(0,0,0,0.3));
+
+  & input {
+    width: 100%;
+    font-size: 24px;
+    padding-left: 6px;
+    .border-radius(@borderRadius);
+    border: 3px solid #cfcfcf;
+    outline: none;
+    &:focus {
+      border: 3px solid @blue;
+    }
+    color: #333;
+  }
+}
+
+
+#browser-licker-list-none {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+#browser-picker-list {
+  padding: @padding 0px;
+  margin: 0px auto;
+  width: @pickerListWidth;
+  background-color: @pickerBgColor;
+  .border-radius(0px, 0px, @borderRadius, @borderRadius);
+  color: #222;
+  max-height: 200px;
+  overflow-y: scroll;
+
+  & ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+  }
+}

@@ -1,0 +1,61 @@
+.browser-picker-row-icon {
+  margin-right: 6px;
+}
+
+
+.browser-picker-app-version {
+  float: right;
+  color: #777;
+  padding-right: @padding;
+
+
+  & div {
+    display: inline-block;
+    color: #555;
+    text-align: center;
+    padding: 0px;
+    margin: -6px;
+    width: 30px !important;
+  }
+}
+
+.browser-picker-list-item {
+
+  cursor: pointer;
+  padding-bottom: @padding;
+  padding-left: @padding*2;
+  padding-right: @padding;
+  padding-top: @padding;
+
+  &:hover {
+    color: #fff;
+
+    & .browser-picker-app-version {
+      color: #fff;
+      & div {
+        color: #fff;
+      }
+    }
+  }
+
+
+  &.firefox:hover {
+    background-color: @red;
+  }
+
+  &.chrome:hover {
+    background-color: @green;
+  }
+
+  &.explorer:hover {
+    background-color: @blue;
+  }
+
+  &.even {
+    background-color: #ffffff;
+  }
+
+  &.odd {
+    background-color: #f6f6f6;
+  }
+}

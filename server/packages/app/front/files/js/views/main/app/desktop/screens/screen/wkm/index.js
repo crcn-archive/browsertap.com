@@ -12,6 +12,7 @@ module.exports = mojo.View.extend({
   bindings: {
     "screen.stream.url": function (url) {
 
+
       if (!url) return;
 
       var urlParts  = Url.parse(url);
@@ -19,52 +20,36 @@ module.exports = mojo.View.extend({
       channel = pathParts.pop();
       var host = urlParts.protocol + "//" + urlParts.hostname + pathParts.join("/");
 
+      console.log(host, channel);
       this.setProperties({
         host: host,
-        channel: channel
+        channel: channel,
+        screenId: this.get("screen._id")
       });
+    },
+    "screen": function (screen) {
+      if (!screen) return;
+      window["desktopEvents"+screen.get("_id")] = {
+        mouseMove  : _.throttle(_.bind(this._onMouseMove, this), 2),
+        keyDown    : _.bind(this._onKeyDown, this),
+        keyUp      : _.bind(this._onKeyUp, this),
+        mouseWheel : _.throttle(_.bind(this._onMouseWheel, this), 1),
+        resize     : _.bind(this._onResize, this)
+      }
     }
   },
   initialize: function () {
     mojo.View.prototype.initialize.call(this);
     this.on("render", this._renderSWF = _.bind(this._renderSWF, this));
-    this.bind("channel, host", this._renderSWF)
+    this.bind("channel, host, screenId", this._renderSWF)
 
     var $win = $(window), self = this;
     $win.resize(_.debounce(function (event) {
       self._onResize();
     }, 100));
 
-
-    $win.mousedown(function(e) {
-      // if(!$(e.target).closest('#desktop-player').length) return;
-      self._mouseEvent(e.button == 0 ? wkmEvents.mouse.MOUSEEVENTF_LEFTDOWN : wkmEvents.mouse.MOUSEEVENTF_RIGHTDOWN);
-      if(e.button === 0) return; //only block right click
-      e.preventDefault();
-      e.stopPropagation();
-    });
-
-    $win.mouseup(function(e) {
-      self._mouseEvent(e.button == 0 ? wkmEvents.mouse.MOUSEEVENTF_LEFTUP : wkmEvents.mouse.MOUSEEVENTF_RIGHTUP);
-    });
-
-
-    /*$win.mousemove(_.throttle(function(event) {
-
-      var coords = { x: event.clientX, y: event.clientY };
-
-      self._mouseEvent(wkmEvents.mouse.MOUSEEVENTF_ABSOLUTE | wkmEvents.mouse.MOUSEEVENTF_MOVE, coords);
-    }, 20));*/
-
-    window.desktopEvents = {
-      mouseMove  : _.throttle(_.bind(this._onMouseMove, this), 2),
-      keyDown    : _.bind(this._onKeyDown, this),
-      keyUp      : _.bind(this._onKeyUp, this),
-      mouseWheel : _.throttle(_.bind(this._onMouseWheel, this), 1),
-      resize     : _.bind(this._onResize, this)
-    }
   },
-  _renderSWF: function (channel, host) {
+  _renderSWF: function (channel, host, screenId) {
 
     if (!channel || !host) return;
 
@@ -86,7 +71,8 @@ module.exports = mojo.View.extend({
         bgColor: "#FFFFFF",
         channel: this.get("channel"),
         allowscriptaccess: "always",
-        host: this.get("host")
+        host: this.get("host"),
+        screenId: screenId
       }, {
         allowscriptaccess: "always",
       }, {}, function () {
@@ -95,7 +81,18 @@ module.exports = mojo.View.extend({
         div.parentNode.removeChild(div);
       });
   },
+  "onMouseDown": function (e) {
+    // if(!$(e.target).closest('#desktop-player').length) return;
+    this._mouseEvent(e.button == 0 ? wkmEvents.mouse.MOUSEEVENTF_LEFTDOWN : wkmEvents.mouse.MOUSEEVENTF_RIGHTDOWN);
+    if(e.button === 0) return; //only block right click
+    e.preventDefault();
+    e.stopPropagation();
+  },
+  onMouseUp: function (e) {
+    this._mouseEvent(e.button == 0 ? wkmEvents.mouse.MOUSEEVENTF_LEFTUP : wkmEvents.mouse.MOUSEEVENTF_RIGHTUP);
+  },
   "_onMouseMove": function (coords) {
+
 
     // var sx = this.screen.get("width")
     var sx = this.$(".wkm").width() / 2 - this.screen.get("width") / 2;
@@ -113,7 +110,6 @@ module.exports = mojo.View.extend({
 		if(this.screen) this._mouseEvent(wkmEvents.mouse.MOUSEEVENTF_WHEEL, coords, coords.delta);
   },
   "_onKeyDown": function (data) {
-    console.log(data, this.screen);
     if(this.screen) this.screen.keybdEvent(data);
   },
   "_onKeyUp": function (coords) {

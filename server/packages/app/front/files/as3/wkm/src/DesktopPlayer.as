@@ -45,6 +45,7 @@ package
 		private var _mask:Sprite;
 		private var _padding:Object;
 		private var _border:Sprite;
+		private var _eventsNS:String;
 
 
 
@@ -54,6 +55,7 @@ package
 			this._server  =  this.root.loaderInfo.parameters.host   || "rtmp://win2008rc2.local:1935/live";
 			this._channel = this.root.loaderInfo.parameters.channel || "default";
 			this._debug =   Boolean(this.root.loaderInfo.parameters.debug);
+			this._eventsNS = "desktopEvents" + this.root.loaderInfo.parameters.screenId;
 			//this._setClipboard = String(this.root.loaderInfo.parameters.clipboard);
 
 			this._copyPaste = new TextField();
@@ -141,7 +143,7 @@ package
 				this._setClipboard = null;
 			}
 
-			ExternalInterface.call('desktopEvents.' + event.type, { x: event.stageX, y: event.stageY, delta: event.delta, ctrlKey: event.ctrlKey, shiftKey: event.shiftKey });
+			ExternalInterface.call(this._eventsNS + '.' + event.type, { x: event.stageX, y: event.stageY, delta: event.delta, ctrlKey: event.ctrlKey, shiftKey: event.shiftKey });
 		}
 
 		private function onKeyboardEvent(event:KeyboardEvent):void
@@ -168,7 +170,7 @@ package
 				{
 					_trace("set external clipboard to " + newClipboardText);
 					this._clipboard = newClipboardText;
-					ExternalInterface.call("desktopEvents.setClipboard", this._clipboard);
+					ExternalInterface.call(this._eventsNS + ".setClipboard", this._clipboard);
 				} else
 				if(event.charCode == "c".charCodeAt(0) && this._setClipboard)
 				{
@@ -177,7 +179,7 @@ package
 				}
 			}
 
-			ExternalInterface.call('desktopEvents.' + event.type, { keyCode: event.keyCode, altKey: event.altKey, shiftKey: event.shiftKey, ctrlKey: event.ctrlKey });
+			ExternalInterface.call(this._eventsNS + '.' + event.type, { keyCode: event.keyCode, altKey: event.altKey, shiftKey: event.shiftKey, ctrlKey: event.ctrlKey });
 		}
 
 
@@ -305,7 +307,7 @@ package
 			if(this._padding) this.setPadding(this._padding);
 
 			this.stage.frameRate = obj.frameRate;
-			ExternalInterface.call('desktopEvents.resize', { width: this._video.width, height: this._video.height });
+			ExternalInterface.call(this._eventsNS + '.resize', { width: this._video.width, height: this._video.height });
 			onStageResize();
 		}
 
@@ -364,7 +366,7 @@ package
 			var fps:Number = this._stream.currentFPS;
 			//_trace("current framerate: " + fps+" cc: "+this._checkCount);
 
-			ExternalInterface.call('desktopEvents.framerateChange', fps);
+			ExternalInterface.call(this._eventsNS + '.framerateChange', fps);
 
 			return;
 			if(fps == 0 && this._checkCount++ >= 2) {

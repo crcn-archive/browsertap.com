@@ -1,1 +1,8 @@
-<div class="wkm"></div>
+<div class="wkm" data-bind="{{
+  onMouseDown: onMouseDown(event),
+  onMouseUp: onMouseUp(event),
+  preventDefault: {
+    mouseDown: false,
+    mouseUp: false
+  }
+}}"></div>

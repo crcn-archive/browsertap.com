@@ -44,8 +44,25 @@ module.exports = mojo.View.extend({
     if (!this._prevChild) return;
     this.call("selectLauncher", [this._prevChild.get("model")]);
   },
+  highlightLauncherView: function (view) {
+    if (this._prevChild) {
+      this._prevChild.set("selected", false);
+    }
+    if (!view) return;
+    this._prevChild = view;
+    view.set("selected", true);
+  },
   moveListIndex: function (pos) {
-    var newPos = this.get("selectedIndex") + pos;
+
+    var selectedIndex = 0;
+
+    if (this._prevChild) {
+      selectedIndex = this.get("sections.browsers.children").indexOf(this._prevChild);
+    }
+
+    console.log(selectedIndex)
+
+    var newPos = selectedIndex + pos;
 
     if (newPos >= this.get("sections.browsers.length")) return;
     if (newPos < 0) return;
@@ -61,20 +78,19 @@ module.exports = mojo.View.extend({
         child = children.at(self.get("selectedIndex"));
 
         if (child) {
-          if (self._prevChild) self._prevChild.set("selected", false);
-          self._prevChild = child;
-          child.set("selected", true);
-
           var $row = child.$("li"),
           top = $row.position().top,
           $list = $("#browser-picker-list");
 
           if (top > $list.height()) {
-            return $row[0].scrollIntoView(false);
+            $row[0].scrollIntoView(false);
           } else if (top < 0) {
-            return $row[0].scrollIntoView(true);
+            $row[0].scrollIntoView(true);
           }
-        }
+
+          self.highlightLauncherView(child);
+
+        } 
       }
     })
   }

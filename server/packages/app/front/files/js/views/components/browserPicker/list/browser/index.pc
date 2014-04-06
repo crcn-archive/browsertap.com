@@ -2,6 +2,7 @@
   class="browser-picker-list-item {{model.appName}}"
   data-bind="{{ 
     onClick: selectLauncher(model),
+    onMouseOver: highlightLauncherView(this),
     css: {
       selected: selected
     }

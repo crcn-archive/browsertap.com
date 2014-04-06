@@ -1,1 +1,1 @@
-{{ html: `sections.screens` }}
+{{ html: =sections.screens }}

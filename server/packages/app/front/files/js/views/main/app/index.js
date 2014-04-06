@@ -14,7 +14,6 @@ module.exports = mojo.View.extend({
     "models.states.app": "sections.pages.currentName"
   },
   sections: {
-
     desktop: require("./desktop")
   }
 });

@@ -8,11 +8,13 @@
   position: fixed;
   width: 100%;
   top: 30%;
+
 }
 
 #browser-picker-inner {
   margin: 0px auto;
   display: table;
+
 }
 
 #browser-picker-header {
@@ -20,6 +22,8 @@
   width: @pickerWidth;
   position: relative;
   z-index: 99;
+
+  .box-shadow(0 0 10px rgba(0,0,0, 0.3));
 
   background-color: @pickerBgColor;
   .border-radius(@borderRadius);
@@ -58,7 +62,9 @@
 }
 
 #browser-picker-list {
-  .box-shadow(inset 0 0 10px rgba(0,0,0, 0.3));
+
+  .box-shadow(0 0 100px rgba(0,0,0, 1));
+
   position: relative;
   padding: @padding 0px;
   margin: 0px auto;

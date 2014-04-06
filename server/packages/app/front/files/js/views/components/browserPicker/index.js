@@ -23,8 +23,11 @@ module.exports = mojo.View.extend({
     this.set("highlightedLauncher", launcher);
   },
   search: function (url) {
-    console.log(url);
     this.close();
+    this.application.mediator.execute("launch", {
+      launcher: this.get("launcher"),
+      url: url
+    });
   },
   close: function () {
     var self = this;

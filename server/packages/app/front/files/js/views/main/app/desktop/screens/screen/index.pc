@@ -1,12 +1,3 @@
-<div class="screen" data-bind="{{
-  style: {
-    left: x || 0,
-    top: y || 0,
-    width: maximize ? '100%' : width,
-    height: maximize ? '100%' : height
-  }
-}}">
+<div class="screen">
   {{ html: `sections.wkm`     }}
-  {{ html: `sections.borders` }}
-  {{ html: `sections.header`  }}
 </div>

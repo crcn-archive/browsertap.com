@@ -109,7 +109,9 @@ module.exports = {
 
 	launch: function (message, next) {
 
-		var launcher = message.data;
+		var d = message.data,
+		launcher = d.launcher,
+		url = d.url;
 
 		message.mediator.application.models.set("launcher", launcher);
 

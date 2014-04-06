@@ -11,7 +11,7 @@ module.exports = mojo.View.extend({
    */
 
   bindings: {
-    "models.user.launchers": "sections.browsers.source",
+    "models.user.launchers": ["launchers", "sections.browsers.source"],
 
     // applies a filter against the list when browser
     "browserQuery": function (search) {

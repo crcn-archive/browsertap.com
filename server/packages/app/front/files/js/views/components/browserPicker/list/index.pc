@@ -3,14 +3,19 @@
   onClick: event | select() }}" placeholder="Chrome 24"  />
 </div>
 
-<div id="browser-picker-list" data-bind="{{ show: browserQuery.length }}">
+<div id="browser-picker-list">
 
   <ul>
     {{ html: =sections.browsers }}
   </ul>
 
 
-  {{#if: !sections.browsers.length }}
+
+  {{#if: !sections.browsers.length && launchers }}
     <div id="browser-licker-list-none">No browsers found</div>
+  {{/elseif: !launchers }}
+    <div class="browser-picker-loader">
+      {{loader: { show: true }}}
+    </div>
   {{/}}
 </div>

@@ -52,6 +52,9 @@ module.exports = mojo.View.extend({
     this._prevChild = view;
     view.set("selected", true);
   },
+  selectAll: function () {
+    this.$("input").select();
+  },
   moveListIndex: function (pos) {
 
     var selectedIndex = 0;

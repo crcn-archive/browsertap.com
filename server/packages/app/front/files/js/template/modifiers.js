@@ -40,6 +40,10 @@ module.exports = function (app) {
       return app.i18n.t(string, params);
     },
 
+    select: function (event) {
+      $(event.target).select();
+    },
+
     te: function (string, error) {
       var t = modifiers.t(string = (string + "." + (error ? error.code : "undefined")));
       if (t === string) return modifiers.t("common.errors.undefined");

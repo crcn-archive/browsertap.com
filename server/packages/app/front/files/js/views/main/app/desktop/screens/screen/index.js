@@ -13,6 +13,7 @@ module.exports = mojo.View.extend({
       "maximize": {
         "map": function (style) {
           if (!style) return false;
+          return false;
           return Boolean(style.minimizebox && style.maximizebox && style.sysmenu && style.visible);
         }
       }

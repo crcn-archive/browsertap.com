@@ -6,7 +6,7 @@
     height: maximize ? '100%' : height
   }
 }}">
-  {{ html: `sections.header`  }}
-  {{ html: `sections.wkm`     }}
-  {{ html: `sections.borders` }}
+  {{ html: =sections.wkm     }}
+  {{ html: =sections.borders }}
+  {{ html: =sections.header  }}
 </div>

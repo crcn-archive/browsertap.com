@@ -35,6 +35,17 @@ module.exports = mojo.View.extend({
     header: require("./header"),
     borders: require("./borders")
   },
+  minmax: function () {
+    this.set("maximize", !this.get("maximize"));
+    $(window).trigger("resize");
+  },
+  popout: function () {
+
+  },
+  close: function () {
+      this.screen.close();
+      this.remove();
+  },
   focus: function () {
     this.set("zindex", ++_zindex);
   },

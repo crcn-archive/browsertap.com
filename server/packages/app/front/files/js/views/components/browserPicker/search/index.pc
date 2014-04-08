@@ -1,8 +1,16 @@
 <div id="browser-picker-header" class="browser-picker-search">
-  
+
   <div class="browser-picker-select-launcher {{launcher.appName}}">
     {{ launcher.appName | titlecase() }}@{{ launcher.appVersion }}
   </div>
 
-  <input type="text" class="browser-picker-url" data-bind="{{ model: <=>url, focus: true, onEnter: search(url), onClick: event | select() }}" placeholder="http://yoursite.com" />
+  <input
+    type="text"
+    class="browser-picker-url"
+    data-bind="{{
+      model: <=>url,
+      focus: true,
+      onEnter: search(url),
+      onClick: event | select()
+    }}" placeholder="http://yoursite.com" />
 </div>

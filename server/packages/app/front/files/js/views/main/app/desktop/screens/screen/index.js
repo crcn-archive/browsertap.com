@@ -1,5 +1,8 @@
 var mojo = require("mojojs");
 
+
+var _zindex = 99;
+
 module.exports = mojo.View.extend({
   paper: require("./index.pc"),
   x: 0,
@@ -32,9 +35,14 @@ module.exports = mojo.View.extend({
     header: require("./header"),
     borders: require("./borders")
   },
+  focus: function () {
+    this.set("zindex", ++_zindex);
+  },
   setScreenPosition: function (pos) {
   },
   startBorderDrag: function (pos, event) {
+
+    this.focus();
 
     var ox = event.offsetX,
     oy     = event.offsetY,
@@ -55,6 +63,7 @@ module.exports = mojo.View.extend({
     $win.bind("mousemove", onMouseDown);
 
     function onMouseDown (event) {
+
       var nx = cbox.x, ny = cbox.y, nw = cbox.w, nh = cbox.h;
 
       if (/right/.test(pos)) {

@@ -3,7 +3,8 @@
     left: x || 0,
     top: y || 0,
     width: maximize ? '100%' : width,
-    height: maximize ? '100%' : height
+    height: maximize ? '100%' : height,
+    'z-index': maximize ? 0 : zindex
   }
 }}">
   {{ html: `sections.header`  }}

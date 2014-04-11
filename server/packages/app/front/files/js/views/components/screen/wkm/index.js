@@ -83,13 +83,24 @@ module.exports = mojo.View.extend({
   },
   "onMouseDown": function (e) {
     // if(!$(e.target).closest('#desktop-player').length) return;
-    this._mouseEvent(e.button == 0 ? wkmEvents.mouse.MOUSEEVENTF_LEFTDOWN : wkmEvents.mouse.MOUSEEVENTF_RIGHTDOWN);
-    if(e.button === 0) return; //only block right click
+
+    var rightClick = e.button !== 0 || e.ctrlKey;
+
+    this._mouseEvent(!rightClick ? wkmEvents.mouse.MOUSEEVENTF_LEFTDOWN : wkmEvents.mouse.MOUSEEVENTF_RIGHTDOWN);
+
+    if (!rightClick) {
+      return
+    }
+
     e.preventDefault();
     e.stopPropagation();
   },
   onMouseUp: function (e) {
-    this._mouseEvent(e.button == 0 ? wkmEvents.mouse.MOUSEEVENTF_LEFTUP : wkmEvents.mouse.MOUSEEVENTF_RIGHTUP);
+    var rightClick = e.button !== 0 || e.ctrlKey;
+
+    // if (rightClick) return;
+    console.log(rightClick);
+    this._mouseEvent(!rightClick ? wkmEvents.mouse.MOUSEEVENTF_LEFTUP : wkmEvents.mouse.MOUSEEVENTF_RIGHTUP);
   },
   "_onMouseMove": function (coords) {
 

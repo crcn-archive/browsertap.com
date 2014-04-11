@@ -10,7 +10,11 @@ module.exports = mojo.View.extend({
   bindings: {
     "model": "screen",
     "screen": function (screen) {
-      if (screen) screen.stream.start();
+      if (!screen) return;
+
+      screen.stream.start();
+      this.set("x", $(window).width()/2 - screen.get("width")/2);
+      this.set("y", $(window).height()/2 - screen.get("height")/2);
     },
     "screen.style": {
       "maximize": {

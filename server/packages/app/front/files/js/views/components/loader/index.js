@@ -5,7 +5,10 @@ module.exports = mojo.View.extend({
   render: function () {
     var sect = mojo.View.prototype.render.call(this);
     if (process.browser) {
-      new Spinner().spin(this.$(".spinner")[0]); 
+      new Spinner({
+        radius: 7,
+        width: 2
+      }).spin(this.$(".spinner")[0]);
     }
     return sect;
   }

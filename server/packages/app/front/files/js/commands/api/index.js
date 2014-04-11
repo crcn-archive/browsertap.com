@@ -65,7 +65,14 @@ module.exports = {
 
 		var domain = message.mediator.application.models.get("desktopDomain");
 
-		window.open(window.location.origin + "/#!/screen/" + screenId + "?desktop=" + encodeURIComponent(domain), "_blank", "toolbar=0 menubar=0 location=0 scrollbars=0 width="+screen.get("width")+" height="+screen.get("height"));
+		var popup = window.open(window.location.origin + "/#!/screen/" + screenId + "?desktop=" + encodeURIComponent(domain), "_blank", "toolbar=0 menubar=0 location=0 scrollbars=0 width="+screen.get("width")+" height="+screen.get("height"));
+
+		var pollTimer = setInterval(function () {
+			if (popup.closed === true) {
+				clearInterval(pollTimer);
+				screen.close();
+			}
+		}, 200);
 	},
 
 	/**

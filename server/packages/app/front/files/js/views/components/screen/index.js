@@ -13,8 +13,8 @@ module.exports = mojo.View.extend({
       if (!screen) return;
 
       screen.stream.start();
-      this.set("x", $(window).width()/2 - screen.get("width")/2);
-      this.set("y", $(window).height()/2 - screen.get("height")/2);
+      this.set("x", Math.max($(window).width()/2 - screen.get("width")/2, 0));
+      this.set("y", Math.max($(window).height()/2 - screen.get("height")/2, 0));
     },
     "screen.style": {
       "maximize": {

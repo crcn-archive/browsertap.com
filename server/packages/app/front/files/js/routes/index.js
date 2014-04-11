@@ -40,6 +40,7 @@ module.exports = function (app) {
       next();
     })
 
+
   router.
     route("/screen/:screen").
     enter(auth).
@@ -57,6 +58,7 @@ module.exports = function (app) {
 
           app.models.set("mainScreen", targetScreen);
           next();
+
         }}).now();
       });
     }).

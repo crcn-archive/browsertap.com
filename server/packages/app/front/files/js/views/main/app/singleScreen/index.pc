@@ -1,0 +1,6 @@
+{{
+  screen: {
+    model: model,
+    resizable: false
+  }
+}}

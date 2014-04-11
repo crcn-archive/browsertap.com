@@ -1,0 +1,68 @@
+@borderWidth: 8px;
+
+.screen-border-left, .screen-border-right, .screen-border-top, .screen-border-bottom {
+  background-color: rgba(0,0,0,0);
+  position: absolute;
+  cursor: pointer;
+}
+
+.screen-border-left {
+  left: 0px;
+}
+
+.screen-border-right {
+  right: 0px;
+}
+
+.screen-border-left, .screen-border-right {
+  height: 100%;
+  width: 8px;
+  cursor: ew-resize;
+}
+
+
+.screen-border-top, .screen-border-bottom {
+  height: 8px;
+  width: 100%;
+  cursor: ns-resize;
+}
+
+.screen-border-top {
+  top: 0px;
+}
+
+.screen-border-bottom {
+  bottom: 0px;
+}
+
+.screen-border-top-left, .screen-border-top-right, .screen-border-bottom-left, .screen-border-bottom-right {
+  background-color: rgba(0,0,0,0);
+  position: absolute;
+  width: 8px;
+  height: 8px;
+}
+
+.screen-border-top-left {
+  top: 0px;
+  left: 0px;
+  cursor: pointer;
+  cursor: nwse-resize;
+}
+
+.screen-border-top-right {
+  top: 0px;
+  right: 0px;
+  cursor: nesw-resize;
+}
+
+.screen-border-bottom-left {
+  bottom: 0px;
+  left: 0px;
+  cursor: nesw-resize;
+}
+
+.screen-border-bottom-right {
+  bottom: 0px;
+  right: 0px;
+  cursor: nwse-resize;
+}

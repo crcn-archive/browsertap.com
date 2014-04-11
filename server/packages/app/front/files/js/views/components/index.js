@@ -3,5 +3,6 @@ module.exports = {
   inputOk          : require("./inputOk"),
   loader           : require("./loader"),
   settings         : require("./settings"),
-  browserPicker    : require("./browserPicker")
+  browserPicker    : require("./browserPicker"),
+  screen           : require("./screen")
 }

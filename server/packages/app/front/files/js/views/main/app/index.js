@@ -14,6 +14,12 @@ module.exports = mojo.View.extend({
     "models.states.app": "sections.pages.currentName"
   },
   sections: {
-    desktop: require("./desktop")
+    pages: {
+      type: "states",
+      views: [
+        { class: require("./desktop")      , name: "desktop"      },
+        { class: require("./singleScreen") , name: "singleScreen" }
+      ]
+    }
   }
 });

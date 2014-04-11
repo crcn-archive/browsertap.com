@@ -58,6 +58,19 @@ module.exports = {
 	/**
 	 */
 
+	popout: function (message, next) {
+
+		var screen = message.data.screen,
+		screenId   = screen.get("_id");
+
+		var domain = message.mediator.application.models.get("desktopDomain");
+
+		window.open(window.location.origin + "/#!/screen/" + screenId + "?desktop=" + encodeURIComponent(domain), "_blank", "toolbar=0 menubar=0 location=0 scrollbars=0 width="+screen.get("width")+" height="+screen.get("height"));
+	},
+
+	/**
+	 */
+
 	resetPassword: function (message, next) {
 
 		var app = message.mediator.application;
@@ -119,23 +132,34 @@ module.exports = {
 
 			var domain = desktop.addresses.publicIp;
 
-			console.log("connecting to %s", domain);
-
-			var stream = shoe("http://" + domain + "/dnode"),
-			d = dnode();
-			d.on("remote", function (desktop) {
-
-				console.log("connected to %s", domain);
-
-				var _desktop = _wrapBindables(desktop);
-
-				message.mediator.application.models.set("desktop", _desktop);
-
-				next();
-			});
-
-			d.pipe(stream).pipe(d);
+			message.mediator.execute("connect", { host: domain }, next);
 		}));
+	},
+
+	/**
+	 */
+
+	connect: function (message, next) {
+
+		var domain = message.data.host;
+
+		console.log("connecting to %s", domain);
+
+		var stream = shoe("http://" + domain + "/dnode"),
+		d = dnode();
+		d.on("remote", function (desktop) {
+
+			console.log("connected to %s", domain);
+
+			var _desktop = _wrapBindables(desktop);
+
+			message.mediator.application.models.set("desktop", _desktop);
+			message.mediator.application.models.set("desktopDomain", domain);
+
+			next(null, _desktop);
+		});
+
+		d.pipe(stream).pipe(d);
 	},
 
 	/**

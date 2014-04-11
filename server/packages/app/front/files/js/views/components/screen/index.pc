@@ -1,0 +1,20 @@
+<div class="screen" data-bind="{{
+  style: {
+    left: maximize ? 0 : x || 0,
+    top: maximize ? 0 : y || 0,
+    width: maximize ? '100%' : width,
+    height: maximize ? '100%' : height,
+    'z-index': maximize ? 0 : zindex
+  },
+  css: {
+    maximized: maximize
+  }
+}}">
+
+  {{#if:resizable !== false}}
+    {{ html: `sections.header`  }}
+  {{/}}
+
+  {{ html: `sections.wkm`     }}
+  {{ html: `sections.borders` }}
+</div>

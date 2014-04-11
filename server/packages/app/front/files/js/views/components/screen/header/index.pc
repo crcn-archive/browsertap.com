@@ -1,0 +1,7 @@
+<div class="screen-header" data-bind="{{ onMouseDown: startDragHeader(event) }}">
+  <div class="screen-header-controls">
+    <img src="/img/ikons/64/upload-white.png" data-bind="{{ onClick: popout() }}" />
+    <img src="/img/ikons/64/resize_{{ maximize ? 2 : 1 }}-white.png" data-bind="{{ onClick: minmax() }}" />
+    <img src="/img/ikons/64/close-white.png" data-bind="{{ onClick: close() }}" />
+  </div>
+</div>

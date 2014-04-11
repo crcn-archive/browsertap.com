@@ -1,6 +1,6 @@
 <div id="browser-picker-header">
-  <input type="text" id="browser-picker-input" data-bind="{{ model: <=>browserQuery, focus: true, onKeyDown: checkDownKey(event), onEnter: selectBrowser(), 
-  onClick: event | select() }}" placeholder="Chrome 24"  />
+  <input type="text" id="browser-picker-input" data-bind="{{ model: <=>browserQuery, focus: true, onKeyDown: checkDownKey(event), onEnter: selectBrowser(),
+  onClick: event | select() }}" placeholder="Search for browser (e.g: Chrome 24)"  />
 </div>
 
 <div id="browser-picker-list">

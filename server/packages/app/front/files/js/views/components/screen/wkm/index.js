@@ -20,7 +20,6 @@ module.exports = mojo.View.extend({
       channel = pathParts.pop();
       var host = urlParts.protocol + "//" + urlParts.hostname + pathParts.join("/");
 
-      console.log(host, channel);
       this.setProperties({
         host: host,
         channel: channel,
@@ -75,6 +74,7 @@ module.exports = mojo.View.extend({
         screenId: screenId
       }, {
         allowscriptaccess: "always",
+        wmode: "transparent"
       }, {}, function () {
         self.$(".wkm").html("");
         self.$(".wkm").append(div.childNodes[0]);

@@ -1,1 +1,1 @@
-{{html: =sections.desktop }}
+{{html: =sections.pages }}

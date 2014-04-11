@@ -29,9 +29,9 @@ module.exports = function (app) {
     enter(auth).
     states({
       main : "app",
-      app  : "browser"
+      app  : "desktop"
     })
-  
+
   router.
     route("/logout").
     name("logout").
@@ -39,6 +39,32 @@ module.exports = function (app) {
       app.mediator.execute("logout");
       next();
     })
+
+  router.
+    route("/screen/:screen").
+    enter(auth).
+    enter(function (request, next) {
+      // app.mediator.execute("connnect)
+      console.log(request.query);
+      app.mediator.execute("connect", {
+        host: request.query.desktop
+      }, function (err, desktop) {
+        desktop.bind("screens", { max: 1, to: function (screens) {
+
+          var targetScreen = screens.filter(function (screen) {
+            return screen.get("_id") == request.params.screen;
+          }).pop();
+
+          app.models.set("mainScreen", targetScreen);
+          next();
+        }}).now();
+      });
+    }).
+    states({
+      main : "app",
+      app  : "singleScreen"
+    })
+
 
   router.
     route("/login").
